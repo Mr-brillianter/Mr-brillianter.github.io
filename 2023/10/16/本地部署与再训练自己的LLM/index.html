@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>本地部署、再训练与二次开发自己的LLM | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="选型参考问题选型必然考虑优缺点、benchmark指标，比如准确性、模型大小及要求（能否在个人PC部署）、推理速度、是否开源&#x2F;国产（防止被封和维护问题） 要求最好开源且4070 12G GPU上推理或者api调用 准确性较高、速度较快 Benchmark Leaderboardopen-llm-leaderboard (Open LLM Leaderboard) (huggingfac">
+<meta property="og:type" content="article">
+<meta property="og:title" content="本地部署、再训练与二次开发自己的LLM">
+<meta property="og:url" content="https://xxminxx.love/2023/10/16/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%86%8D%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84LLM/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="选型参考问题选型必然考虑优缺点、benchmark指标，比如准确性、模型大小及要求（能否在个人PC部署）、推理速度、是否开源&#x2F;国产（防止被封和维护问题） 要求最好开源且4070 12G GPU上推理或者api调用 准确性较高、速度较快 Benchmark Leaderboardopen-llm-leaderboard (Open LLM Leaderboard) (huggingfac">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2023-10-16T05:31:34.000Z">
+<meta property="article:modified_time" content="2023-10-21T07:04:04.028Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="geek">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2023/10/16/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%86%8D%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84LLM/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '本地部署、再训练与二次开发自己的LLM',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-21 15:04:04'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">本地部署、再训练与二次开发自己的LLM</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-10-16T05:31:34.000Z" title="发表于 2023-10-16 13:31:34">2023-10-16</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-21T07:04:04.028Z" title="更新于 2023-10-21 15:04:04">2023-10-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/LLM/">LLM</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.4k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="本地部署、再训练与二次开发自己的LLM"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><img src="https://s2.loli.net/2023/10/16/IECb7WlH9kdzTKF.png" alt="image.png"></p>
+<h1 id="选型"><a href="#选型" class="headerlink" title="选型"></a>选型</h1><h2 id="参考问题"><a href="#参考问题" class="headerlink" title="参考问题"></a>参考问题</h2><p>选型必然考虑优缺点、benchmark指标，比如准确性、模型大小及要求（能否在个人PC部署）、推理速度、是否开源&#x2F;国产（防止被封和维护问题）</p>
+<h3 id="要求"><a href="#要求" class="headerlink" title="要求"></a>要求</h3><p>最好开源且4070 12G GPU上推理或者api调用</p>
+<p>准确性较高、速度较快</p>
+<h3 id="Benchmark-Leaderboard"><a href="#Benchmark-Leaderboard" class="headerlink" title="Benchmark Leaderboard"></a>Benchmark Leaderboard</h3><p><a target="_blank" rel="noopener" href="https://huggingface.co/open-llm-leaderboard">open-llm-leaderboard (Open LLM Leaderboard) (huggingface.co)</a></p>
+<p><a target="_blank" rel="noopener" href="https://cevalbenchmark.com/">C-Eval: A Multi-Level Multi-Discipline Chinese Evaluation Suite for Foundation Models (cevalbenchmark.com)</a></p>
+<p><a target="_blank" rel="noopener" href="https://tatsu-lab.github.io/alpaca_eval/">Alpaca Eval Leaderboard (tatsu-lab.github.io)</a></p>
+<h1 id="In-Details"><a href="#In-Details" class="headerlink" title="In Details"></a>In Details</h1><h3 id="AutoGen"><a href="#AutoGen" class="headerlink" title="AutoGen"></a>AutoGen</h3><p>AutoGen帮助开发者创建基于大语言模型的复杂应用程序。依赖于openai付费的apikey，弃用</p>
+<h3 id="fastchat"><a href="#fastchat" class="headerlink" title="fastchat"></a>fastchat</h3><p><a target="_blank" rel="noopener" href="https://github.com/lm-sys/FastChat">lm-sys&#x2F;FastChat: An open platform for training, serving, and evaluating large language models. Release repo for Vicuna and Chatbot Arena. (github.com)</a></p>
+<h3 id="中文LLaMA-Alpaca"><a href="#中文LLaMA-Alpaca" class="headerlink" title="中文LLaMA&amp;Alpaca"></a>中文LLaMA&amp;Alpaca</h3><p><a target="_blank" rel="noopener" href="https://github.com/ymcui/Chinese-LLaMA-Alpaca">ymcui&#x2F;Chinese-LLaMA-Alpaca: 中文LLaMA&amp;Alpaca大语言模型+本地CPU&#x2F;GPU训练部署 (Chinese LLaMA &amp; Alpaca LLMs) (github.com)</a></p>
+<h1 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h1><p>需不需要自己prompt工程</p>
+<h1 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h1><h2 id="使用Xwin-LM的hugging-face实现（弃用）"><a href="#使用Xwin-LM的hugging-face实现（弃用）" class="headerlink" title="使用Xwin-LM的hugging face实现（弃用）"></a>使用Xwin-LM的hugging face实现（弃用）</h2><p><img src="https://github.com/Xwin-LM/Xwin-LM/raw/main/assets/_logo.png"></p>
+<p>号称超过gpt！安装hugging face、pytorch-gpu和transformers，并然后进行测试，详见hugging-face-startup.md</p>
+<h3 id="使用example测试"><a href="#使用example测试" class="headerlink" title="使用example测试"></a>使用example测试</h3><p>Xwin-LM还有一个实现是vLLM库.使用hf实现，看到使用了30G来下模型，很头大，没有更改缓存，C盘一下就满了</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">#env4hf</span><br><span class="line">from transformers import AutoTokenizer, AutoModelForCausalLM</span><br><span class="line"></span><br><span class="line">model = AutoModelForCausalLM.from_pretrained(&quot;Xwin-LM/Xwin-LM-7B-V0.1&quot;)</span><br><span class="line">tokenizer = AutoTokenizer.from_pretrained(&quot;Xwin-LM/Xwin-LM-7B-V0.1&quot;)</span><br><span class="line">(</span><br><span class="line">    prompt := &quot;A chat between a curious user and an artificial intelligence assistant. &quot;</span><br><span class="line">            &quot;The assistant gives helpful, detailed, and polite answers to the user&#x27;s questions. &quot;</span><br><span class="line">            &quot;USER: Hello, can you help me? &quot;</span><br><span class="line">            &quot;ASSISTANT:&quot;</span><br><span class="line">)</span><br><span class="line">inputs = tokenizer(prompt, return_tensors=&quot;pt&quot;)</span><br><span class="line">samples = model.generate(**inputs, max_new_tokens=4096, temperature=0.7)</span><br><span class="line">output = tokenizer.decode(samples[0][inputs[&quot;input_ids&quot;].shape[1]:], skip_special_tokens=True)</span><br><span class="line">print(output) </span><br><span class="line"># Of course! I&#x27;m here to help. Please feel free to ask your question or describe the issue you&#x27;re having, and I&#x27;ll do my best to assist you.</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">pytorch_model-00001-of-00003.bin: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9.88G/9.88G [17:20&lt;00:00, 9.50MB/s] </span><br><span class="line">pytorch_model-00002-of-00003.bin: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 9.89G/9.89G [17:21&lt;00:00, 9.50MB/s]</span><br><span class="line">pytorch_model-00003-of-00003.bin: 100%|████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████████| 7.18G/7.18G [12:34&lt;00:00, 9.52MB/s]</span><br><span class="line">Downloading shards: 100%|947.04s/it</span><br></pre></td></tr></table></figure>
+<p>存在两个问题，1.莫名其妙卡死 2.C盘快满了，不得不处理缓存问题</p>
+<p>先处理缓存问题，参考<a target="_blank" rel="noopener" href="https://huggingface.co/docs/transformers/v4.34.0/en/installation#installation%E4%B8%ADcache">https://huggingface.co/docs/transformers/v4.34.0/en/installation#installation中cache</a> setup，默认为user&#x2F;XX&#x2F;.cache&#x2F;huggingface&#x2F;hub,<br>缓存位置的优先级为三个环境变量：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">1(default)  HUGGINGFACE_HUB_CACHE or TRANSFORMERS_CACHE.</span><br><span class="line">2 HF_HOME.</span><br><span class="line">3 XDG_CACHE_HOME + /huggingface.</span><br></pre></td></tr></table></figure>
+<p>直接修改环境变量即可，然后我们把他搬过去,打印环境变量windows是%%而linux才是#,以上环境变量都没有设，很奇怪为什么7B的模型有25G这么大，能放到显存吗？</p>
+<h3 id="LLM回答：一个7B的LLM语言大模型占用多少空间？"><a href="#LLM回答：一个7B的LLM语言大模型占用多少空间？" class="headerlink" title="LLM回答：一个7B的LLM语言大模型占用多少空间？"></a>LLM回答：一个7B的LLM语言大模型占用多少空间？</h3><p>一个7B的LLM语言大模型的显存占用量根据参数类型有所不同。</p>
+<p>推理：</p>
+<ul>
+<li>7B-float类型，需要28GB显存</li>
+<li>7B-BF16类型，需要14GB显存；</li>
+<li>7B-int8类型，需7GB显存。</li>
+</ul>
+<p>在训练过程中，所需显存可能会达到推理时的4倍，以7B-float类型为例，其训练显存大约为112GB。然而，这只是理论估算，实际使用中可能因为batch size和sequence length等因素的不同，显存占用会更大。所以想要进行模型训练，至少需要的显存是推理的3-4倍。至于硬盘空间的占用，由于模型参数量大，全精度模型加载可能需要78G至104G的硬盘空间。</p>
+<p>WTF???看了看12G的现存，好像也只能支持7B-int8，可是为什么没有11B-int8模型呢，而且再训练也做不了，只能使用云服务器。难道之前的尝试都错了，7B-int8应该效果不行吧，不如api啊~~~~😢我是小丑？？<br>除非使用int8推理，但不能满足训练和其他要求。</p>
+<h2 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h2><p><a target="_blank" rel="noopener" href="http://news.sohu.com/a/706913394_453160">我为什么放弃了 LangChain？</a></p>
+<p>Chinese-LLaMA-Alpaca中，transformers接口要求20G以上显存，只能使用C接口，而且只能用13B-4bit或7B-8bit量化，但是量化的部署依赖于C++部署：<a target="_blank" rel="noopener" href="https://github.com/ymcui/Chinese-LLaMA-Alpaca-2/wiki/llamacpp_zh">llamacpp_zh Chinese-LLaMA-Alpaca-2</a></p>
+<h2 id="星火模型"><a href="#星火模型" class="headerlink" title="星火模型"></a>星火模型</h2><p>个人免费200万tokens，每秒查询率QPS限制2，缺点：一年期限</p>
+<p><a target="_blank" rel="noopener" href="https://xfyun-doc.cn-bj.ufileos.com/static%2F16974374635522820%2FSparkApi_Python.zip">python案例</a></p>
+<p>test.py只依赖你的三个api,以及websocket-client库</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">#1.修改appid,api_secret,api_key为自己的</span><br><span class="line">#2.</span><br><span class="line">conda create -n env4spark python==3.10 websocket-client</span><br></pre></td></tr></table></figure>
+<p>就有了自己的问答接口小程序</p>
+<p>理解test.py程序,反注释掉text（或查看变量表）</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">我:a  </span><br><span class="line">星火:I&#x27;m sorry, I am an AI language model and I do not understand what you are trying to ask. Can you please provide more context or clarify your question?[&#123;&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: &#x27;a&#x27;&#125;, &#123;&#x27;role&#x27;: &#x27;assistant&#x27;, &#x27;content&#x27;: &quot;I&#x27;m sorry, I am an AI language model and I do not understand what you are trying to ask. Can you please provide more context or clarify your question?&quot;&#125;]</span><br><span class="line"></span><br><span class="line">我:can you speak chinese</span><br><span class="line">星火:是的，我可以说中文。有什么我可以帮你的吗？[&#123;&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: &#x27;a&#x27;&#125;, &#123;&#x27;role&#x27;: &#x27;assistant&#x27;, &#x27;content&#x27;: &quot;I&#x27;m sorry, I am an AI language model and I do not understand what you are trying to ask. Can you </span><br><span class="line">please provide more context or clarify your question?&quot;&#125;, &#123;&#x27;role&#x27;: &#x27;user&#x27;, &#x27;content&#x27;: &#x27;can you speak chinese&#x27;&#125;, &#123;&#x27;role&#x27;: &#x27;assistant&#x27;, &#x27;content&#x27;: &#x27;是的，我可以说中文。有什么我可以帮你的吗？&#x27;&#125;]</span><br></pre></td></tr></table></figure>
+<p>text和question变量都一样，都是，只有SparkApi.answer只包含每次回答的结果,输出结果是在        SparkApi.main中完成的,更详细是在SparkApi.py的97行print(content,end &#x3D;””)，作为on_message回调函数触发的，每次打印部分消息，把它修改成print(content,end &#x3D;”\n”)就会发生神奇的一幕</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">星火:Hello</span><br><span class="line">! How</span><br><span class="line"> can I assist</span><br><span class="line"> you today?</span><br></pre></td></tr></table></figure>
+<p>间隔非常大，说明Hello、! How、 can I assist等是一次次返回出来的</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2023/10/16/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%86%8D%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84LLM/">https://xxminxx.love/2023/10/16/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%86%8D%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84LLM/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/LLM/">LLM</a><a class="post-meta__tags" href="/tags/geek/">geek</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/10/16/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%81%9A%E5%A5%BD%E4%B8%80%E4%BB%BDppt/" title="如何高效做好一份ppt"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">如何高效做好一份ppt</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/16/Hugging-face-Startup/" title="Hugging face Startup"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Hugging face Startup</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2023/10/16/Hugging-face-Startup/" title="Hugging face Startup"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-10-16</div><div class="title">Hugging face Startup</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|少量Go<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">10</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">7</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%89%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">选型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E8%80%83%E9%97%AE%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">参考问题</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A6%81%E6%B1%82"><span class="toc-number">1.1.1.</span> <span class="toc-text">要求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Benchmark-Leaderboard"><span class="toc-number">1.1.2.</span> <span class="toc-text">Benchmark Leaderboard</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#In-Details"><span class="toc-number">2.</span> <span class="toc-text">In Details</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AutoGen"><span class="toc-number">2.0.1.</span> <span class="toc-text">AutoGen</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#fastchat"><span class="toc-number">2.0.2.</span> <span class="toc-text">fastchat</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%AD%E6%96%87LLaMA-Alpaca"><span class="toc-number">2.0.3.</span> <span class="toc-text">中文LLaMA&amp;Alpaca</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">3.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5"><span class="toc-number">4.</span> <span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8Xwin-LM%E7%9A%84hugging-face%E5%AE%9E%E7%8E%B0%EF%BC%88%E5%BC%83%E7%94%A8%EF%BC%89"><span class="toc-number">4.1.</span> <span class="toc-text">使用Xwin-LM的hugging face实现（弃用）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8example%E6%B5%8B%E8%AF%95"><span class="toc-number">4.1.1.</span> <span class="toc-text">使用example测试</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LLM%E5%9B%9E%E7%AD%94%EF%BC%9A%E4%B8%80%E4%B8%AA7B%E7%9A%84LLM%E8%AF%AD%E8%A8%80%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%8D%A0%E7%94%A8%E5%A4%9A%E5%B0%91%E7%A9%BA%E9%97%B4%EF%BC%9F"><span class="toc-number">4.1.2.</span> <span class="toc-text">LLM回答：一个7B的LLM语言大模型占用多少空间？</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8"><span class="toc-number">4.2.</span> <span class="toc-text">使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%98%9F%E7%81%AB%E6%A8%A1%E5%9E%8B"><span class="toc-number">4.3.</span> <span class="toc-text">星火模型</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/20/Those-that-I-Am-Concerned-About/" title="Those that I Am Concerned About">Those that I Am Concerned About</a><time datetime="2023-10-20T15:42:49.000Z" title="发表于 2023-10-20 23:42:49">2023-10-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/16/Hugging-face-Startup/" title="Hugging face Startup">Hugging face Startup</a><time datetime="2023-10-16T05:59:20.000Z" title="发表于 2023-10-16 13:59:20">2023-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/16/%E6%9C%AC%E5%9C%B0%E9%83%A8%E7%BD%B2%E4%B8%8E%E5%86%8D%E8%AE%AD%E7%BB%83%E8%87%AA%E5%B7%B1%E7%9A%84LLM/" title="本地部署、再训练与二次开发自己的LLM">本地部署、再训练与二次开发自己的LLM</a><time datetime="2023-10-16T05:31:34.000Z" title="发表于 2023-10-16 13:31:34">2023-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/16/%E5%A6%82%E4%BD%95%E9%AB%98%E6%95%88%E5%81%9A%E5%A5%BD%E4%B8%80%E4%BB%BDppt/" title="如何高效做好一份ppt">如何高效做好一份ppt</a><time datetime="2023-10-16T04:43:12.000Z" title="发表于 2023-10-16 12:43:12">2023-10-16</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/10/10/Python%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B%E3%80%81%E8%A3%85%E9%A5%B0%E5%99%A8%E4%B8%8E%E9%97%AD%E5%8C%85/" title="Python函数式编程、装饰器与闭包">Python函数式编程、装饰器与闭包</a><time datetime="2023-10-10T15:51:05.000Z" title="发表于 2023-10-10 23:51:05">2023-10-10</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2023 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
