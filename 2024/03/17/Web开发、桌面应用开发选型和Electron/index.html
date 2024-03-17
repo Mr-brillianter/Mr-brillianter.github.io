@@ -1,0 +1,465 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Web开发、桌面应用开发选型和Electron | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、一些有关Web开发的常识window对象的子对象分很多种：    子对象 说明    document 文档对象用于操作页面元素   location 地址对象用于操作URL地址   navigator 浏览器对象用于获取浏览器版本信息   history 历史对象用于操作浏览器历史   screen 屏幕对象用于操作屏幕的高度和宽度    ECMAScript指的是基本语法w3school">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web开发、桌面应用开发选型和Electron">
+<meta property="og:url" content="https://xxminxx.love/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="一、一些有关Web开发的常识window对象的子对象分很多种：    子对象 说明    document 文档对象用于操作页面元素   location 地址对象用于操作URL地址   navigator 浏览器对象用于获取浏览器版本信息   history 历史对象用于操作浏览器历史   screen 屏幕对象用于操作屏幕的高度和宽度    ECMAScript指的是基本语法w3school">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2024-03-17T11:08:37.000Z">
+<meta property="article:modified_time" content="2024-03-17T11:08:48.020Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="Min&#39;s blog.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Web开发、桌面应用开发选型和Electron',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-17 19:08:48'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Web开发、桌面应用开发选型和Electron</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-17T11:08:37.000Z" title="发表于 2024-03-17 19:08:37">2024-03-17</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-17T11:08:48.020Z" title="更新于 2024-03-17 19:08:48">2024-03-17</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">5.7k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>17分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Web开发、桌面应用开发选型和Electron"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、一些有关Web开发的常识"><a href="#一、一些有关Web开发的常识" class="headerlink" title="一、一些有关Web开发的常识"></a>一、一些有关Web开发的常识</h1><p>window对象的子对象分很多种：</p>
+<table>
+<thead>
+<tr>
+<th>子对象</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>document</td>
+<td>文档对象用于操作页面元素</td>
+</tr>
+<tr>
+<td>location</td>
+<td>地址对象用于操作URL地址</td>
+</tr>
+<tr>
+<td>navigator</td>
+<td>浏览器对象用于获取浏览器版本信息</td>
+</tr>
+<tr>
+<td>history</td>
+<td>历史对象用于操作浏览器历史</td>
+</tr>
+<tr>
+<td>screen</td>
+<td>屏幕对象用于操作屏幕的高度和宽度</td>
+</tr>
+</tbody></table>
+<ul>
+<li>ECMAScript指的是基本语法<br><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/">w3school 在线教程</a><br><a target="_blank" rel="noopener" href="https://www.w3school.com.cn/jsref/index.asp">JavaScript 和 HTML DOM 参考手册 (w3school.com.cn)</a></li>
+</ul>
+<table>
+<thead>
+<tr>
+<th><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onclick.html">onclick</a></th>
+<th>当用户点击某个对象时调用的事件句柄。</th>
+<th>2</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-oncontextmenu.html">oncontextmenu</a></td>
+<td>在用户点击鼠标右键打开上下文菜单时触发</td>
+<td></td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-ondblclick.html">ondblclick</a></td>
+<td>当用户双击某个对象时调用的事件句柄。</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmousedown.html">onmousedown</a></td>
+<td>鼠标按钮被按下。</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmouseenter.html">onmouseenter</a></td>
+<td>当鼠标指针移动到元素上时触发。</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmouseleave.html">onmouseleave</a></td>
+<td>当鼠标指针移出元素时触发</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmousemove.html">onmousemove</a></td>
+<td>鼠标被移动。</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmouseover.html">onmouseover</a></td>
+<td>鼠标移到某元素之上。</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmouseout.html">onmouseout</a></td>
+<td>鼠标从某元素移开。</td>
+<td>2</td>
+</tr>
+<tr>
+<td><a target="_blank" rel="noopener" href="https://www.runoob.com/jsref/event-onmouseup.html">onmouseup</a></td>
+<td>鼠标按键被松开。</td>
+<td>2</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_22903531/article/details/131679343">玩转代码|Script 标签中的async与defer属性详细分析_ async-CSDN博客</a></p>
+<p>readyState属性值</p>
+<table>
+<thead>
+<tr>
+<th>返回值</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>0</td>
+<td>未初始化。表示对象已经建立，但是尚未初始化，尚未调用 open() 方法</td>
+</tr>
+<tr>
+<td>1</td>
+<td>初始化。表示对象已经建立，尚未调用 send() 方法</td>
+</tr>
+<tr>
+<td>2</td>
+<td>发送数据。表示 send() 方法已经调用，但是当前的状态及 HTTP 头未知</td>
+</tr>
+<tr>
+<td>3</td>
+<td>数据传送中。已经接收部分数据，因为响应及 HTTP 头不安全，这时通过 responseBody 和 responseText 获取部分数据会出现错误</td>
+</tr>
+<tr>
+<td>4</td>
+<td>完成。数据接收完毕，此时可以通过 responseBody 和 responseText 获取完整的响应数据</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://c.biancheng.net/view/5995.html">JS XMLHttpRequest入门教程（非常详细） (biancheng.net)</a><br><a target="_blank" rel="noopener" href="https://c.biancheng.net/view/9377.html">JS Ajax请求（简明教程） (biancheng.net)</a></p>
+<h1 id="二、好文分享"><a href="#二、好文分享" class="headerlink" title="二、好文分享"></a>二、好文分享</h1><p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/509656170">为什么用 electron 开发的桌面应用那么多？</a></p>
+<p>在瞬息万变的互联网行业中，年过二十四的即时通讯IM应用 QQ 堪称超长寿的产品，见证了中国互联网崛起的完整历程。</p>
+<p>然而，如今这个元老级产品经历了一次从内到外彻底的重构。在这次重构中，QQ 选择了 Electron 作为 UI 跨平台开发框架。</p>
+<p>尽管 Electron 被 Slack、Visual Studio Code 和 Discord 等大型产品广泛使用，但也引发了一些网友的担忧，例如内存占用、安装包体积和启动速度等方面的问题。<strong>本文内容整理自 QQ 技术团队的采访，我们一起来看看QQ团队选择Electron作为桌面版跨端框架背后的决策与思考。</strong></p>
+<h2 id="1、老QQ桌面版的技术债"><a href="#1、老QQ桌面版的技术债" class="headerlink" title="1、老QQ桌面版的技术债"></a><strong>1、老QQ桌面版的技术债</strong></h2><h3 id="1-1多端代码不统一"><a href="#1-1多端代码不统一" class="headerlink" title="1.1多端代码不统一"></a><strong>1.1<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%A4%9A%E7%AB%AF%E4%BB%A3%E7%A0%81&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">多端代码</a>不统一</strong></h3><p>QQ 的第一个版本发布于 1998 年，在 Windows 技术栈的基础上用纯原生的方式开发，在当时互联网带宽非常小的情况下，QQ 将安装包控制在了只有 200K 左右。</p>
+<p>2007 年后智能手机开始露出苗头，腾讯行动得比较早，部分前端技术开发开始转型到了移动端，在桌面端， QQ 随着业务和组织的发展，针对三大操作系统陆续组建了三支不同的研发团队，各自负责自己的一套代码。</p>
+<p><img src="https://picx.zhimg.com/80/v2-068a9e9ed85d12011b1a11c92dfc5d7f_1440w.webp?source=1940ef5c"></p>
+<p>▲ 初版QQ的注册向导页</p>
+<p><img src="https://pica.zhimg.com/80/v2-ffd73982beabac763909bf37f7792c77_1440w.webp?source=1940ef5c"></p>
+<p>▲ 初版QQ的主要功能为即时聊天</p>
+<p>三端不同代码，老产品历史包袱，加上移动时代研发人员的转型，导致桌面 QQ 维护成本很高。</p>
+<p>QQ 技术团队介绍，拿之前的桌面 QQ 为例，Windows QQ 以前的 UI 框架用的是腾讯自研的 GF 框架，10 多年了，GF 这个框架文档还不全，新加入这个项目的团队人员，要基于这个基础框架去做一些事情，是效率很低的一件事情，慢慢的就没有人愿意去用这个框架了。简而言之，就是<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%8A%80%E6%9C%AF%E5%80%BA&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">技术债</a>。</p>
+<p>_PS：_如果你对QQ的发展史感兴趣可以看看下面这些文章：</p>
+<ol>
+<li>《<a href="https://link.zhihu.com/?target=http://www.52im.net/thread-1447-1-1.html">闲话即时通讯：腾讯的成长史本质就是一部QQ成长史</a>》</li>
+<li>《<a href="https://link.zhihu.com/?target=http://www.52im.net/thread-613-1-1.html">技术往事：创业初期的腾讯——16年前的冬天，谁动了马化腾的代码</a>》</li>
+<li>《<a href="https://link.zhihu.com/?target=http://www.52im.net/thread-599-1-1.html">技术往事：史上最全QQ图标变迁过程，追寻IM巨人的演进历史</a>》</li>
+<li>《<a href="https://link.zhihu.com/?target=http://www.52im.net/thread-1929-1-1.html">QQ的成功，远没有你想象的那么顺利和轻松</a>》</li>
+<li>《<a href="https://link.zhihu.com/?target=http://www.52im.net/thread-2336-1-1.html">还原真实的腾讯：从最不被看好，到即时通讯巨头的草根创业史</a>》</li>
+</ol>
+<h3 id="1-2多端功能不一致"><a href="#1-2多端功能不一致" class="headerlink" title="1.2多端功能不一致"></a><strong>1.2多端功能不一致</strong></h3><p>旧版的桌面端 QQ，Windows 的功能最丰富，Mac OS 次之， Linux 功能非常简洁。</p>
+<p>比如“屏幕共享”这个功能，移动端有，Windows 端有，但是 Mac OS 端是没有的。那用户就会遇到一个问题，像 Mac OS 端无法与其它端 QQ 用户一起来使用这个功能。</p>
+<p>“多端不统一不利于用户对于 QQ 的统一认知。我们这次的架构升级就是想尽量通过一套核心代码去拉平所有平台的体验，让它具有更好的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8F%AF%E7%BB%B4%E6%8A%A4%E6%80%A7&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">可维护性</a>和<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8F%AF%E6%89%A9%E5%B1%95%E6%80%A7&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">可扩展性</a>，让桌面 QQ 能够更好地迭代产品交互和功能，升级用户体验，再次焕发生长的生命力。”</p>
+<h3 id="1-3QQ-NT-项目的诞生"><a href="#1-3QQ-NT-项目的诞生" class="headerlink" title="1.3QQ NT 项目的诞生"></a><strong>1.3QQ NT 项目的诞生</strong></h3><p><img src="https://picx.zhimg.com/80/v2-6c789d243e3b391f32f2fc18fa602ff1_1440w.webp?source=1940ef5c"></p>
+<p><strong>于是 QQ NT 项目的诞生了！</strong></p>
+<p>QQ NT 项目是在 2022 年 3 月份正式启动， Mac OS QQ 在 6 月份开始发布内测， 9 月份正式上架了 App Store，迭代了几个版本之后，QQ 团队就同步开发 Linux。</p>
+<p>在 2022 年，QQ 发布了新的 macOS 和 Linux 版本，包括 QQ 后台其实也做了很大的改变和重构，核心系统做了全新重写，<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E4%BA%91%E5%8E%9F%E7%94%9F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">云原生</a>成熟度也得到了很大的提升。</p>
+<p>从 2023 年开始，QQ 团队聚焦做 Windows 端的开发，在 3 月底就开始内测，7 月初上架官网。</p>
+<p>同时移动端 QQ NT 也在 7 月初完成了核心系统的重写和全量升级。</p>
+<p>在目前全新的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">框架设计</a>下，无论是核心系统、功能迭代还是<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%AE%BE%E8%AE%A1%E8%AF%AD%E8%A8%80&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">设计语言</a>上，都可以尽可能地“原子化”，来让 QQ 后续更好地迭代功能。</p>
+<h2 id="2、新QQ桌面版重构的技术挑战"><a href="#2、新QQ桌面版重构的技术挑战" class="headerlink" title="2、新QQ桌面版重构的技术挑战"></a><strong>2、新QQ桌面版重构的技术挑战</strong></h2><h3 id="2-1业务功能上的挑战"><a href="#2-1业务功能上的挑战" class="headerlink" title="2.1业务功能上的挑战"></a><strong>2.1业务功能上的挑战</strong></h3><p><strong>QQ 的重构其实是两方面的重构：</strong></p>
+<ul>
+<li>**<em>1）</em>**一个是面向复杂业务的梳理重构；</li>
+<li>**<em>2）</em>**一个是面向<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%B7%A5%E7%A8%8B%E6%8A%80%E6%9C%AF%E5%80%BA&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">工程技术债</a>的全新技术重构。</li>
+</ul>
+<p>重构之路也是两者相互伴随的过程。</p>
+<p><strong>首先：</strong>在整个 QQ 重构过程中最大的挑战来自于 QQ 功能的复杂化，QQ 有很多十分复杂的历史功能，这些功能模块也曾经由非常多不同的人经手负责过。其中哪些功能是不合理的或没有价值的，如何去做取舍往往是最难的。“虽然技术上我们做了很多事情，但技术上的实现或许并没有那么难，我们处理起来更有经验和从容。相比于技术的复杂度，业务上的往往需要考虑的更多，这本身就是很大的挑战。”</p>
+<p>因为 QQ 已经是近 25 年的产品了，有很多细小复杂的功能。虽然这些功能看看起来很小，但用户量其实又很大，稍微改动可能就会有很多的用户反馈，QQ 团队都得非常的关注。仅从产品功能角度上看，有些功能本身就已经是很重的负债，而 QQ 团队内部有一个叫做“QQ <a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%8A%82%E8%83%BD%E8%AE%A1%E5%88%92&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">节能计划</a>”的项目，会有比较严谨的项目流程去评估是否需要下架。</p>
+<h3 id="2-2技术重构上的挑战"><a href="#2-2技术重构上的挑战" class="headerlink" title="2.2技术重构上的挑战"></a><strong>2.2技术重构上的挑战</strong></h3><p>技术上重构也有不少挑战，这次重构是一次跨平台的重构，而在多个平台里面比较有挑战则是 Linux 平台。</p>
+<p>作为程序员，很多人免不了要跟 Linux 打交道。但是这么多年来，对于使用 Linux 系统的用户来讲，有一个特别让人烦恼的问题，那就是没有一个好用的 IM 聊天工具。被寄予厚望的 QQ，此前在 Linux 版本上功能也没有 Windows 和 Mac OS 版本全面，迭代速度也明显慢过其他两个版本。业界甚至猜测 Linux 第一个版本是由腾讯实习生所写，毕竟这个说法进一步加重了其初版的“简陋”特性，也为其“停更”的原因提供了更合理的解释。</p>
+<p><strong>QQ 技术团队表示，较之另两个版本，Linux 版本的研发最为复杂：</strong></p>
+<ul>
+<li>**<em>1）</em>**一方面操作系统本身很多碎片化，市面上有非常多的发行版，也不缺乏一些千奇百怪的版本；</li>
+<li>**<em>2）</em>**另一方面因为机器运行环境或编译器的缺失，使得解决适配问题的难度很大。</li>
+</ul>
+<p>许多发行版相关的机器和开发环境实际上他们并没有，有时还需要外部公司帮助进行一些测试工作。由于没有相应的开发环境，一旦出现闪退等问题，解决难度自然会变得更大。此外，有时候需要与<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%9B%BD%E4%BA%A7%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">国产操作系统</a>厂商进行特殊的合作，甚至需要对方寄送特定的编译好的代码库，但前后往往会花费一个月的时间才能收到。</p>
+<p>而在本次重构之后，“Linux 功能跟 Windows 一样多了”。</p>
+<h3 id="2-3选型Electron的质疑"><a href="#2-3选型Electron的质疑" class="headerlink" title="2.3选型Electron的质疑"></a><strong>2.3选型Electron的质疑</strong></h3><p>技术上的另一大挑战便是外界对于 QQ 桌面端使用 Electron 的质疑，尤其是内存方面。</p>
+<p>外界有些用户在没有使用和分析的情况下对此发表一些夸大和否定的言论，也确实给 QQ 技术团队带来不小压力，但他们却始终坚定选型方向，也相信其中的问题可以被攻克和解决。</p>
+<h2 id="3、为何选择Electron而非纯Native技术栈？"><a href="#3、为何选择Electron而非纯Native技术栈？" class="headerlink" title="3、为何选择Electron而非纯Native技术栈？"></a><strong>3、为何选择Electron而非<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%BA%AFNative%E6%8A%80%E6%9C%AF%E6%A0%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">纯Native技术栈</a>？</strong></h2><h3 id="3-1为什么Windows端不用原生实现？"><a href="#3-1为什么Windows端不用原生实现？" class="headerlink" title="3.1为什么Windows端不用原生实现？"></a><strong>3.1为什么Windows端不用原生实现？</strong></h3><p>确实当时有很多人在问，<strong>为什么 Windows 不用原生去实现？为什么不用 Qt？</strong></p>
+<p><strong>首先：</strong>不太想和以前一样，Windows、Mac OS、Linux 三端各由一个团队分开负责。在国内这种人才环境里面，相关的纯原生的开发人员其实非常难招了，桌面端的人才稀缺，同时也投入比较大。</p>
+<p>而对于 Qt 技术栈，他们首先考虑的其实还是人才的问题，国内熟练 Qt 技术栈的人非常少。如果对这个框架不了解，使用它反而是一个<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%B4%9F%E5%90%91%E4%BD%9C%E7%94%A8&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">负向作用</a>。</p>
+<p>至于微软的 Webview2，从本质上讲，Webview2 和 Electron 并没有太大的区别，只是相对在其中打包了一些微软自身的优化措施，其他方面也不是很完善，而且还无法跨平台。虽然内存方面相较于 Electron 做了更多的优化。但据了解，比如<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%BE%AE%E8%BD%AF%20Teams&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">微软 Teams</a> 也没有完全切到 Webview2。并且由于它没有开源，因此也没有办法基于 Webview2 做<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%AE%9A%E5%88%B6%E4%BC%98%E5%8C%96&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">定制优化</a>。</p>
+<p>包括 Flutter，QQ 团队表示他们当时也有过调研。他们放弃的一个原因是 Flutter 在桌面端的完善程度并不高，也担心标准化的问题。虽然当前 Flutter 非常流行，但谁也说不好这是不是“2015 年的 React Native”。大家担心随着时间推移，这套技术可能会失去维护支持，因为本身 Google 使用 Flutter 的占比也比较小。</p>
+<p>“虽然它很热，但我们历史上踩过了很多很多<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E9%9D%9E%E6%A0%87%E5%87%86%E5%8C%96&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">非标准化</a>的坑，一旦某个技术栈热度一过、维护力度不够，它就会成为全新的负债，做选型时必然也是避免再有类似经历。”</p>
+<h3 id="3-2选择Electron的几个考量"><a href="#3-2选择Electron的几个考量" class="headerlink" title="3.2选择Electron的几个考量"></a><strong>3.2选择Electron的几个考量</strong></h3><p><img src="https://pic1.zhimg.com/80/v2-1d3e983ab27f7078b98f6b9a6e1972e3_1440w.webp?source=1940ef5c"></p>
+<p>至于为什么最后选择 Electron，QQ 技术团队表示主要是基于以下几个考量。</p>
+<p><strong>_1）_首先最看重的是框架成熟度和技术栈的标准化：</strong></p>
+<p>Electron 基于 Web 技术栈，有足够低的上手和使用成本，不需要为了使用框架本身，还需要投入额外巨大人力成本去做基建和周边工具链的建设，以前在 RN、Flutter 的实践上都有类似的情况。而使用 Electron，现有的 Web 前端的大部分基建都可以直接复用，而且使用 Web 开发 UI 的效率，在主流技术栈里算是很高的了。至于迭代效率我觉得从新版桌面 QQ 功能的迭代速度就可以证明，这放在以前是完全办不到的。</p>
+<p>另外由于 Web 技术栈是标准化的，假如 Electron 修改<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%BC%80%E6%BA%90%E5%8D%8F%E8%AE%AE&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">开源协议</a>或者要闭源了，他们也能很方便的去写出一套类似的框架。只不过现在已经有开源的了，没必要再去重复建设一个。而且随着 Web 标准长久发展，Web 技术栈也不会有大的问题，而且还会越来越好。</p>
+<p><strong>_2）_其次是技术经验及人才储备：</strong></p>
+<p>技术选型是否适合当前团队也是一个很重要的考虑点，团队是否有相关的技术积累，是否有人才储备来持续投入这个技术栈。</p>
+<p>Qt 的确在性能上是一个很好的选择，但目前团队对 Qt 没有太多积累，基建基本没有，而且相关人才其实比较匮乏，招聘就更难了。</p>
+<p>而当前 QQ 技术团队 Web 前端团队还是有比较多的积累，在 QQ 频道项目中，也完整验证了 Electron 的技术可行性。</p>
+<p><strong>_3）_最后就是 Electron 具备的桌面端跨平台的优势：</strong></p>
+<p>但 QQ NT 架构并不是仅指 Electron，Electron 主要是作为 UI 跨平台的框架，只是占比很小的一部分，并且 QQ 桌面端不是全部用 Electron 实现，QQ NT 最核心的部分还是 QQ 底层通用抽象的模块，称之为 NT 内核，包括核心登录、消息系统、关系链、富媒体、<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E9%95%BF%E8%BF%9E%E6%8E%A5&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">长连接</a>、数据库等等模块，完全用 C++ 实现，全平台通用。因此底层是完全跨平台的架构，而 Electron 只是上层桌面端 UI 跨平台较薄的一层。</p>
+<p>“其实我们当时选型的时候，也的确看得到大家对 Electron 的评价褒贬不一，但我们还是有信心去解决这个问题，前期也做了一些技术的 Demo 和预研。实际上 Electron 并没有糟糕到这个地步。我们觉得可能是国内很多没有用过 Electron 的开发者，对这个框架有些忌惮。其实你到 Electron 的网站去看，还是有非常多国内外的亿级 DAU 产品都使用 Electron 框架。目前这几年主流的桌面端应用基本都选择了 Electron，如 Visual Studio Code、Discord、Slack、Skype、Whatsapp、Figma 等等，新的应用基本上也是首选 Electron，版本的迭代速度和社区氛围都很在线。”</p>
+<p>“我们觉得不需要单纯因为口碑问题，就对这个选型没有了期待。还是要从实际出发，哪种技术栈适合你的产品，看看到底能不能有技术实力去把这个事情搞定。”</p>
+<h2 id="4、如何有效控制Electron的内存占用？"><a href="#4、如何有效控制Electron的内存占用？" class="headerlink" title="4、如何有效控制Electron的内存占用？"></a><strong>4、如何有效控制Electron的内存占用？</strong></h2><p>外界之所以会觉得 Electron 内存占用高，是因为其本身是一个多进程的架构，主进程基于 Node.js, 而每个窗口都对应一个<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%B8%B2%E6%9F%93%E8%BF%9B%E7%A8%8B&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">渲染进程</a>以及 V8 实例。可以说从技术框架层面上，上手写代码很容易，但不容易去管控它的内存。</p>
+<p><strong>QQ 技术团队认为：</strong>Electron 的开发者更多的是前端的开发者，可能在思维上没有去考虑怎么在这样一套技术框架里，去对内存数据进行管理和管控。开发者需要从前端开发者的思维，转变为客户端开发者的思维。</p>
+<p><strong>综合来看：</strong>对内存的看法其实不完全是 Electron 的技术框架所导致的，更多的是门槛上、开发思维上，导致内存没有得到很好的关注和优化。其实最简单的 Electron 应用大概也就只有几十兆的内存占用。因为前端原本更多还是停留在开发即用即走的 Web 站点，很少实现一个超大客户端，缺乏控制内存的经验，所以面对 QQ 这么大一个产品的时候，你就必须非常在意内存的使用和管控。</p>
+<p><strong>至于<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E4%BC%98%E5%8C%96%E5%86%85%E5%AD%98&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">优化内存</a>的突破口，可以说是从各个层面：</strong>从消息的链路中的每条消息的收发上，数据是怎么管理，包括像窗口及会话的管理，都得精打细算，也会做一些<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%95%B0%E6%8D%AE%E6%9C%AC%E5%9C%B0%E5%8C%96&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">数据本地化</a>和一些机制的按需加载，包括渲染上他们也提出一个根本的原则：“要做到所见才占用”，既我们看到的内容才占用这一部分内存，没看到和用不到的任何场景的内存就不应该再占用，通过各种方式来去让内存达到一个设定的目标。</p>
+<p>他们也使用了不同维度的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%86%85%E5%AD%98%E5%88%86%E6%9E%90&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">内存分析</a>工具，从 V8 引擎到进程，再到整个<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">应用程序</a>，打通整个链路进行多角度的细节分析，以此来定位内存使用的瓶颈。之后采取一系列的针对性优化策略，包括<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%BC%93%E5%AD%98%E7%AD%96%E7%95%A5&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">缓存策略</a>、按需加载、<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E4%BC%98%E9%9B%85%E9%99%8D%E7%BA%A7&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">优雅降级</a>等，同时使用线上监控、<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E8%87%AA%E5%8A%A8%E5%8C%96%E6%B5%8B%E8%AF%95&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">自动化测试</a>手段，包括借助开发框架、工具建设、代码审查等，来阻止性能退化。（更多细节可以参看技术文章：《<a href="https://link.zhihu.com/?target=http://www.52im.net/%23">IM跨平台技术学习(九)：全面解密新QQ桌面版的Electron内存占用优化</a>》）</p>
+<p><img src="https://picx.zhimg.com/80/v2-d90d03e280a3a9a97c300efe946a66b1_1440w.webp?source=1940ef5c"></p>
+<p><strong>经过一系列<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%BB%84%E5%90%88%E4%BC%98%E5%8C%96&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">组合优化</a>之后：</strong>QQ 的内存在长时间挂机的条件下，平均稳定在 220M 左右。“现在优化还是不错的，比老版本要好很多。我们认为这个难题还是可以被很好的攻克，内存并不是大家认为的这么不可控，但是也需要团队去花费相当精力去探索和实践，才能去把内存控制到一个比较理想的状态。”</p>
+<h2 id="5、未来展望"><a href="#5、未来展望" class="headerlink" title="5、未来展望"></a><strong>5、未来展望</strong></h2><p>目前 QQ 的前端团队作为一个公线团队，不仅负责桌面 QQ 的研发，还有 QQ 基础运营、QQ 空间以及基于 QQ 生态的创新项目研发，有比较多的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%BA%BF%E4%B8%8A%E9%A1%B9%E7%9B%AE&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">线上项目</a>的开发与维护和内部研效工具的建设。涉及的技术栈，包括 H5、Electron、Cocos、<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%B0%8F%E7%A8%8B%E5%BA%8F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">小程序</a>、WebGL、WebAssembly、WebRTC 等。他们也表示会继续夯实这些技术，同时也不断地打破立下的性能目标，希望让桌面 QQ 覆盖更多平台。</p>
+<p><strong>他们也正在积极拥抱 AI：</strong>让 AI 在质量和效率上辅助日常开发。比如：<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%89%8D%E7%AB%AF%E8%AE%BE%E8%AE%A1%E7%A8%BF&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">前端设计稿</a>还原，之前更多是一个耗时的体力活，D2C 是 QQ 前端一直探索的方向，之前使用纯规则转换生成代码，在视觉还原上效果还不错，但是代码可读性和可维护性不能很好的满足预期，所以除了一些日抛型的运营活动有些使用之外，比较难扩大成果。现在 D2C 结合大模型，生成的代码质量高了很多，也能很方便的将代码与 UI <a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%BB%84%E4%BB%B6%E5%BA%93&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">组件库</a>做映射，达到可以在核心业务中高效使用，达到通过 AI 提升研发效率的目的。针对一些无设计稿的管理平台开发，使用 P2C 提效，目前也有了一些不错的案例。</p>
+<p><strong>另外：</strong>QQ 技术团队也在积极探索 AI 更广阔的应用场景，比如<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E4%BB%A3%E7%A0%81%E8%AF%84%E5%AE%A1&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">代码评审</a>，基本的 Lint 检检是难以实现的，但将已经掌握的<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">内存泄漏</a>模式通过规则的形式给到 AI，可以很方便地给开发同学一些不错的建议，为性能看家护院提供多一道保障。</p>
+<h2 id="6、写在最后"><a href="#6、写在最后" class="headerlink" title="6、写在最后"></a><strong>6、写在最后</strong></h2><p>QQ NT 项目于 2022 年 3 月份启动，Mac OS QQ 花了该团队 3 个月的开发时间，9 月份上架 App Store，迭代了几个版本后同步开始开发 Linux QQ，并于这一年的最后一天上架各 Linux 应用市场，作为给 Linux 用户的一份特殊的新年礼物。2023 年 QQ 团队开始去聚焦做 Windows QQ NT 的开发，7 月正式上架应用市场和官网。同时移动端的 QQ 从 2022 年的 Q4 开始开发，也已经完成了全量升级和发布。</p>
+<p><strong>另外：</strong>桌面 QQ 也是在 NT 版本中第一次支持 64 位，这需要将音视频、安全、字节码、<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%9B%BE%E5%BD%A2%E5%BA%93&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">图形库</a>等 C++ 模块，包括 Electron 框架都重新进行编译，花费了比较大的工作量。但在 64 位系统上，QQ 从此便不再需要以 32 位应用的方式通过额外的兼容和转换来运行。毕竟额外操作会增加开销，导致性能下降。</p>
+<p><strong>至此：</strong>QQ 实现了多个<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E7%B3%BB%E7%BB%9F%E5%B9%B3%E5%8F%B0&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">系统平台</a>之间架构的统一。而团队的未来规划还是不断地打破性能目标，并覆盖更多平台，同时探索更多提升研发效率的办法，加快研发速度。</p>
+<p>腾讯 QQ 用跨平台 Electron 取代之前<a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E5%8E%9F%E7%94%9F%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">原生应用程序</a>的开发模式，这一举动引发的反响确实巨大。但我们也能看出，不同于小型产品团队，在大公司里具有一定规模的产品组织架构之下，快速满足用户需求，并逐渐需要为第三、第四乃至第五种运行平台提供支持时，保持一致性和协调性并不是想象中的那么容易。而缓慢而低效，最终会令你输掉比赛。</p>
+<p>不管使用什么跨平台开发框架，都要去选择最合适自己团队的，也因此在 Web <a target="_blank" rel="noopener" href="https://www.zhihu.com/search?q=%E6%A0%87%E5%87%86%E6%8A%80%E6%9C%AF%E6%A0%88&search_source=Entity&hybrid_search_source=Entity&hybrid_search_extra=%7B%22sourceType%22:%22answer%22,%22sourceId%22:3219750217%7D">标准技术栈</a>上有丰富积累的 QQ 团队才会选择 Electron。并且我们认为没有人真正讨厌 Electron，只是我们对 QQ，对国内 App 寄予了非常高的期盼。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/">https://xxminxx.love/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/12/29/haystack%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%93%E4%BD%BF%E7%94%A8/" title="haystack大模型库使用"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">haystack大模型库使用</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">一些常见的人工智能技术和算法</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|少量Go<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">26</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">13</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%B8%80%E4%BA%9B%E6%9C%89%E5%85%B3Web%E5%BC%80%E5%8F%91%E7%9A%84%E5%B8%B8%E8%AF%86"><span class="toc-number">1.</span> <span class="toc-text">一、一些有关Web开发的常识</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%A5%BD%E6%96%87%E5%88%86%E4%BA%AB"><span class="toc-number">2.</span> <span class="toc-text">二、好文分享</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1%E3%80%81%E8%80%81QQ%E6%A1%8C%E9%9D%A2%E7%89%88%E7%9A%84%E6%8A%80%E6%9C%AF%E5%80%BA"><span class="toc-number">2.1.</span> <span class="toc-text">1、老QQ桌面版的技术债</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-1%E5%A4%9A%E7%AB%AF%E4%BB%A3%E7%A0%81%E4%B8%8D%E7%BB%9F%E4%B8%80"><span class="toc-number">2.1.1.</span> <span class="toc-text">1.1多端代码不统一</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-2%E5%A4%9A%E7%AB%AF%E5%8A%9F%E8%83%BD%E4%B8%8D%E4%B8%80%E8%87%B4"><span class="toc-number">2.1.2.</span> <span class="toc-text">1.2多端功能不一致</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#1-3QQ-NT-%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%AF%9E%E7%94%9F"><span class="toc-number">2.1.3.</span> <span class="toc-text">1.3QQ NT 项目的诞生</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2%E3%80%81%E6%96%B0QQ%E6%A1%8C%E9%9D%A2%E7%89%88%E9%87%8D%E6%9E%84%E7%9A%84%E6%8A%80%E6%9C%AF%E6%8C%91%E6%88%98"><span class="toc-number">2.2.</span> <span class="toc-text">2、新QQ桌面版重构的技术挑战</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#2-1%E4%B8%9A%E5%8A%A1%E5%8A%9F%E8%83%BD%E4%B8%8A%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">2.2.1.</span> <span class="toc-text">2.1业务功能上的挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-2%E6%8A%80%E6%9C%AF%E9%87%8D%E6%9E%84%E4%B8%8A%E7%9A%84%E6%8C%91%E6%88%98"><span class="toc-number">2.2.2.</span> <span class="toc-text">2.2技术重构上的挑战</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-3%E9%80%89%E5%9E%8BElectron%E7%9A%84%E8%B4%A8%E7%96%91"><span class="toc-number">2.2.3.</span> <span class="toc-text">2.3选型Electron的质疑</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3%E3%80%81%E4%B8%BA%E4%BD%95%E9%80%89%E6%8B%A9Electron%E8%80%8C%E9%9D%9E%E7%BA%AFNative%E6%8A%80%E6%9C%AF%E6%A0%88%EF%BC%9F"><span class="toc-number">2.3.</span> <span class="toc-text">3、为何选择Electron而非纯Native技术栈？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#3-1%E4%B8%BA%E4%BB%80%E4%B9%88Windows%E7%AB%AF%E4%B8%8D%E7%94%A8%E5%8E%9F%E7%94%9F%E5%AE%9E%E7%8E%B0%EF%BC%9F"><span class="toc-number">2.3.1.</span> <span class="toc-text">3.1为什么Windows端不用原生实现？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-2%E9%80%89%E6%8B%A9Electron%E7%9A%84%E5%87%A0%E4%B8%AA%E8%80%83%E9%87%8F"><span class="toc-number">2.3.2.</span> <span class="toc-text">3.2选择Electron的几个考量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4%E3%80%81%E5%A6%82%E4%BD%95%E6%9C%89%E6%95%88%E6%8E%A7%E5%88%B6Electron%E7%9A%84%E5%86%85%E5%AD%98%E5%8D%A0%E7%94%A8%EF%BC%9F"><span class="toc-number">2.4.</span> <span class="toc-text">4、如何有效控制Electron的内存占用？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#5%E3%80%81%E6%9C%AA%E6%9D%A5%E5%B1%95%E6%9C%9B"><span class="toc-number">2.5.</span> <span class="toc-text">5、未来展望</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#6%E3%80%81%E5%86%99%E5%9C%A8%E6%9C%80%E5%90%8E"><span class="toc-number">2.6.</span> <span class="toc-text">6、写在最后</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法">一些常见的人工智能技术和算法</a><time datetime="2024-03-17T11:17:42.000Z" title="发表于 2024-03-17 19:17:42">2024-03-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/" title="Web开发、桌面应用开发选型和Electron">Web开发、桌面应用开发选型和Electron</a><time datetime="2024-03-17T11:08:37.000Z" title="发表于 2024-03-17 19:08:37">2024-03-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/29/haystack%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%93%E4%BD%BF%E7%94%A8/" title="haystack大模型库使用">haystack大模型库使用</a><time datetime="2023-12-29T02:20:12.000Z" title="发表于 2023-12-29 10:20:12">2023-12-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/19/%E5%8F%8D%E7%88%AC%E9%80%9A%E8%BF%87/" title="反爬通过">反爬通过</a><time datetime="2023-11-19T09:32:09.000Z" title="发表于 2023-11-19 17:32:09">2023-11-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/19/ffmpeg%E7%9A%84%E4%BD%BF%E7%94%A8/" title="ffmpeg的使用">ffmpeg的使用</a><time datetime="2023-11-19T08:03:07.000Z" title="发表于 2023-11-19 16:03:07">2023-11-19</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>function loadValine () {
+  function initValine () {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  if (typeof Valine === 'function') initValine() 
+  else getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js').then(initValine)
+}
+
+if ('Valine' === 'Valine' || !false) {
+  if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+  else setTimeout(loadValine, 0)
+} else {
+  function loadOtherComment () {
+    loadValine()
+  }
+}</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener scroll 
+  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
+  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+
+  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', (e) => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
