@@ -9,13 +9,13 @@
 <meta property="article:author" content="Min">
 <meta property="article:tag" content="Min&#39;s blog.">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
   root: '/',
   algolia: undefined,
   localSearch: undefined,
   translate: undefined,
   noticeOutdate: undefined,
-  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
   copy: {
     success: '复制成功',
     error: '复制错误',
@@ -36,11 +36,9 @@
   copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
   lightbox: 'fancybox',
   Snackbar: undefined,
-  source: {
-    justifiedGallery: {
-      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
-      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
-    }
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
   },
   isPhotoFigcaption: false,
   islazyload: false,
@@ -56,85 +54,78 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2024-03-20 10:11:47'
-}</script><noscript><style type="text/css">
-  #nav {
-    opacity: 1
-  }
-  .justified-gallery img {
-    opacity: 1
-  }
-
-  #recent-posts time,
-  #post-meta time {
-    display: inline !important
-  }
-</style></noscript><script>(win=>{
-    win.saveToLocal = {
-      set: function setWithExpiry(key, value, ttl) {
-        if (ttl === 0) return
-        const now = new Date()
-        const expiryDay = ttl * 86400000
-        const item = {
-          value: value,
-          expiry: now.getTime() + expiryDay,
+  postUpdate: '2024-03-22 23:49:57'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
         }
-        localStorage.setItem(key, JSON.stringify(item))
-      },
-
-      get: function getWithExpiry(key) {
-        const itemStr = localStorage.getItem(key)
-
-        if (!itemStr) {
-          return undefined
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
         }
-        const item = JSON.parse(itemStr)
-        const now = new Date()
 
-        if (now.getTime() > item.expiry) {
-          localStorage.removeItem(key)
-          return undefined
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
         }
-        return item.value
-      }
-    }
-  
-    win.getScript = url => new Promise((resolve, reject) => {
-      const script = document.createElement('script')
-      script.src = url
-      script.async = true
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    })
-  
-    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = url
-      if (id) link.id = id
-      link.onerror = reject
-      link.onload = link.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        link.onload = link.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(link)
-    })
-  
-      win.activateDarkMode = function () {
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
         document.documentElement.setAttribute('data-theme', 'dark')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
         }
       }
-      win.activateLightMode = function () {
+      win.activateLightMode = () => {
         document.documentElement.setAttribute('data-theme', 'light')
         if (document.querySelector('meta[name="theme-color"]') !== null) {
           document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
@@ -142,9 +133,9 @@
       }
       const t = saveToLocal.get('theme')
     
-          if (t === 'dark') activateDarkMode()
-          else if (t === 'light') activateLightMode()
-        
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
       const asideStatus = saveToLocal.get('aside-status')
       if (asideStatus !== undefined) {
         if (asideStatus === 'hide') {
@@ -154,13 +145,22 @@
         }
       }
     
-    const detectApple = () => {
-      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
-        document.documentElement.classList.add('apple')
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
       }
-    }
-    detectApple()
-    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/5EbUf3XWGkMjTK9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Min的博客</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/19/fastapi%E9%AB%98%E6%80%A7%E8%83%BD%E5%BC%82%E6%AD%A5python%E5%90%8E%E7%AB%AF%E6%A1%86%E6%9E%B6/" title="fastapi高性能异步python后端框架">fastapi高性能异步python后端框架</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-19T13:56:15.000Z" title="发表于 2024-03-19 21:56:15">2024-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></span></div><div class="content">Documentation: https://fastapi.tiangolo.com
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="full_page" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/5EbUf3XWGkMjTK9.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="site-info"><h1 id="site-title">Min的博客</h1></div><div id="scroll-down"><i class="fas fa-angle-down scroll-down-effects"></i></div></header><main class="layout" id="content-inner"><div class="recent-posts" id="recent-posts"><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/22/Ubuntu%E5%8E%8B%E7%BC%A9/" title="Ubuntu压缩">Ubuntu压缩</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-22T15:46:28.000Z" title="发表于 2024-03-22 23:46:28">2024-03-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a></span></div><div class="content">最近在两台Ubuntu上压缩超过4G的程序都卡得死死的，用的是tar，换个方法也是，特别是使用GUI右键点击的压缩更慢，问题出在哪里？
+首先，我们需要搞清楚GUI右键单击压缩会执行什么？？没有找到相关资料，可以根据压缩文件格式后缀大致推断，无非是-xzf之类的,我感觉好像默认执行的命令根据不同系统版本有在变。
+其次，如何选压缩格式？
+zip: 这是最流行的归档文件格式之一，它广泛被使用因为它的兼容性好，可以在多个操作系统之间轻松分享和解压。
+tar.gz: 这是一种在Linux系统中常见的格式，它结合了tar（用于打包）和gzip（用于压缩）。
+tar.xz: 这种格式使用了比gzip更高效的XZ压缩算法，通常可以提供更好的压缩率。XZ慢，压缩后文件小；GZ快，压缩后文件大。
+
+常用压缩命令：解压、打包、压缩用man tar就看到了，自己看吧
+更快速的压缩：PigZ压缩速度太慢推荐我PigZ，此外建议我查看系统日志来检查问题dmesg。pigz是GZIP的并行版，它的全称是Parallel Implementation of GZip，特点是多线程。例如，pigz压缩命令：
+1tar  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/19/fastapi%E9%AB%98%E6%80%A7%E8%83%BD%E5%BC%82%E6%AD%A5python%E5%90%8E%E7%AB%AF%E6%A1%86%E6%9E%B6/" title="fastapi高性能异步python后端框架">fastapi高性能异步python后端框架</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-19T13:56:15.000Z" title="发表于 2024-03-19 21:56:15">2024-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%90%8E%E7%AB%AF/">后端</a></span></div><div class="content">Documentation: https://fastapi.tiangolo.com
 Source Code: https://github.com/tiangolo/fastapi
 
 FastAPI is a modern, fast (high-performance), web framework for building APIs with Python 3.8+ based on standard Python type hints.
@@ -168,7 +168,15 @@ The key features are:
 
 Fast: Very high performance, on par with NodeJS and Go (thanks to Starlette and Pydantic). One of the fastest Python frameworks available.
 Fast to code: Increase the speed to develop features by about 200% to 300%. *
-Fewer bugs: Reduce about 40% of hu ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法">一些常见的人工智能技术和算法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-17T11:17:42.000Z" title="发表于 2024-03-17 19:17:42">2024-03-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></span></div><div class="content">此页仅分享人工智能知识，丰富中文互联网内容以供查阅和复习。其实我对这个分法和其中的方法通用性有些不赞同，不过用来借鉴也还将就。讲法很过时，不过比较经典
+Fewer bugs: Reduce about 40% of hu ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/19/Systemctl%E5%91%BD%E4%BB%A4/" title="Systemctl命令">Systemctl命令</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-19T13:25:19.000Z" title="发表于 2024-03-19 21:25:19">2024-03-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/linux/">linux</a></span></div><div class="content">Systemctl是System control的缩写，是systemd最重要命令，systemd是 Linux 系统中负责初始化和管理服务的程序
+1.   可用命令通常systemctl都需要使用root权限，即加sudo；systemctl后面跟的服务文件即XXX.service一般在文件夹/etc/systemd/system/下面，个人用户文件常在 ~/.config/systemd/user/文件夹下
+
+systemctl restart [xxx.service]: 重启服务
+systemctl start [xxx.service]: 开启服务
+systemctl status [xxx.service]:查看服务状态
+systemctl reload [xxx.service]：重新加载服务的配置，且不重启，例如ssh，例如：1systemctl reload sshd
+systemctl enable [xxx.service]:开机自启动，例如：1systemctl enable httpd.service
+下面简单说说其它的命令：  disable时取消引导时启用 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法">一些常见的人工智能技术和算法</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-17T11:17:42.000Z" title="发表于 2024-03-17 19:17:42">2024-03-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/">人工智能</a></span></div><div class="content">此页仅分享人工智能知识，丰富中文互联网内容以供查阅和复习。其实我对这个分法和其中的方法通用性有些不赞同，不过用来借鉴也还将就。讲法很过时，不过比较经典
 模糊计算算法模糊集、模糊关系、模糊运算、模糊推理、模糊控制,遍地开花
 
 
@@ -283,14 +291,34 @@ onmouseover
 2
 
 
-onmous ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/29/haystack%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%93%E4%BD%BF%E7%94%A8/" title="haystack大模型库使用">haystack大模型库使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-29T02:20:12.000Z" title="发表于 2023-12-29 10:20:12">2023-12-29</time></span></div><div class="content">安装安装方法1234conda create -n haystack python==3.8 -yconda activate haystack # 安装数据集库,便于下载数据集pip install datasets&gt;=2.6.1
+onmous ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/03/10/react%E4%BB%A5%E5%8F%8Aant/" title="react以及ant">react以及ant</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-03-10T11:24:56.000Z" title="发表于 2024-03-10 19:24:56">2024-03-10</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="content">类似npm create vue@latest是脚手架工具，虽然很方便，但容易导致版本不一致。因此，有时创建文件，比如react，只需要创建html文件，然后在文件里导入,对应的js文件，即js库，然后直接写react代码即可。
+antd可以用使用npm安装，
+1npm install antd --save
+也可以使用“浏览器导入”。
+React包管理react默认使用yarn进行包管理，但也可用npm
+yarn安装
+1npm i -g yarn
+
+yarn测试
+1yarn -v
+
+yarn初始化
+123yarn init -yyarn add -D XXX #安装某个库，类似npm i npx create-react-app &lt;项目名&gt;
+
+可以使用next.js等react框架结合ant组件，参照react+ant，但是这里不用它，而是使用简单的create-react-app:
+Create React App是一个React官方提供的脚手架工具，用于快速创建React应用程序。
+react学习使用npx create-react-app antd-demo与cre ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2024/02/28/AutoTools%E5%92%8Cmakefile/" title="AutoTools和makefile">AutoTools和makefile</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2024-02-28T11:09:35.000Z" title="发表于 2024-02-28 19:09:35">2024-02-28</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tools/">Tools</a></span></div><div class="content">Automake和Autoconf automake是由Perl語言所写的，必須和GNU autoconf一并使用，它用于从makefile.am文件生成 Makefile.in。Automake的作用是避免繁杂的makefile编写和适配，而将负担转移给Automake来生成跨平台的makefile。
+一个makefile.am文件包含了多个make的变量定义。Automake做了一些项目的限制：1.必须使用Autoconf 2.configure.ac有一些写法限制。用Automake生成makefile.in需要Perl语言支持，但是直接从makefile构建项目不需要。
+一个常见的automake项目包含以下文件： configure, configure.ac, Makefile.in, Makefile.am, aclocal.m4, …,
+
+教程：Autotools Tutorial    makefile经常需要调整，因此诞生了configure脚本，为了更方便的生成makefile和configure，分别诞生了automake和autoconf，一个经典的GNU b ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/12/29/haystack%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%93%E4%BD%BF%E7%94%A8/" title="haystack大模型库使用">haystack大模型库使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-12-29T02:20:12.000Z" title="发表于 2023-12-29 10:20:12">2023-12-29</time></span></div><div class="content">安装安装方法1234conda create -n haystack python==3.8 -yconda activate haystack # 安装数据集库,便于下载数据集pip install datasets&gt;=2.6.1
 最小安装
 1pip install farm-haystack
 最大安装
 1pip install farm-haystack[full]
 
 
-安装问题:1 faiss失败123456789101112131415161718192021  Building wheel for faiss-cpu (pyproject.toml) ... error  error: subprocess-exited-with-error  × Building wheel for faiss-cpu (pyproject.toml) did not run successfully.  │ exit code: 1  ╰─&gt; [8 lines of output]      running bdist_wheel      running build     ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/19/%E5%8F%8D%E7%88%AC%E9%80%9A%E8%BF%87/" title="反爬通过">反爬通过</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-19T09:32:09.000Z" title="发表于 2023-11-19 17:32:09">2023-11-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/%E7%88%AC%E8%99%AB/Python/">Python</a></span></div><div class="content">anti-bot bypassing，
+安装问题:1 faiss失败123456789101112131415161718192021  Building wheel for faiss-cpu (pyproject.toml) ... error  error: subprocess-exited-with-error  × Building wheel for faiss-cpu (pyproject.toml) did not run successfully.  │ exit code: 1  ╰─&gt; [8 lines of output]      running bdist_wheel      running build     ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/19/%E5%8F%8D%E7%88%AC%E9%80%9A%E8%BF%87/" title="反爬通过">反爬通过</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-19T09:32:09.000Z" title="发表于 2023-11-19 17:32:09">2023-11-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%88%AC%E8%99%AB/">爬虫</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/%E7%88%AC%E8%99%AB/Python/">Python</a></span></div><div class="content">anti-bot bypassing，
 测试反爬通过手段nowSecure
 spiderbuf
 测试playwright会被nowSecure检测吗codegen过不了“确定你是真人”
@@ -301,7 +329,7 @@ spiderbuf
 12import timetime.sleep(1)
 身份反爬行为特征反爬数据加密反爬防盗链盗链是指在自己的页面上展示一些其它服务器上的内容，使用别人的图片、 音乐、视频、软件等资源。通过盗链可以减轻自己服务器的负担，增加它人服务器带宽等费用。
 防盗链通过Refer或者签名检查阻止盗链行为，如果不是跳转而是直接打开会显示403即无权限，有时我们单独打开网页上图片发生403就是这个情况。
- ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/19/ffmpeg%E7%9A%84%E4%BD%BF%E7%94%A8/" title="ffmpeg的使用">ffmpeg的使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-19T08:03:07.000Z" title="发表于 2023-11-19 16:03:07">2023-11-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tools/">Tools</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Tools/%E7%88%AC%E8%99%AB/">爬虫</a></span></div><div class="content">(TODO)
+ ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/19/ffmpeg%E7%9A%84%E4%BD%BF%E7%94%A8/" title="ffmpeg的使用">ffmpeg的使用</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-19T08:03:07.000Z" title="发表于 2023-11-19 16:03:07">2023-11-19</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tools/">Tools</a><i class="fas fa-angle-right article-meta-link"></i><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tools/%E7%88%AC%E8%99%AB/">爬虫</a></span></div><div class="content">(TODO)
 下载步骤
 
 官网下载二进制包
@@ -316,40 +344,15 @@ spiderbuf
 conda 也可以
 测试ffmpeg-python使用ffmpeg的使用Documentation (ffmpeg.org)
 合并视频和音频12ffmpeg -i 视频文件 -i 音频文件 -c:v copy -c:a aac -strict experimental output.mp4ffmpeg -i video.mp4 -i audio.mp4 -c copy output.mp4
-合并ts视频1f ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/18/repr%E5%92%8Cstr/" title="repr和str">repr和str</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-18T09:05:51.000Z" title="发表于 2023-11-18 17:05:51">2023-11-18</time></span></div><div class="content">repr() 和 str() 都是 Python 中的内置函数，它们用于将对象转化为字符串。但两者的应用场景和返回结果有所不同。
-str() 给用户看；repr给开发者看，更原始，通常在交互式环境下或者使用repr()函数时也会被调用，利于调试。
-自写的重构方法__repr__和__str__完全取决于自己怎么写
-123456789101112131415s=&quot;物品\t单价\t数量\n包子\t1\t2&quot;m=&#x27;123&#x27;print(s)print(repr(s))print(m)print(repr(m))# 物品    单价    数量# 包子    1       2# &#x27;物品\t单价\t数量\n包子\t1\t2&#x27;# 123# &#x27;123&#x27;
-可以看到，repr自动不转义，表现了字符串的类型，保持原始
-</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/15/requests%E5%BA%93%E5%92%8Cpython%E4%B8%ADXPath/" title="requests库和python中XPath">requests库和python中XPath</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-15T08:20:17.000Z" title="发表于 2023-11-15 16:20:17">2023-11-15</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tools/">Tools</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Tools/Python/">Python</a><i class="fas fa-angle-right article-meta-link"></i><a class="article-meta__categories" href="/categories/Tools/Python/%E7%88%AC%E8%99%AB/">爬虫</a></span></div><div class="content">典例
-1234567891011121314151617import requestsurl=&#x27;www.example.com&#x27;headers = &#123;    &#x27;User-Agent&#x27;:&#x27;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36 Edg/119.0.0.0&#x27;,    &#x27;referer&#x27;:url&#125;with requests.get(url=url,headers = headers) as response:     if not response.ok:        print(&#x27;request error!&#x27;)    else:        data2 = response.text        print(data2)        try:            data  =  ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/14/%E9%87%8D%E6%8B%BEvim/" title="重拾vim">重拾vim</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-14T09:17:26.000Z" title="发表于 2023-11-14 17:17:26">2023-11-14</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Tools/">Tools</a></span></div><div class="content">vimvim是编辑器的一把利器，但是因为新手用起来确实不太方便，要记很多指令，而且还有经常搞不清楚的几种编辑模式，但是深入过后确实有时觉得好用。
-vim或者vi不依赖于编辑器，vscode等IDE也有对应的插件
-大概在几年前接触了，中间因为各种原因没有用，现在编程代码量要求越来越高，于是决定重新拾起来,可惜之前的笔记不太好找了，于是重新写在下面。
-用不用vim取决于代码量、兴趣和记忆
-四种模式和模式切换在 Vim 中，有以下几种模式：
-
-普通模式（Normal mode）：这是 Vim 默认的模式，用于输入文本和执行命令。
-插入模式（Insert mode）：在该模式下，可以输入文本并使用鼠标选择、复制和粘贴等操作。
-可视模式（Visual mode）：在该模式下，可以选择一行或多行文本进行操作。
-命令行模式（Command-line mode）：在该模式下，可以输入各种命令来控制 Vim。
-
-普通模式是最基础的模式，模式切换都要涉及普通模式，以下是在不同模式之间切换的方法：
-
-从普通模式切换到插入模式：按下 i 键。
-从插入模式切换到普通模式：按下 Esc 键。
-从普通模式切换到可视 ...</div></div></div><div class="recent-post-item"><div class="recent-post-info no-cover"><a class="article-title" href="/2023/11/09/%E6%88%91%E7%9A%84%E4%B8%AA%E6%80%A7%E5%8C%96%E6%90%9C%E7%B4%A2/" title="我的个性化搜索">我的个性化搜索</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2023-11-09T15:40:57.000Z" title="发表于 2023-11-09 23:40:57">2023-11-09</time></span></div><div class="content">https://programmablesearchengine.google.com/
-123&lt;script async src=&quot;https://cse.google.com/cse.js?cx=d53a5bff4bf734a99&quot;&gt;&lt;/script&gt;&lt;div class=&quot;gcse-search&quot;&gt;&lt;/div&gt;
-
-https://cse.google.com.hk/cse?cx=d53a5bff4bf734a99
-</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="page-number" href="/page/3/#content-inner">3</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">27</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">21</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">14</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/19/fastapi%E9%AB%98%E6%80%A7%E8%83%BD%E5%BC%82%E6%AD%A5python%E5%90%8E%E7%AB%AF%E6%A1%86%E6%9E%B6/" title="fastapi高性能异步python后端框架">fastapi高性能异步python后端框架</a><time datetime="2024-03-19T13:56:15.000Z" title="发表于 2024-03-19 21:56:15">2024-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法">一些常见的人工智能技术和算法</a><time datetime="2024-03-17T11:17:42.000Z" title="发表于 2024-03-17 19:17:42">2024-03-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/" title="Web开发、桌面应用开发选型和Electron">Web开发、桌面应用开发选型和Electron</a><time datetime="2024-03-17T11:08:37.000Z" title="发表于 2024-03-17 19:08:37">2024-03-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/12/29/haystack%E5%A4%A7%E6%A8%A1%E5%9E%8B%E5%BA%93%E4%BD%BF%E7%94%A8/" title="haystack大模型库使用">haystack大模型库使用</a><time datetime="2023-12-29T02:20:12.000Z" title="发表于 2023-12-29 10:20:12">2023-12-29</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/11/19/%E5%8F%8D%E7%88%AC%E9%80%9A%E8%BF%87/" title="反爬通过">反爬通过</a><time datetime="2023-11-19T09:32:09.000Z" title="发表于 2023-11-19 17:32:09">2023-11-19</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+合并ts视频1f ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="page-number" href="/page/3/#content-inner">3</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">30</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">22</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">15</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/22/Ubuntu%E5%8E%8B%E7%BC%A9/" title="Ubuntu压缩">Ubuntu压缩</a><time datetime="2024-03-22T15:46:28.000Z" title="发表于 2024-03-22 23:46:28">2024-03-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/19/fastapi%E9%AB%98%E6%80%A7%E8%83%BD%E5%BC%82%E6%AD%A5python%E5%90%8E%E7%AB%AF%E6%A1%86%E6%9E%B6/" title="fastapi高性能异步python后端框架">fastapi高性能异步python后端框架</a><time datetime="2024-03-19T13:56:15.000Z" title="发表于 2024-03-19 21:56:15">2024-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/19/Systemctl%E5%91%BD%E4%BB%A4/" title="Systemctl命令">Systemctl命令</a><time datetime="2024-03-19T13:25:19.000Z" title="发表于 2024-03-19 21:25:19">2024-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法">一些常见的人工智能技术和算法</a><time datetime="2024-03-17T11:17:42.000Z" title="发表于 2024-03-17 19:17:42">2024-03-17</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/Web%E5%BC%80%E5%8F%91%E3%80%81%E6%A1%8C%E9%9D%A2%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91%E9%80%89%E5%9E%8B%E5%92%8CElectron/" title="Web开发、桌面应用开发选型和Electron">Web开发、桌面应用开发选型和Electron</a><time datetime="2024-03-17T11:08:37.000Z" title="发表于 2024-03-17 19:08:37">2024-03-17</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             <a class="card-more-btn" href="/categories/" title="查看更多">
     <i class="fas fa-angle-right"></i></a>
             </div>
             <ul class="card-category-list" id="aside-cat-list">
-            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/"><span class="card-category-list-name">Tools</span><span class="card-category-list-count">6</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/python-test/"><span class="card-category-list-name">python test</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 1.1em; color: #999">函数式编程</a> <a href="/tags/requests/" style="font-size: 1.1em; color: #999">requests</a> <a href="/tags/geek/" style="font-size: 1.1em; color: #999">geek</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">工具</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">神经网络</a> <a href="/tags/LLM/" style="font-size: 1.3em; color: #99a1ac">LLM</a> <a href="/tags/vim/" style="font-size: 1.1em; color: #999">vim</a> <a href="/tags/Hexo/" style="font-size: 1.1em; color: #999">Hexo</a> <a href="/tags/git-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">git 工具</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E5%BC%B1%E6%99%BA/" style="font-size: 1.3em; color: #99a1ac">人工弱智</a> <a href="/tags/Playwright/" style="font-size: 1.1em; color: #999">Playwright</a> <a href="/tags/Python%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">Python应用</a> <a href="/tags/Python/" style="font-size: 1.5em; color: #99a9bf">Python</a> <a href="/tags/ffmpeg/" style="font-size: 1.1em; color: #999">ffmpeg</a> <a href="/tags/XPath/" style="font-size: 1.1em; color: #999">XPath</a> <a href="/tags/anti-bot-bypassing/" style="font-size: 1.1em; color: #999">anti-bot bypassing</a> <a href="/tags/Github-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">Github 工具</a> <a href="/tags/pytest/" style="font-size: 1.1em; color: #999">pytest</a> <a href="/tags/python%E8%AF%AD%E6%B3%95/" style="font-size: 1.1em; color: #999">python语法</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">深度学习</a> <a href="/tags/windows-API/" style="font-size: 1.1em; color: #999">windows API</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">12</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">27</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-09-30T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">25k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-03-20T02:11:47.692Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/5EbUf3XWGkMjTK9.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/"><span class="card-category-list-name">Tools</span><span class="card-category-list-count">7</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/python/"><span class="card-category-list-name">python</span><span class="card-category-list-count">1</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/vim/" style="font-size: 1.1em; color: #999">vim</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">深度学习</a> <a href="/tags/react-ant%E7%BB%84%E4%BB%B6/" style="font-size: 1.1em; color: #999">react ant组件</a> <a href="/tags/anti-bot-bypassing/" style="font-size: 1.1em; color: #999">anti-bot bypassing</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.3em; color: #99a1ac">工具</a> <a href="/tags/linux/" style="font-size: 1.3em; color: #99a1ac">linux</a> <a href="/tags/pytest/" style="font-size: 1.1em; color: #999">pytest</a> <a href="/tags/Playwright/" style="font-size: 1.1em; color: #999">Playwright</a> <a href="/tags/git-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">git 工具</a> <a href="/tags/Python%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">Python应用</a> <a href="/tags/ffmpeg/" style="font-size: 1.1em; color: #999">ffmpeg</a> <a href="/tags/python%E8%AF%AD%E6%B3%95/" style="font-size: 1.1em; color: #999">python语法</a> <a href="/tags/requests/" style="font-size: 1.1em; color: #999">requests</a> <a href="/tags/Python/" style="font-size: 1.5em; color: #99a9bf">Python</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">神经网络</a> <a href="/tags/XPath/" style="font-size: 1.1em; color: #999">XPath</a> <a href="/tags/windows-API/" style="font-size: 1.1em; color: #999">windows API</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 1.1em; color: #999">函数式编程</a> <a href="/tags/Github-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">Github 工具</a> <a href="/tags/%E4%BA%BA%E5%B7%A5%E5%BC%B1%E6%99%BA/" style="font-size: 1.3em; color: #99a1ac">人工弱智</a> <a href="/tags/LLM/" style="font-size: 1.3em; color: #99a1ac">LLM</a> <a href="/tags/geek/" style="font-size: 1.1em; color: #999">geek</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">6</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/11/"><span class="card-archive-list-date">十一月 2023</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/10/"><span class="card-archive-list-date">十月 2023</span><span class="card-archive-list-count">11</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">30</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-09-30T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">28k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2024-03-22T15:49:56.973Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/5EbUf3XWGkMjTK9.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
 POWERMODE.shake = false;
 POWERMODE.mobile = false;
 document.body.addEventListener('input', POWERMODE);
@@ -365,11 +368,11 @@ var pjax = new Pjax({
 
 document.addEventListener('pjax:send', function () {
 
-  // removeEventListener scroll 
-  window.tocScrollFn && window.removeEventListener('scroll', window.tocScrollFn)
-  window.scrollCollect && window.removeEventListener('scroll', scrollCollect)
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
 
-  document.getElementById('rightside').style.cssText = "opacity: ''; transform: ''"
+  document.getElementById('rightside').classList.remove('rightside-show')
   
   if (window.aplayers) {
     for (let i = 0; i < window.aplayers.length; i++) {
@@ -415,7 +418,7 @@ document.addEventListener('pjax:complete', function () {
   typeof Prism === 'object' && Prism.highlightAll()
 })
 
-document.addEventListener('pjax:error', (e) => {
+document.addEventListener('pjax:error', e => {
   if (e.request.status === 404) {
     pjax.loadUrl('/404.html')
   }
