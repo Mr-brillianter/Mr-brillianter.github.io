@@ -1,0 +1,372 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Vue-1 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="什么是Vue？Vue是JS框架，常用于Web前端，Vue代码会被编译成JS代码。 .Vue语法&#x2F;SFC一个Vue文件通常由几部分组成(这也被称为SFC 语法定义 |vuejs.org)：+	模板Template，这是前端HTML语言模板用于渲染+	脚本Script：JS脚本，用于程序运行+	风格Style:用于控制渲染风格 其它不太重要的标签还有自定义和预脚本，这些作为类似于HTML语言">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Vue-1">
+<meta property="og:url" content="https://xxminxx.love/2024/03/22/Vue-1/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="什么是Vue？Vue是JS框架，常用于Web前端，Vue代码会被编译成JS代码。 .Vue语法&#x2F;SFC一个Vue文件通常由几部分组成(这也被称为SFC 语法定义 |vuejs.org)：+	模板Template，这是前端HTML语言模板用于渲染+	脚本Script：JS脚本，用于程序运行+	风格Style:用于控制渲染风格 其它不太重要的标签还有自定义和预脚本，这些作为类似于HTML语言">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2024-03-22T11:28:24.000Z">
+<meta property="article:modified_time" content="2024-03-22T12:18:54.773Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="Vue">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2024/03/22/Vue-1/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Vue-1',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-03-22 20:18:54'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Vue-1</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-03-22T11:28:24.000Z" title="发表于 2024-03-22 19:28:24">2024-03-22</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-03-22T12:18:54.773Z" title="更新于 2024-03-22 20:18:54">2024-03-22</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/%E5%89%8D%E7%AB%AF/">前端</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>12分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Vue-1"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="什么是Vue？"><a href="#什么是Vue？" class="headerlink" title="什么是Vue？"></a>什么是Vue？</h1><p>Vue是JS框架，常用于Web前端，Vue代码会被编译成JS代码。</p>
+<h1 id="Vue语法-SFC"><a href="#Vue语法-SFC" class="headerlink" title=".Vue语法&#x2F;SFC"></a>.Vue语法&#x2F;SFC</h1><p>一个Vue文件通常由几部分组成(这也被称为<a target="_blank" rel="noopener" href="https://cn.vuejs.org/api/sfc-spec.html">SFC 语法定义</a> |vuejs.org)：<br>+	模板Template，这是前端HTML语言模板用于渲染<br>+	脚本Script：JS脚本，用于程序运行<br>+	风格Style:用于控制渲染风格</p>
+<p>其它不太重要的标签还有自定义和预脚本，这些作为类似于HTML语言的标签语言&lt;&#x2F;&gt;就是Vue，且是最底层的标签，模板template和脚本标签script不能有多个。</p>
+<h1 id="Get-Started"><a href="#Get-Started" class="headerlink" title="Get Started:"></a>Get Started:</h1><p>main.js或main.ts</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">import &#123; createApp, ref &#125; from &#x27;vue&#x27;</span><br><span class="line"></span><br><span class="line">createApp(&#123;</span><br><span class="line">  setup() &#123;</span><br><span class="line">    return &#123;</span><br><span class="line">      count: ref(0)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;).mount(&#x27;#app&#x27;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">&lt;div id=&quot;app&quot;&gt;</span><br><span class="line">  &lt;button @click=&quot;count++&quot;&gt;</span><br><span class="line">    Count is: &#123;&#123; count &#125;&#125;</span><br><span class="line">  &lt;/button&gt;</span><br><span class="line">&lt;/div&gt;</span><br></pre></td></tr></table></figure>
+<p>第一部分就是script部分,第二部分就是模板部分。前者创建了一个count从0开始的计数器，并挂载在后者的button 上，<br>Click-&gt;count++<br>Count++-&gt;Count is $count<br>说明html和js是交互作用的。</p>
+<p>Vue 的单文件组件会将一个组件的逻辑 (JavaScript)，模板 (HTML) 和样式 (CSS) 封装在同一个文件里。下面我们将用单文件组件的格式重写上面的计数器示例：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;script setup&gt;</span><br><span class="line">import &#123; ref &#125; from &#x27;vue&#x27;</span><br><span class="line">const count = ref(0)</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;button @click=&quot;count++&quot;&gt;Count is: &#123;&#123; count &#125;&#125;&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;style scoped&gt;</span><br><span class="line">button &#123;</span><br><span class="line">  font-weight: bold;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/style&gt;</span><br></pre></td></tr></table></figure>
+
+<h1 id="响应式和组合式api：Vue的两种API风格"><a href="#响应式和组合式api：Vue的两种API风格" class="headerlink" title="响应式和组合式api：Vue的两种API风格"></a>响应式和组合式api：Vue的两种API风格</h1><p>一个很像类，有状态（暴露的属性&#x2F;变量）、方法、钩子（调用时间&#x2F;方式），另一个很像直接的编程,……hard tosay，自己看吧</p>
+<h1 id="Vue-的核心Feature"><a href="#Vue-的核心Feature" class="headerlink" title="Vue 的核心Feature"></a>Vue 的核心Feature</h1><ul>
+<li>   声明式渲染：Vue 基于标准 HTML 拓展了一套模板语法，使得我们可以声明式地描述最终输出的 HTML 和 JavaScript 状态之间的关系。</li>
+<li>   响应性：Vue 会自动跟踪 JavaScript 状态并在其发生变化时响应式地更新 DOM。</li>
+<li>组件化：渐进开发</li>
+</ul>
+<p>使用 Vue 的多种方式&#x2F;常见：</p>
+<ul>
+<li>   无需构建步骤，渐进式增强静态的 HTML</li>
+<li>   单页应用 (SPA)</li>
+<li>   全栈 &#x2F; 服务端渲染 (SSR)</li>
+<li>   Jamstack &#x2F; 静态站点生成 (SSG)</li>
+<li>   开发桌面端、移动端、WebGL，甚至是命令行终端中的界面</li>
+</ul>
+<h3 id="vue中ES模块是什么意思"><a href="#vue中ES模块是什么意思" class="headerlink" title="vue中ES模块是什么意思"></a>vue中ES模块是什么意思</h3><p>Vue中的ES模块指的是<strong>使用JavaScript的ECMAScript模块系统来组织和加载代码的方式</strong>。</p>
+<p>ES模块（ECMAScript Modules）是JavaScript官方的模块标准，它允许开发者通过<code>export</code>和<code>import</code>关键字来导出和导入模块。在Vue.js中，使用ES模块可以更有效地组织和管理组件代码，特别是在大型项目中。ES模块的主要特点包括：</p>
+<ol>
+<li><strong>模块化</strong>: 可以将代码分割成多个文件，每个文件是一个模块，这样可以更好地组织和维护代码。</li>
+<li><strong>封装性</strong>: 每个模块都有自己的作用域，模块内部的变量、函数和类不会污染全局作用域。</li>
+<li><strong>复用性</strong>: 可以在多个地方重复使用同一个模块，只需导入即可。</li>
+<li><strong>静态加载</strong>: ES模块支持静态类型检查，并且<code>import</code>语句必须放在文件的顶部，不能动态加载。</li>
+</ol>
+<p>es6是什么？不是elastic而是js，ECMAScript 6，也被称为ES6，是JavaScript语言的一个重要版本。</p>
+<p>ES6在2015年正式发布，它引入了许多新特性，以解决ES5中存在的限制和不足。以下是ES6的一些主要特性：</p>
+<ul>
+<li><p>类（Classes）：ES6中引入了类的概念，使得对象原型的写法更加清晰和面向对象。</p>
+</li>
+<li><p>模块化（Modules）：ES6支持原生的模块化功能，允许开发者使用import和export关键字来导入和导出模块。</p>
+</li>
+<li><p>箭头函数（Arrow Functions）：提供了更简洁的函数语法，并且this的值在箭头函数中是固定的。</p>
+</li>
+<li><p>模板字符串（Template Strings）：允许嵌入表达式的字符串文字，使用反引号（&#96;）包围。</p>
+</li>
+</ul>
+<p>在Vue项目中，通常每个<code>.vue</code>文件就是一个单文件组件（SFC），它包含了模板、脚本和样式三部分。在脚本部分，可以使用ES模块语法来定义组件，并使用<code>export default</code>来导出组件。在其他组件或文件中，可以使用<code>import</code>语句来导入和使用这些组件。</p>
+<h1 id="安装："><a href="#安装：" class="headerlink" title="安装："></a>安装：</h1><p>1.到官网下载node.js二进制文件并安装</p>
+<p>2.运行下列代码：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm install -g cnpm #可选，安装cnpm，防止npm连网太慢</span><br><span class="line">cnpm create vue@latest #项目名不应包含大写，后续选项默认选择关，几乎等同于init</span><br><span class="line">cd &lt;项目名&gt;</span><br><span class="line">cnpm install #安装依赖</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><p>推荐的 IDE 配置是 <strong>Visual Studio Code + Volar</strong> 扩展。</p>
+</li>
+<li><p>要了解构建工具 Vite 更多背后的细节，请查看 Vite 文档。</p>
+</li>
+</ul>
+<p><strong>运行</strong>，并设置端口127.0.0.1:5271，默认不暴露</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta prompt_">#</span><span class="language-bash">开发环境</span></span><br><span class="line">cnpm run dev </span><br><span class="line"><span class="meta prompt_"># </span><span class="language-bash">生产环境</span></span><br><span class="line">cnpm run build</span><br></pre></td></tr></table></figure>
+
+
+
+
+<h1 id="语法学习"><a href="#语法学习" class="headerlink" title="语法学习"></a>语法学习</h1><p>当我们修改了Vue文件后，立即就会更新到对应的网页，堪称<strong>神奇的自动更新编译！</strong></p>
+<h2 id="2-1空Vue文件"><a href="#2-1空Vue文件" class="headerlink" title="2.1空Vue文件"></a>2.1空Vue文件</h2><p>一个空网页的代码如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">&lt;你的html代码&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> &gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span>&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      &lt;需要导出的以供上面html使用的变量，形式为“变量:值”的字典&gt;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> &gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+
+<p>数据绑定，js导出变量绑定到前端，模板中需要用双括号来表示变量，即&lt;p&gt;&lt;&#x2F;p&gt;，脚本中需要msg:’神奇的语法’类似的字典形式来输出变量</p>
+<h2 id="数据绑定"><a href="#数据绑定" class="headerlink" title="数据绑定"></a>数据绑定</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg &#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">script</span> &gt;</span><span class="language-javascript"></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    <span class="keyword">return</span>&#123;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">      <span class="attr">msg</span>:<span class="string">&#x27;神奇的语法&#x27;</span></span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">    &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">  &#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-javascript"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> &gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="组件导入"><a href="#组件导入" class="headerlink" title="组件导入"></a>组件导入</h2><p>同时导出数据和组件:</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;script &gt;</span><br><span class="line"></span><br><span class="line"><span class="comment">//1、导入组件</span></span><br><span class="line"><span class="keyword">import</span> comp_test <span class="keyword">from</span> <span class="string">&quot;./components/comp_test.vue&quot;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span>&#123;</span><br><span class="line">  <span class="title function_">data</span>(<span class="params"></span>)&#123;</span><br><span class="line">    <span class="keyword">return</span>&#123;</span><br><span class="line">      <span class="attr">msg</span>:<span class="string">&#x27;神奇的语法&#x27;</span>+<span class="string">&#x27;sad&#x27;</span>,</span><br><span class="line">      </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="comment">//2、script导出组件</span></span><br><span class="line">  <span class="attr">components</span>:&#123;comp_test&#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">template</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123; msg&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">p</span>&gt;</span>&#123;&#123;\n&#125;&#125;<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span></span><br><span class="line"><span class="language-xml">// 前端使用组件</span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">comp_test</span>/&gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">template</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> &gt;</span></span></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<p><strong>常见问题</strong>：导入组件时需要做三步，并且import时不能有中括号，即</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//正确</span><br><span class="line">import von from &quot;./components/von.vue&quot;;</span><br><span class="line">//不显示</span><br><span class="line">import &#123;von&#125; from &quot;./components/von.vue&quot;;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="style的使用"><a href="#style的使用" class="headerlink" title="style的使用"></a>style的使用</h2><figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在div中声明，某个标签使用了风格的class，这里是myclassfont1</span></span><br><span class="line">&lt;template&gt;</span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">class</span>=<span class="string">&quot;myclassfont1&quot;</span>&gt;</span>&#123;&#123; msg2&#125;&#125;<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line"><span class="language-xml"><span class="tag">&lt;<span class="name">style</span> &gt;</span><span class="language-css"></span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">// <span class="selector-class">.class</span>名&#123;内部设置class的style&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"><span class="selector-class">.myclassfont1</span>&#123;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  <span class="attribute">font-size</span>: <span class="number">12px</span>;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">  <span class="attribute">color</span>:blueviolet</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml">&#125;</span></span></span><br><span class="line"><span class="language-css"><span class="language-xml"></span><span class="tag">&lt;/<span class="name">style</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+<h2 id="v-if和else、elif：条件语句"><a href="#v-if和else、elif：条件语句" class="headerlink" title="v-if和else、elif：条件语句"></a>v-if和else、elif：条件语句</h2><p>条件语句可以选择性渲染html，这三个关键字都容易理解。v-if用法是v-if&#x3D;”&lt;语句&gt;”，和v-else搭配组成了if-else语句；还可以和<br>v-else-if搭配组成if-elif语句，比如</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-if</span>=<span class="string">&quot;type==&#x27;A&#x27;&quot;</span>&gt;</span>类型是A<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type==&#x27;B&#x27;&quot;</span>&gt;</span>类型是B<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else-if</span>=<span class="string">&quot;type==&#x27;C&#x27;&quot;</span>&gt;</span>类型是C<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">v-else</span>&gt;</span>类型不是ABC<span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>以上代码利用type判断实现标签的选择性内容显示</p>
+<h3 id="v-show"><a href="#v-show" class="headerlink" title="v-show"></a>v-show</h3><p>v-show和V-if基本一致，但开销不一样，暂不深究</p>
+<h2 id="v-for-循环语句"><a href="#v-for-循环语句" class="headerlink" title="v-for 循环语句"></a>v-for 循环语句</h2><h2 id="script-setup：免除export，自动暴露"><a href="#script-setup：免除export，自动暴露" class="headerlink" title="script setup：免除export，自动暴露"></a>script setup：免除export，自动暴露</h2><h2 id="v-on-事件触发"><a href="#v-on-事件触发" class="headerlink" title="v-on 事件触发"></a>v-on 事件触发</h2><p>语法：</p>
+<p>v-on:&lt;事件&gt;&#x3D;“&lt;函数或表达式&gt;”</p>
+<p>其中v-on等价于@</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">&lt;button v-on:click=&quot;count++&quot;&gt;&#123;&#123; count &#125;&#125;这里&lt;/button&gt;</span><br><span class="line">&lt;div&gt;&#123;&#123; count &#125;&#125;这里&lt;/div&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            count:0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<p>当为函数（或方法）时，使用前需要导出，即</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">&lt;button v-on:click=&quot;AddCount&quot;&gt;&#123;&#123; count &#125;&#125;这里&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            count:0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        AddCount()&#123;</span><br><span class="line">        this.count++</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>需要注意的是，使用变量要用this.来指定。这里使用的是及时定义的函数</p>
+<h2 id="事件读取和网页事件"><a href="#事件读取和网页事件" class="headerlink" title="事件读取和网页事件"></a>事件读取和网页事件</h2><p>将上述函数增加参数，就会自动获取到对应的事件，并且这个事件是<br>原生元素的“引用”，也就是可以直接去修改</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">&lt;button v-on:click=&quot;AddCount&quot;&gt;&#123;&#123; count &#125;&#125;这里&lt;/button&gt;</span><br><span class="line">&lt;button v-on:click=&quot;AddCount2&quot;&gt;你好&lt;/button&gt;</span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            count:0,</span><br><span class="line">            count2:0</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    methods:&#123;</span><br><span class="line">        AddCount(e)&#123;</span><br><span class="line">            this.count++</span><br><span class="line">            console.log(e)</span><br><span class="line">    &#125;,</span><br><span class="line">        AddCount2(e)&#123;</span><br><span class="line">            this.count2++</span><br><span class="line">            console.log(e.target.innerHTML)</span><br><span class="line">            e.target.innerHTML=this.count2</span><br><span class="line">    &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+<p>上述代码点击第二个框后，可以直接改变html标签的写法，非常恐怖~</p>
+<h2 id="计算属性"><a href="#计算属性" class="headerlink" title="计算属性"></a>计算属性</h2><p>计算属性是响应式导出这一类变量，比如data中变量，集中进行计算的位置，并将它们变成“新变量”，这样做是为了防止在双括号中的计算过于复杂、可读性差</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">&lt;!-- 计算属性 --&gt;</span><br><span class="line">&lt;template&gt;</span><br><span class="line">&lt;h3&gt;&#123;&#123; msg.name &#125;&#125;&lt;/h3&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123; msg.content.length&gt;0?&quot;Yes&quot;:&quot;No&quot; &#125;&#125;&lt;/p&gt;</span><br><span class="line">&lt;p&gt;&#123;&#123; msg_has_content&#125;&#125;&lt;/p&gt;</span><br><span class="line"></span><br><span class="line">&lt;/template&gt;</span><br><span class="line"></span><br><span class="line">&lt;script&gt;</span><br><span class="line">export default&#123;</span><br><span class="line">    data()&#123;</span><br><span class="line">        return&#123;</span><br><span class="line">            msg:&#123;</span><br><span class="line">                name:&quot;这是一个类似于类的东西&quot;,</span><br><span class="line">                content:[&quot;Python&quot;,&quot;Java&quot;,&quot;C&quot;]</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    computed:&#123; //标准格式</span><br><span class="line">        msg_has_content()&#123; //新变量名</span><br><span class="line">            return this.msg.content.length&gt;0?&quot;Yes&quot;:&quot;No&quot; // 记得加this.</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">&lt;/script&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="侦听器-watch"><a href="#侦听器-watch" class="headerlink" title="侦听器 watch"></a>侦听器 watch</h2><p>侦听器能够侦听数据改变，一旦数据改变会触发函数</p>
+<p>响应式数据可以被侦听，包括data return的数据、被双括号使用的数据。</p>
+<p>侦听器的写法：watch:在data同级，后跟对象</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">括号1 函数名(newVaule,oldValue)括号2 括号2 括号1</span><br></pre></td></tr></table></figure>
+<p>这个函数名必须要和你侦听的变量同名。oldValue是改变之前的数据,newValue是改变之后的数据</p>
+<h1 id="路由"><a href="#路由" class="headerlink" title="路由"></a>路由</h1><p>既可以将导航router写成单独的文件导入，如src&#x2F;router&#x2F;index.js, 然后在src&#x2F;main.js中导入import router from ‘.&#x2F;router’，你看不用写index.js。也可以直接把导航写到main中</p>
+<h1 id="自闭合标签"><a href="#自闭合标签" class="headerlink" title="自闭合标签"></a>自闭合标签</h1><p>以前没系统学，常常会疑惑，原来，在HTML中，<code>&lt;标签名 /&gt;</code> 和 <code>&lt;标签名&gt; &lt;/标签名&gt;</code> 是两种不同的标签语法，它们的区别如下：</p>
+<ol>
+<li><p><strong>自闭合标签（Self-closing tag）：</strong><br><code>&lt;标签名 /&gt;</code> 是一种自闭合标签的写法。自闭合标签不需要成对出现，它没有内容，也不会包含其他元素。这种语法用于那些不需要结束标签的元素，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;image.jpg&quot;</span> <span class="attr">alt</span>=<span class="string">&quot;图片描述&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>非自闭合标签：</strong><br><code>&lt;标签名&gt; &lt;/标签名&gt;</code> 是非自闭合标签的写法。非自闭合标签需要成对出现，它有一个开始标签和一个结束标签，并且可以包含文本内容或其他子元素。这种语法用于需要定义内容范围的元素，例如：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">p</span>&gt;</span>这是一个段落。<span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure></li>
+</ol>
+<p>总结来说，自闭合标签使用<code>/</code>来表示标签的结束，而非自闭合标签需要显式地写出结束标签。自闭合标签通常用于那些不需要内容的空元素，如<code>&lt;img&gt;</code>、<code>&lt;br&gt;</code>等，而非自闭合标签则用于需要包裹内容的元素，如<code>&lt;div&gt;</code>、<code>&lt;p&gt;</code>等。</p>
+<h1 id="相关知识"><a href="#相关知识" class="headerlink" title="相关知识"></a>相关知识</h1><h2 id="js对象是什么？"><a href="#js对象是什么？" class="headerlink" title="js对象是什么？"></a>js对象是什么？</h2><p>JavaScript对象是一种复合类型，它可以包含属性和方法。一个对象可以看作是一个拥有属性和类型的实体。在JavaScript中，几乎所有的值都是对象，例如字符串、数值、数组、函数等。此外，JavaScript还允许自定义对象。这些对象可以具有自己的属性和方法，用于描述事物的特征和行为  。</p>
+<h2 id="Arco-design组件（感觉Vue3不够成熟，建议用其它的）"><a href="#Arco-design组件（感觉Vue3不够成熟，建议用其它的）" class="headerlink" title="Arco design组件（感觉Vue3不够成熟，建议用其它的）"></a>Arco design组件（感觉Vue3不够成熟，建议用其它的）</h2><p>Arco design使用vue pro的最佳实践，关键在于安装和使用pnpm，即npm i -g pnpm和进入目录执行</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">D:\Vue_learning\tmp&gt; pnpm install</span><br><span class="line">D:\Vue_learning\tmp&gt; npm i -g arco-cli</span><br><span class="line">D:\Vue_learning\tmp&gt; arco init hello-arco-pro</span><br></pre></td></tr></table></figure>
+
+<p>spawn XXX ENOENT表示没有相应的命令或文件，这里我们不用解决这个问题，而是借助pnpm去解决这个问题。spawn cmd ENOENT表示需要在PATH中添加C:\Windows\System32从而找到cmd命令<br>ERR!   × Error: Command failed: C:\Windows\system32\cmd.exe &#x2F;s &#x2F;c “autoreconf -ivf”</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">npm I -g pnpm</span><br><span class="line"><span class="built_in">cd</span> hello-arco-pro</span><br><span class="line">pnpm install </span><br><span class="line">pnpm run dev</span><br></pre></td></tr></table></figure>
+
+
+
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2024/03/22/Vue-1/">https://xxminxx.love/2024/03/22/Vue-1/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/Vue/">Vue</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/03/19/fastapi%E9%AB%98%E6%80%A7%E8%83%BD%E5%BC%82%E6%AD%A5python%E5%90%8E%E7%AB%AF%E6%A1%86%E6%9E%B6/" title="fastapi高性能异步python后端框架"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">fastapi高性能异步python后端框架</div></div></a></div><div class="next-post pull-right"><a href="/2024/03/22/Ubuntu%E5%8E%8B%E7%BC%A9/" title="Ubuntu压缩"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Ubuntu压缩</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">32</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">24</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">16</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFVue%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是Vue？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue%E8%AF%AD%E6%B3%95-SFC"><span class="toc-number">2.</span> <span class="toc-text">.Vue语法&#x2F;SFC</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Get-Started"><span class="toc-number">3.</span> <span class="toc-text">Get Started:</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%93%8D%E5%BA%94%E5%BC%8F%E5%92%8C%E7%BB%84%E5%90%88%E5%BC%8Fapi%EF%BC%9AVue%E7%9A%84%E4%B8%A4%E7%A7%8DAPI%E9%A3%8E%E6%A0%BC"><span class="toc-number">4.</span> <span class="toc-text">响应式和组合式api：Vue的两种API风格</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Vue-%E7%9A%84%E6%A0%B8%E5%BF%83Feature"><span class="toc-number">5.</span> <span class="toc-text">Vue 的核心Feature</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#vue%E4%B8%ADES%E6%A8%A1%E5%9D%97%E6%98%AF%E4%BB%80%E4%B9%88%E6%84%8F%E6%80%9D"><span class="toc-number">5.0.1.</span> <span class="toc-text">vue中ES模块是什么意思</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">安装：</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95%E5%AD%A6%E4%B9%A0"><span class="toc-number">7.</span> <span class="toc-text">语法学习</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#2-1%E7%A9%BAVue%E6%96%87%E4%BB%B6"><span class="toc-number">7.1.</span> <span class="toc-text">2.1空Vue文件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%BB%91%E5%AE%9A"><span class="toc-number">7.2.</span> <span class="toc-text">数据绑定</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E5%AF%BC%E5%85%A5"><span class="toc-number">7.3.</span> <span class="toc-text">组件导入</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#style%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-number">7.4.</span> <span class="toc-text">style的使用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#v-if%E5%92%8Celse%E3%80%81elif%EF%BC%9A%E6%9D%A1%E4%BB%B6%E8%AF%AD%E5%8F%A5"><span class="toc-number">7.5.</span> <span class="toc-text">v-if和else、elif：条件语句</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#v-show"><span class="toc-number">7.5.1.</span> <span class="toc-text">v-show</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#v-for-%E5%BE%AA%E7%8E%AF%E8%AF%AD%E5%8F%A5"><span class="toc-number">7.6.</span> <span class="toc-text">v-for 循环语句</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#script-setup%EF%BC%9A%E5%85%8D%E9%99%A4export%EF%BC%8C%E8%87%AA%E5%8A%A8%E6%9A%B4%E9%9C%B2"><span class="toc-number">7.7.</span> <span class="toc-text">script setup：免除export，自动暴露</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#v-on-%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91"><span class="toc-number">7.8.</span> <span class="toc-text">v-on 事件触发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8B%E4%BB%B6%E8%AF%BB%E5%8F%96%E5%92%8C%E7%BD%91%E9%A1%B5%E4%BA%8B%E4%BB%B6"><span class="toc-number">7.9.</span> <span class="toc-text">事件读取和网页事件</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E5%B1%9E%E6%80%A7"><span class="toc-number">7.10.</span> <span class="toc-text">计算属性</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BE%A6%E5%90%AC%E5%99%A8-watch"><span class="toc-number">7.11.</span> <span class="toc-text">侦听器 watch</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%B7%AF%E7%94%B1"><span class="toc-number">8.</span> <span class="toc-text">路由</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%87%AA%E9%97%AD%E5%90%88%E6%A0%87%E7%AD%BE"><span class="toc-number">9.</span> <span class="toc-text">自闭合标签</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E7%9F%A5%E8%AF%86"><span class="toc-number">10.</span> <span class="toc-text">相关知识</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#js%E5%AF%B9%E8%B1%A1%E6%98%AF%E4%BB%80%E4%B9%88%EF%BC%9F"><span class="toc-number">10.1.</span> <span class="toc-text">js对象是什么？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Arco-design%E7%BB%84%E4%BB%B6%EF%BC%88%E6%84%9F%E8%A7%89Vue3%E4%B8%8D%E5%A4%9F%E6%88%90%E7%86%9F%EF%BC%8C%E5%BB%BA%E8%AE%AE%E7%94%A8%E5%85%B6%E5%AE%83%E7%9A%84%EF%BC%89"><span class="toc-number">10.2.</span> <span class="toc-text">Arco design组件（感觉Vue3不够成熟，建议用其它的）</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/22/Ubuntu%E5%8E%8B%E7%BC%A9/" title="Ubuntu压缩">Ubuntu压缩</a><time datetime="2024-03-22T15:46:28.000Z" title="发表于 2024-03-22 23:46:28">2024-03-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/22/Vue-1/" title="Vue-1">Vue-1</a><time datetime="2024-03-22T11:28:24.000Z" title="发表于 2024-03-22 19:28:24">2024-03-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/19/fastapi%E9%AB%98%E6%80%A7%E8%83%BD%E5%BC%82%E6%AD%A5python%E5%90%8E%E7%AB%AF%E6%A1%86%E6%9E%B6/" title="fastapi高性能异步python后端框架">fastapi高性能异步python后端框架</a><time datetime="2024-03-19T13:56:15.000Z" title="发表于 2024-03-19 21:56:15">2024-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/19/Systemctl%E5%91%BD%E4%BB%A4/" title="Systemctl命令">Systemctl命令</a><time datetime="2024-03-19T13:25:19.000Z" title="发表于 2024-03-19 21:25:19">2024-03-19</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/03/17/%E4%B8%80%E4%BA%9B%E5%B8%B8%E8%A7%81%E7%9A%84%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%97%E6%B3%95/" title="一些常见的人工智能技术和算法">一些常见的人工智能技术和算法</a><time datetime="2024-03-17T11:17:42.000Z" title="发表于 2024-03-17 19:17:42">2024-03-17</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
