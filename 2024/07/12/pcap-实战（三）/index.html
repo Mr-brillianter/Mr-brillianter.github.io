@@ -1,0 +1,322 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>pcap++实战（三） | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="pcap++实战（三）TLS指纹、SSL分析、  HttpAnalyzer、 DNS解析、PCAP解析、PCAP分割与搜索 这一章主要介绍 pcap++的应用，即示例程序 pcap应用这些应用以bin存在，但源码位于github，可用于学习和借鉴 ArpSpoofing ARP欺骗这是一个应用程序，使用packet++和Pcap++进行ARP欺骗。你可以在这里阅读更多关于ARP欺骗的内容。 arp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pcap++实战（三）">
+<meta property="og:url" content="https://xxminxx.love/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="pcap++实战（三）TLS指纹、SSL分析、  HttpAnalyzer、 DNS解析、PCAP解析、PCAP分割与搜索 这一章主要介绍 pcap++的应用，即示例程序 pcap应用这些应用以bin存在，但源码位于github，可用于学习和借鉴 ArpSpoofing ARP欺骗这是一个应用程序，使用packet++和Pcap++进行ARP欺骗。你可以在这里阅读更多关于ARP欺骗的内容。 arp">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2024-07-12T15:30:49.000Z">
+<meta property="article:modified_time" content="2024-07-12T15:30:56.236Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="pcap++">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'pcap++实战（三）',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-12 23:30:56'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">pcap++实战（三）</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-12T15:30:49.000Z" title="发表于 2024-07-12 23:30:49">2024-07-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-12T15:30:56.236Z" title="更新于 2024-07-12 23:30:56">2024-07-12</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">3.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>11分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="pcap++实战（三）"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="pcap-实战（三）"><a href="#pcap-实战（三）" class="headerlink" title="pcap++实战（三）"></a>pcap++实战（三）</h1><p>TLS指纹、SSL分析、  HttpAnalyzer、 DNS解析、PCAP解析、PCAP分割与搜索</p>
+<p>这一章主要介绍 pcap++的应用，即示例程序</p>
+<h2 id="pcap应用"><a href="#pcap应用" class="headerlink" title="pcap应用"></a><a target="_blank" rel="noopener" href="https://pcapplusplus.github.io/docs/examples">pcap应用</a></h2><p>这些应用以bin存在，但源码位于github，可用于学习和借鉴</p>
+<h3 id="ArpSpoofing-ARP欺骗"><a href="#ArpSpoofing-ARP欺骗" class="headerlink" title="ArpSpoofing ARP欺骗"></a>ArpSpoofing ARP欺骗</h3><p>这是一个应用程序，使用packet++和Pcap++进行ARP欺骗。你可以在这里阅读更多关于ARP欺骗的内容。</p>
+<h3 id="arp"><a href="#arp" class="headerlink" title="arp"></a>arp</h3><p>使用PcapPlusPlus的路由实用程序的实现。</p>
+<h3 id="DnsSpoofing-DNS欺骗"><a href="#DnsSpoofing-DNS欺骗" class="headerlink" title="DnsSpoofing DNS欺骗"></a>DnsSpoofing DNS欺骗</h3><p>一个命令行实用程序，使用packe++和Pcap++进行DNS欺骗。</p>
+<h3 id="DNSResolver-DNS解析"><a href="#DNSResolver-DNS解析" class="headerlink" title="DNSResolver  DNS解析"></a><a target="_blank" rel="noopener" href="https://github.com/seladb/PcapPlusPlus/tree/v23.09/Examples/DNSResolver#dns-resolver">DNSResolver  DNS解析</a></h3><p>一个命令行实用程序，使用ARP和DNS协议解析主机名的IPv4地址。工作原理是发送DNS请求并分析DNS回复来解析IPV4地址的主机名</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Basic usage:</span><br><span class="line">	DNSResolver [-hl] [-t timeout] [-d dns_server] [-g gateway] [-i interface] -s hostname</span><br><span class="line"></span><br><span class="line">Options:          </span><br><span class="line">	-h           : 帮助信息。</span><br><span class="line">	-l           : 列出网卡。Print the list of interfaces and exists</span><br><span class="line">	-s hostname  : 待解析主机名。Hostname to resolve</span><br><span class="line">	-i interface : 使用网卡。Use the specified interface. Can be interface name (e.g eth0) or interface IPv4 address. If not set then one of the interfaces that has a default gateway will be used</span><br><span class="line">	-d dns_server: 指定DNS服务器。IPv4 address of DNS server to send the DNS request to. If not set the DNS request will be sent to the gateway</span><br><span class="line">	-g gateway   : 指定网关。IPv4 address of the gateway to send the DNS request to. If not set the default gateway will be chosen</span><br><span class="line">	-t timeout   : 超时时间。How long to wait for a reply (in seconds). Default timeout is 5 seconds</span><br></pre></td></tr></table></figure>
+
+<p>限制：IPV4 only</p>
+<p>hostname通常指的是计算机在网络中的名称，而IPv4地址则是该计算机在网络中的具体位置。</p>
+<ol>
+<li><strong>定义</strong>：Hostname是赋予设备的标签或名称，用于在网络中标识该设备。它是易于理解和记忆的字符串，如“<a target="_blank" rel="noopener" href="http://www.example.com”.而ipv4地址是一种数字标签,由四部分组成,每部分用小数点分隔,例如“192.168.1.1”./">www.example.com”。而IPv4地址是一种数字标签，由四部分组成，每部分用小数点分隔，例如“192.168.1.1”。</a></li>
+<li><strong>唯一性</strong>：在私有网络内部，hostname必须是唯一的，以避免冲突；而在全世界范围内，IPv4地址必须唯一，以确保每个设备都可以在互联网上被精确定位。</li>
+</ol>
+<h3 id="IcmpFileTransfer-Icmp文件传输"><a href="#IcmpFileTransfer-Icmp文件传输" class="headerlink" title="IcmpFileTransfer Icmp文件传输"></a>IcmpFileTransfer Icmp文件传输</h3><p>这个应用程序演示了如何仅使用ICMP消息在两台机器之间传输文件。基本思想是使用ICMP消息的数据部分在机器之间传输文件块。</p>
+<h3 id="HttpAnalyzer"><a href="#HttpAnalyzer" class="headerlink" title="HttpAnalyzer"></a>HttpAnalyzer</h3><p>一个应用程序，分析HTTP流量，并提供详细和多样化的信息，如数据包计数和速率，带宽，流量计数和速率，HTTP请求和响应计数和速率，主机名直方图，内容类型直方图，状态码直方图和更多。可以操作实时流量或从pcap文件读取数据包。</p>
+<ol>
+<li><strong>Packet count and rate</strong>：指的是在特定时间内通过网络传输的数据包的数量和速率。数据包是网络传输的基本单位，了解它们的计数和速率有助于监测网络流量和性能。</li>
+<li><strong>Bandwidth</strong>：带宽指的是网络连接的数据传输能力，通常以比特每秒（bps）为单位表示。它是衡量网络通信速度的重要指标。</li>
+<li><strong>Flow count and rate</strong>：流（Flow）是指从某个源到目的地的一系列数据包。流的数量和速率可以帮助识别网络上活跃的连接数和数据流的情况。</li>
+<li><strong>HTTP requests + responses count and rate</strong>：指HTTP请求和响应的数量及其发生的速率。每次用户在浏览器中访问网页时，都会向服务器发送一个或多个HTTP请求，并接收服务器的响应。</li>
+<li><strong>HTTP transaction count and rate</strong>：一个HTTP事务包括一个请求和对应的响应。事务的数量和速率有助于了解服务器处理请求的性能。</li>
+<li><strong>HTTP pipelining count</strong>：HTTP管道化技术允许客户端同时发送多个请求而不必等待每个请求的响应，从而提高通信效率。管道化计数表明了这种技术的使用情况。</li>
+<li><strong>HTTP header size</strong>：HTTP头信息包含了描述消息内容的元数据，如内容类型、缓存控制指令等。头信息的大小可以影响传输效率。</li>
+<li><strong>Hostname histogram</strong>：主机名直方图是一种展示不同主机名出现频率的图表统计，可用于分析服务器名称的分布情况。</li>
+<li><strong>Content-type histogram</strong>：内容类型直方图显示了不同MIME类型的内容在HTTP传输中的分布情况，例如文本、图片、视频等。</li>
+<li><strong>Status code histogram</strong>：状态码直方图展示了各种HTTP响应状态码的分布情况，如200（成功）、404（未找到）、500（服务器错误）等。</li>
+</ol>
+<h3 id="SSLAnalyzer"><a href="#SSLAnalyzer" class="headerlink" title="SSLAnalyzer"></a><a target="_blank" rel="noopener" href="https://github.com/seladb/PcapPlusPlus/tree/v23.09/Examples/SSLAnalyzer">SSLAnalyzer</a></h3><p>一个应用程序，分析SSL&#x2F;TLS流量，并提供详细和多样化的信息，如数据包计数和速率，带宽，流量计数和速率，SSL&#x2F;TLS消息计数，主机名直方图，SSL&#x2F;TLS版本计数，密码套件计数和更多。可以操作实时流量或从pcap文件读取数据包。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">njust@njust:~/program/pcapplusplus-23.09-ubuntu-20.04-gcc-9.4.0-x86_64/bin$ ./SSLAnalyzer -f /home/njust/arkime/tests/pcap/openssl-ssl3.pcap</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">STATS SUMMARY</span><br><span class="line">=============</span><br><span class="line"></span><br><span class="line">General stats</span><br><span class="line">-------------</span><br><span class="line"></span><br><span class="line">Sample time:                                            0.000 [Seconds]</span><br><span class="line">Number of SSL packets:                                      5 [Packets]</span><br><span class="line">Rate of SSL packets:                                    0.000 [Packets/sec]</span><br><span class="line">Number of SSL flows:                                        1 [Flows]</span><br><span class="line">Rate of SSL flows:                                      0.000 [Flows/sec]</span><br><span class="line">Total SSL data:                                          1802 [Bytes]</span><br><span class="line">Rate of SSL data:                                       0.000 [Bytes/sec]</span><br><span class="line">Average packets per flow:                               5.000 [Packets]</span><br><span class="line">Average data per flow:                               1802.000 [Bytes]</span><br><span class="line">Client-hello message:                                       1 [Messages]</span><br><span class="line">Server-hello message:                                       1 [Messages]</span><br><span class="line">Number of SSL flows with successful handshake:              0 [Flows]</span><br><span class="line">Number of SSL flows ended with alert:                       1 [Flows]</span><br><span class="line"></span><br><span class="line">SSL/TLS ports count</span><br><span class="line">-------------------</span><br><span class="line"></span><br><span class="line">-------------------------</span><br><span class="line">| SSL/TLS ports | Count |</span><br><span class="line">-------------------------</span><br><span class="line">| 443           | 1     |</span><br><span class="line">-------------------------</span><br><span class="line"></span><br><span class="line">SSL/TLS versions count</span><br><span class="line">----------------------</span><br><span class="line"></span><br><span class="line">----------------------------------------</span><br><span class="line">| SSL/TLS version              | Count |</span><br><span class="line">----------------------------------------</span><br><span class="line">| SSL 3.0                      | 1     |</span><br><span class="line">----------------------------------------</span><br><span class="line"></span><br><span class="line">Cipher-suite count</span><br><span class="line">------------------</span><br><span class="line"></span><br><span class="line">--------------------------------------------------------------</span><br><span class="line">| Cipher-suite                                       | Count |</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line">| TLS_ECDHE_RSA_WITH_RC4_128_SHA                     | 1     |</span><br><span class="line">--------------------------------------------------------------</span><br><span class="line"></span><br><span class="line">Server-name count</span><br><span class="line">-----------------</span><br></pre></td></tr></table></figure>
+<p>DpdkExample-FilterTraffic<br>一个演示PcapPlusPlus DPDK api的应用程序。该应用程序监听一个或多个DPDK端口(也称为DPDK设备)，捕获所有流量，并根据用户自定义的匹配标准(如源&#x2F;dest IP，源&#x2F;dest TCP&#x2F;UDP端口等)匹配数据包。匹配的数据包可以发送到另一个DPDK端口和&#x2F;或保存到pcap文件中。此外，应用程序还会对接收到的报文和匹配的报文进行统计。</p>
+<p>DpdkBridge<br>这个应用程序演示了如何使用PcapPlusPlus DPDK api在两个网络设备之间创建桥接(类似于DPDK的L2转发示例)。</p>
+<p>KniPong<br>一个演示DPDK KNI的PcapPlusPlus包装器的应用程序。它模拟了用-u键运行的Unix NETCAT实用程序。它基本上是一个ping&#x2F;pong客户机&#x2F;服务器通道，使用来自stdin的用户提供的输入。</p>
+<h3 id="PfRingExample-FilterTraffic-❤❤❤"><a href="#PfRingExample-FilterTraffic-❤❤❤" class="headerlink" title="PfRingExample-FilterTraffic ❤❤❤"></a>PfRingExample-FilterTraffic ❤❤❤</h3><p>捕获、过滤、转发或保存、统计</p>
+<p>PF_RING是一种网络套接字库，用于高性能网络流量处理和分析。它提供了一种快速捕获和处理网络数据包的方法，可以显著提高数据包捕获速度，并支持多种负载均衡方法。</p>
+<p>以下是PF_RING在网络流量方面的一些功能和应用：</p>
+<ol>
+<li><p>高性能数据包捕获：PF_RING可以通过绕过内核协议栈的方式直接从网卡抓取数据包，从而提高数据包捕获的速度和效率。</p>
+</li>
+<li><p>多种负载均衡方法：PF_RING支持多种负载均衡方法，包括RSS（Receive Side Scaling）和ZC（Zero Copy）。RSS是一种能够在多处理器系统下将接收报文高效分发到多个CPU的网卡驱动技术。ZC则是一种使用软件方法实现的流量分发技术，可以高速地将流量从网卡抓取并分发到不同的队列。</p>
+</li>
+<li><p>提高流量处理能力：通过使用PF_RING的负载均衡方法，可以将流量分发到多个处理节点上，从而提高流量处理的能力。这对于网络安全监视、性能评估和故障排除等任务非常有用。</p>
+</li>
+<li><p>支持过滤和应用层识别：PF_RING还支持过滤和应用层识别功能。通过配置过滤规则，可以过滤掉不需要关注的流量，从而减轻处理负担并提高效率。</p>
+</li>
+</ol>
+<p>一个演示PcapPlusPlus PF_RING api的应用程序。此应用程序监听PF_RING接口，捕获所有流量并通过用户定义的匹配标准(如源&#x2F;dest IP，源&#x2F;dest TCP&#x2F;UDP端口等)匹配数据包。匹配的数据包可以发送到另一个PF_RING接口和&#x2F;或保存到pcap文件中。此外，应用程序还会对接收到的报文和匹配的报文进行统计。</p>
+<h3 id="PcapPrinter"><a href="#PcapPrinter" class="headerlink" title="PcapPrinter"></a>PcapPrinter</h3><p>一个简单的应用程序，从pcap文件输出数据包作为可读字符串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">njust@njust:~/program/pcapplusplus-23.09-ubuntu-20.04-gcc-9.4.0-x86_64/bin$ ./PcapPrinter xxx/openssl-ssl3.pcap</span><br><span class="line">File summary:</span><br><span class="line">~~~~~~~~~~~~~</span><br><span class="line">   File name: /home/njust/arkime/tests/pcap/openssl-ssl3.pcap</span><br><span class="line">   File size: 6330 bytes</span><br><span class="line">   Link layer type: Ethernet</span><br><span class="line"></span><br><span class="line">Packet length: 74 [Bytes], Arrival time: 2014-10-15 09:49:29.995637000</span><br><span class="line">Ethernet II Layer, Src: 00:13:72:c4:f1:e1, Dst: 00:00:0c:07:ac:01</span><br><span class="line">IPv4 Layer, Src: 10.0.0.1, Dst: 74.125.228.238</span><br><span class="line">TCP Layer, [SYN], Src port: 45680, Dst port: 443</span><br><span class="line"></span><br><span class="line">Packet length: 74 [Bytes], Arrival time: 2014-10-15 09:49:29.995637000</span><br><span class="line">Ethernet II Layer, Src: 00:13:72:c4:f1:e1, Dst: 00:00:0c:07:ac:01</span><br><span class="line">IPv4 Layer, Src: 10.0.0.1, Dst: 74.125.228.238</span><br><span class="line">TCP Layer, [SYN], Src port: 45680, Dst port: 443</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+<p>可以看到，展示了pcap大小、层数、包长、到达时间、以太网地址、IP地址、TCP端口</p>
+<h3 id="PcapSplitter-pcap分割❤❤❤"><a href="#PcapSplitter-pcap分割❤❤❤" class="headerlink" title="PcapSplitter pcap分割❤❤❤"></a>PcapSplitter pcap分割❤❤❤</h3><p>一个应用程序，可以根据用户定义的各种标准将pcap文件拆分为更小的pcap文件，如文件大小，数据包计数，每个连接拆分，每个客户端- IP，每个服务器- IP，每个服务器-端口(协议)或每个IP src + IP dst(2元组)。与类似的工具相比，这个应用程序非常先进，例如:对输入文件大小或数据包计数没有限制，对输出文件数量没有技术限制(除非用户设置限制)，支持IPv4和IPv6等等。</p>
+<h3 id="PcapSearch-pcap搜索❤❤❤"><a href="#PcapSearch-pcap搜索❤❤❤" class="headerlink" title="PcapSearch pcap搜索❤❤❤"></a>PcapSearch pcap搜索❤❤❤</h3><p>一个应用程序，它在用户给定的目录&#x2F;目录中搜索pcap文件，并计算有多少数据包匹配BPF格式中给定的用户定义模式。</p>
+<h4 id="TcpReassembly"><a href="#TcpReassembly" class="headerlink" title="TcpReassembly"></a>TcpReassembly</h4><p>一个应用程序，它捕获作为TCP连接的一部分传输的数据，组织数据并以一种方便协议分析和调试的方式存储数据。该应用程序重建TCP数据流，并将每个连接存储在单独的文件中。TcpReassembly理解TCP序列号，将正确重建数据流，无论重传，乱序交付或数据丢失。</p>
+<h4 id="IPFragUtil-IPDefragUtil"><a href="#IPFragUtil-IPDefragUtil" class="headerlink" title="IPFragUtil&amp;IPDefragUtil"></a>IPFragUtil&amp;IPDefragUtil</h4><p>IPFragUtil将IP数据包分割成片段的实用程序。它可以在pcap和pcapng文件上工作，并允许用户选择要分割的数据包和大小。支持IPv4和IPv6报文。</p>
+<p>IPDefragUtil将IP片段重新组装回IP数据包的实用程序。它适用于pcap和pcapng文件，并允许用户选择要重新组装的片段。支持IPv4和IPv6报文。</p>
+<h3 id="TLSFingerprinting-TLS指纹❤❤❤"><a href="#TLSFingerprinting-TLS指纹❤❤❤" class="headerlink" title="TLSFingerprinting TLS指纹❤❤❤"></a>TLSFingerprinting TLS指纹❤❤❤</h3><p>这个应用程序演示了如何从实时流量或pcap文件中收集ClientHello (JA3)和ServerHello (JA3S) TLS指纹，将它们写入输出文件并显示各种统计信息。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">./TLSFingerprinting -r /home/njust/arkime/tests/pcap/tls13.pcap </span><br><span class="line">Start reading &#x27;/home/njust/arkime/tests/pcap/tls13.pcap&#x27;...</span><br><span class="line"></span><br><span class="line">Summary:</span><br><span class="line">========</span><br><span class="line">Total packets read:                   6</span><br><span class="line">TLS ClientHello packets:              1</span><br><span class="line">Unique ClientHello TLS fingerprints:  1</span><br><span class="line"></span><br><span class="line">ClientHello TLS fingerprints:</span><br><span class="line">----------------------------------------------</span><br><span class="line">| TLS Fingerprint                  | Count   |</span><br><span class="line">----------------------------------------------</span><br><span class="line">| 4826a90ec2daf4f7b4b64cc1c8bd343b | 1       |</span><br><span class="line">----------------------------------------------</span><br><span class="line">Output file was written to: &#x27;tls13.txt&#x27;</span><br></pre></td></tr></table></figure>
+<p>此例中提取了TLS指纹：4826a90ec2daf4f7b4b64cc1c8bd343b<br>TLS指纹又叫SSL指纹，或者JA3指纹，是根据客户端向服务端发送的Client Hello计算得到在TLS握手中还有服务端响应的Server Hello，也有特征，可以得到JA3S指纹又由于服务端会根据不同的Client Hello响应不同的Server Hello，根据这个又可以得到JARM指纹<br>简单来说：<br>JA3是标记客户端的指纹<br>JA3S是标记服务端的指纹<br>JARM是升级版的JA3S指纹</p>
+<h3 id="PcapPlusPlus-benchmark"><a href="#PcapPlusPlus-benchmark" class="headerlink" title="PcapPlusPlus-benchmark"></a>PcapPlusPlus-benchmark</h3><p>用于测量PcapPlusPlus性能的基准应用程序。有关更多细节，请参阅基准测试页面。该应用程序目前仅在Linux上编译(运行基准测试)。</p>
+<h3 id="Tutorial-LiveTraffic"><a href="#Tutorial-LiveTraffic" class="headerlink" title="Tutorial-LiveTraffic"></a>Tutorial-LiveTraffic</h3><p>有很多demo没有编译到bin，需要自己git下来并且build，我下到了&#x2F;下载文件夹</p>
+<blockquote>
+<p>cmake ..报错</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">~/下载/PcapPlusPlus/Examples/Tutorials/Tutorial-LiveTraffic/build$ cmake ..</span><br><span class="line">cmake: /usr/local/lib/libcurl.so.4: no version information available (required by cmake)</span><br><span class="line">Compiling Tutorial out of project</span><br><span class="line">CMake Error at CMakeLists.txt:13 (find_package):</span><br><span class="line">  By not providing &quot;FindPcapPlusPlus.cmake&quot; in CMAKE_MODULE_PATH this project</span><br><span class="line">  has asked CMake to find a package configuration file provided by</span><br><span class="line">  &quot;PcapPlusPlus&quot;, but CMake did not find one.</span><br><span class="line"></span><br><span class="line">  Could not find a package configuration file provided by &quot;PcapPlusPlus&quot; with</span><br><span class="line">  any of the following names:</span><br><span class="line"></span><br><span class="line">    PcapPlusPlusConfig.cmake</span><br><span class="line">    pcapplusplus-config.cmake</span><br><span class="line"></span><br><span class="line">  Add the installation prefix of &quot;PcapPlusPlus&quot; to CMAKE_PREFIX_PATH or set</span><br><span class="line">  &quot;PcapPlusPlus_DIR&quot; to a directory containing one of the above files.  If</span><br><span class="line">  &quot;PcapPlusPlus&quot; provides a separate development package or SDK, be sure it</span><br><span class="line">  has been installed.</span><br></pre></td></tr></table></figure>
+<p>在CmakeLists.txt中加入这一句</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list(APPEND CMAKE_PREFIX_PATH &quot;/home/njust/program/pcapplusplus-23.09-ubuntu-20.04-gcc-9.4.0-x86_64&quot;)</span><br></pre></td></tr></table></figure>
+<p>即指定CMAKE_PREFIX_PATH</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/">https://xxminxx.love/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/pcap/">pcap++</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/" title="pcap++实战（二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">pcap++实战（二）</div></div></a></div><div class="next-post pull-right"><a href="/2024/07/12/joblib-VS-pickle/" title="joblib VS pickle"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">joblib VS pickle</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/" title="pcap++实战（一）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-12</div><div class="title">pcap++实战（一）</div></div></a></div><div><a href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/" title="pcap++实战（二）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-07-12</div><div class="title">pcap++实战（二）</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">pcap++实战（三）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#pcap%E5%BA%94%E7%94%A8"><span class="toc-number">1.1.</span> <span class="toc-text">pcap应用</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#ArpSpoofing-ARP%E6%AC%BA%E9%AA%97"><span class="toc-number">1.1.1.</span> <span class="toc-text">ArpSpoofing ARP欺骗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#arp"><span class="toc-number">1.1.2.</span> <span class="toc-text">arp</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DnsSpoofing-DNS%E6%AC%BA%E9%AA%97"><span class="toc-number">1.1.3.</span> <span class="toc-text">DnsSpoofing DNS欺骗</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#DNSResolver-DNS%E8%A7%A3%E6%9E%90"><span class="toc-number">1.1.4.</span> <span class="toc-text">DNSResolver  DNS解析</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IcmpFileTransfer-Icmp%E6%96%87%E4%BB%B6%E4%BC%A0%E8%BE%93"><span class="toc-number">1.1.5.</span> <span class="toc-text">IcmpFileTransfer Icmp文件传输</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#HttpAnalyzer"><span class="toc-number">1.1.6.</span> <span class="toc-text">HttpAnalyzer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SSLAnalyzer"><span class="toc-number">1.1.7.</span> <span class="toc-text">SSLAnalyzer</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PfRingExample-FilterTraffic-%E2%9D%A4%E2%9D%A4%E2%9D%A4"><span class="toc-number">1.1.8.</span> <span class="toc-text">PfRingExample-FilterTraffic ❤❤❤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PcapPrinter"><span class="toc-number">1.1.9.</span> <span class="toc-text">PcapPrinter</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PcapSplitter-pcap%E5%88%86%E5%89%B2%E2%9D%A4%E2%9D%A4%E2%9D%A4"><span class="toc-number">1.1.10.</span> <span class="toc-text">PcapSplitter pcap分割❤❤❤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PcapSearch-pcap%E6%90%9C%E7%B4%A2%E2%9D%A4%E2%9D%A4%E2%9D%A4"><span class="toc-number">1.1.11.</span> <span class="toc-text">PcapSearch pcap搜索❤❤❤</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#TcpReassembly"><span class="toc-number">1.1.11.1.</span> <span class="toc-text">TcpReassembly</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#IPFragUtil-IPDefragUtil"><span class="toc-number">1.1.11.2.</span> <span class="toc-text">IPFragUtil&amp;IPDefragUtil</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#TLSFingerprinting-TLS%E6%8C%87%E7%BA%B9%E2%9D%A4%E2%9D%A4%E2%9D%A4"><span class="toc-number">1.1.12.</span> <span class="toc-text">TLSFingerprinting TLS指纹❤❤❤</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#PcapPlusPlus-benchmark"><span class="toc-number">1.1.13.</span> <span class="toc-text">PcapPlusPlus-benchmark</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Tutorial-LiveTraffic"><span class="toc-number">1.1.14.</span> <span class="toc-text">Tutorial-LiveTraffic</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/joblib-VS-pickle/" title="joblib VS pickle">joblib VS pickle</a><time datetime="2024-07-12T15:31:59.000Z" title="发表于 2024-07-12 23:31:59">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/" title="pcap++实战（三）">pcap++实战（三）</a><time datetime="2024-07-12T15:30:49.000Z" title="发表于 2024-07-12 23:30:49">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/" title="pcap++实战（二）">pcap++实战（二）</a><time datetime="2024-07-12T15:30:09.000Z" title="发表于 2024-07-12 23:30:09">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/" title="pcap++实战（一）">pcap++实战（一）</a><time datetime="2024-07-12T15:29:34.000Z" title="发表于 2024-07-12 23:29:34">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/ONNX%E5%92%8C%E6%A8%A1%E5%9E%8B%E8%BD%AC%E6%8D%A2/" title="ONNX和模型转换">ONNX和模型转换</a><time datetime="2024-07-12T15:28:43.000Z" title="发表于 2024-07-12 23:28:43">2024-07-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

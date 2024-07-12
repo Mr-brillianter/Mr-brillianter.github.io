@@ -1,0 +1,275 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>MLOps | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="mlops-roadmap&#x2F;MLOpsRoadmap2020.md at master · tdcox&#x2F;mlops-roadmap (github.com) 什么是MLOps？MLOps可以狭义地定义为“将DevOps原则应用于机器学习应用程序的能力”，但正如我们稍后将看到的，这种狭义的定义错过了MLOps对客户的真正价值。相反，我们将MLOps定义为“DevOps方法论的扩展">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MLOps">
+<meta property="og:url" content="https://xxminxx.love/2024/07/12/MLOps/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="mlops-roadmap&#x2F;MLOpsRoadmap2020.md at master · tdcox&#x2F;mlops-roadmap (github.com) 什么是MLOps？MLOps可以狭义地定义为“将DevOps原则应用于机器学习应用程序的能力”，但正如我们稍后将看到的，这种狭义的定义错过了MLOps对客户的真正价值。相反，我们将MLOps定义为“DevOps方法论的扩展">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2024-07-12T15:26:16.000Z">
+<meta property="article:modified_time" content="2024-07-12T15:26:26.600Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="Min&#39;s blog.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2024/07/12/MLOps/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'MLOps',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2024-07-12 23:26:26'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">MLOps</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2024-07-12T15:26:16.000Z" title="发表于 2024-07-12 23:26:16">2024-07-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2024-07-12T15:26:26.600Z" title="更新于 2024-07-12 23:26:26">2024-07-12</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MLops/">MLops</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.6k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="MLOps"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><a target="_blank" rel="noopener" href="https://github.com/tdcox/mlops-roadmap/blob/master/MLOpsRoadmap2020.md">mlops-roadmap&#x2F;MLOpsRoadmap2020.md at master · tdcox&#x2F;mlops-roadmap (github.com)</a></p>
+<h1 id="什么是MLOps？"><a href="#什么是MLOps？" class="headerlink" title="什么是MLOps？"></a>什么是MLOps？</h1><p>MLOps可以狭义地定义为“将DevOps原则应用于机器学习应用程序的能力”，但正如我们稍后将看到的，这种狭义的定义错过了MLOps对客户的真正价值。相反，我们将MLOps定义为“DevOps方法论的扩展，将机器学习资产(和数据科学资产)作为DevOps生态中的一等公民”。</p>
+<p>MLOps应被视为一种持续管理产品ML方面的实践，其方式与成功将这些产品商业化所需的所有其他技术和非技术元素相统一，并在市场上具有最大的生存潜力。</p>
+<h1 id="什么不是MLOps？（对于MLOps的错误认识和定义外延）"><a href="#什么不是MLOps？（对于MLOps的错误认识和定义外延）" class="headerlink" title="什么不是MLOps？（对于MLOps的错误认识和定义外延）"></a>什么不是MLOps？（对于MLOps的错误认识和定义外延）</h1><p>MLOps不是“将Jupyter notebook投入生产环境”。<br>像Jupyter Notebooks这样的RAD工具牺牲了可维护性、可测试性和 scalability，以实现快速方法探索和教学<br>很大一部分ML从业者从未接触过过去70年在商业环境中管理软件资产的经验教训。</p>
+<p>数据科学家创建的训练好的ML模型只是可行性的概念证明，与能够在生产环境中安全将该资产转换为商业产品之间存在很大的概念差距。<br>此外，机器学习的解决方案往往用于决策系统，而不仅仅是数据处理系统，因此，交付项目的标准高得多，质量和治理流程的门槛非常高，在许多情况下需要满足区域立法规定的法律合规流程。<br>随着这些决策解决方案越来越多地取代商业和政府中的人类决策者，我们遇到了一类新的治理问题，统称为“负责任的人工智能”。这些问题围绕ML模型中的道德、公平和偏见等复杂问题带来了一系列挑战，通常属于政府监管范围，要求模型具有可解释性，通常标准高于适用于员工的标准。</p>
+<h1 id="MLOps动机-目的"><a href="#MLOps动机-目的" class="headerlink" title="MLOps动机&#x2F;目的"></a>MLOps动机&#x2F;目的</h1><h1 id="展望"><a href="#展望" class="headerlink" title="展望"></a>展望</h1><p>MLOps最期望的情况是在CI&#x2F;CD环境中，机器学习资产与所有其他软件资产得到一致的处理，作为统一发布过程的一部分，机器学习模型可以与包裹和使用它们的服务一起部署。</p>
+<ul>
+<li>MLOps必须与语言无关。ML模型的训练脚本可以用各种不同的编程语言编写。   </li>
+<li>MLOps必须与框架无关。目前有大量不同的机器学习框架在使用，预计随着时间的推移，这些框架将继续激增。必须能够在MLOps中使用任何所需的框架，并且能够在任何给定的部署中<strong>组合</strong>多个框架。</li>
+<li>MLOps必须与平台和基础设施无关。MLOps能在之前已经配置好的公司的基础设施下使用。保守假设，仅仅是MLOps，不足以需要导致整个基础设施根本变革。</li>
+<li>MLOps应该努力做到与目标硬件无关。人们可能想让模型在CPU、GPU、TPU、专用ASIC或其它芯片上进行运行。应该可以在尽可能广泛的目标硬件范围内使用MLOps。在某些情况下，可能还需要促进“交叉编译”，模型在一类硬件上训练以提高训练速度，并部署在另一类的硬件上以优化成本或性能。</li>
+<li>MLOps应遵循“约定优于配置”（convention over configuration）原则，通过遵循一定的约定来减少配置工作，从而使系统更加简洁、可维护和可扩展。比如，在MLOps实践中，通常会有许多构建（build）和部署（deployment）的资产，如模型、代码、配置文件等，可以通过遵循一致的约定，来简化管理和维护。对于必需的配置，应该尽可能地通过自动生成或推导来减少手动配置的工作量，（如模板、脚本或自动化工具），并提供配置模板和示例，这些示例可以被客户或用户逐步修改以满足他们的特定需求，以减少错误的可能性。</li>
+<li>MLOps应遵循MLOps的方法论。虽然许多客户在数据科学领域可能是专家，但他们可能对DevOps（开发运维一体化）或其他软件开发生命周期（SDLC）原则了解甚少。MLOps的设计应该始终与生产环境中的最佳实践保持一致，而不是为了满足专家用户在测试环境中快速尝试工具而采取“快速而粗糙”的方法。</li>
+</ul>
+<h1 id="挑战"><a href="#挑战" class="headerlink" title="挑战"></a>挑战</h1><p>XXX</p>
+<h1 id="备注："><a href="#备注：" class="headerlink" title="备注："></a>备注：</h1><h2 id="一等公民-一级对象"><a href="#一等公民-一级对象" class="headerlink" title="一等公民&#x2F;一级对象"></a>一等公民&#x2F;一级对象</h2><p>In programming language design, a first-class citizen (also type, object, entity, or value) in a given programming language is an entity which supports all the operations generally available to other entities. These operations typically include being passed as an argument, returned from a function, modified, and assigned to a variable.<br>在编程语言中，一等公民是指支持所有操作的实体， 这些操作通常包括作为参数传递，作为函数返回值，允许值的修改并赋值给变量等。不同的函数语言在设计时使用了不同的一等公民。<br>常见的一等公民包括int、float、char等基本数据类型，在老的语言比如C中，字符串和数组不是一等公民，因为我们不能用一个数组赋值另一个数组，当它们作为参数传递时，实际上只传递了它们的第一个元素的位置——它们的大小会丢失。<br>更高级的一等公民包括一等函数first-class function、一等类first-class class、一等数据类型first-class data type等。以一等函数为例，函数可以作为返回值和参数传递、并且可以赋值给变量，常见于匿名函数、闭包等。</p>
+<h2 id="RAD-Rapid-Application-Development-快速应用开发"><a href="#RAD-Rapid-Application-Development-快速应用开发" class="headerlink" title="RAD:Rapid Application Development 快速应用开发"></a>RAD:Rapid Application Development 快速应用开发</h2><p>比如jupyter notebook，牺牲了可维护性、可测试性和 scalability，以实现快速方法探索和教学</p>
+<h2 id="反模式"><a href="#反模式" class="headerlink" title="反模式"></a>反模式</h2><ul>
+<li>Anti-patterns是在软件开发和工程实践中出现的一些<strong>常见但不佳</strong>的方法或模式，通过研究并分类反模式，以防在后续开发过程中重蹈覆辙。</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="https://github.com/zenml-io">ZenML (github.com)</a><br><a target="_blank" rel="noopener" href="https://zhidao.baidu.com/question/1551831265028824747.html">MLOps（六）-回顾2023年开源的MLOps产品、框架、工具与格局变化_百度知道 (baidu.com)</a></p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2024/07/12/MLOps/">https://xxminxx.love/2024/07/12/MLOps/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2024/07/12/%E7%89%B9%E5%BE%81%E5%AD%98%E5%82%A8/" title="特征存储"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">特征存储</div></div></a></div><div class="next-post pull-right"><a href="/2024/07/12/dvc/" title="dvc"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">dvc</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">49</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">28</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">18</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E6%98%AFMLOps%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">什么是MLOps？</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%80%E4%B9%88%E4%B8%8D%E6%98%AFMLOps%EF%BC%9F%EF%BC%88%E5%AF%B9%E4%BA%8EMLOps%E7%9A%84%E9%94%99%E8%AF%AF%E8%AE%A4%E8%AF%86%E5%92%8C%E5%AE%9A%E4%B9%89%E5%A4%96%E5%BB%B6%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">什么不是MLOps？（对于MLOps的错误认识和定义外延）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MLOps%E5%8A%A8%E6%9C%BA-%E7%9B%AE%E7%9A%84"><span class="toc-number">3.</span> <span class="toc-text">MLOps动机&#x2F;目的</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%B1%95%E6%9C%9B"><span class="toc-number">4.</span> <span class="toc-text">展望</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%8C%91%E6%88%98"><span class="toc-number">5.</span> <span class="toc-text">挑战</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%A4%87%E6%B3%A8%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">备注：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%AD%89%E5%85%AC%E6%B0%91-%E4%B8%80%E7%BA%A7%E5%AF%B9%E8%B1%A1"><span class="toc-number">6.1.</span> <span class="toc-text">一等公民&#x2F;一级对象</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#RAD-Rapid-Application-Development-%E5%BF%AB%E9%80%9F%E5%BA%94%E7%94%A8%E5%BC%80%E5%8F%91"><span class="toc-number">6.2.</span> <span class="toc-text">RAD:Rapid Application Development 快速应用开发</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E6%A8%A1%E5%BC%8F"><span class="toc-number">6.3.</span> <span class="toc-text">反模式</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/joblib-VS-pickle/" title="joblib VS pickle">joblib VS pickle</a><time datetime="2024-07-12T15:31:59.000Z" title="发表于 2024-07-12 23:31:59">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%89%EF%BC%89/" title="pcap++实战（三）">pcap++实战（三）</a><time datetime="2024-07-12T15:30:49.000Z" title="发表于 2024-07-12 23:30:49">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%BA%8C%EF%BC%89/" title="pcap++实战（二）">pcap++实战（二）</a><time datetime="2024-07-12T15:30:09.000Z" title="发表于 2024-07-12 23:30:09">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/pcap-%E5%AE%9E%E6%88%98%EF%BC%88%E4%B8%80%EF%BC%89/" title="pcap++实战（一）">pcap++实战（一）</a><time datetime="2024-07-12T15:29:34.000Z" title="发表于 2024-07-12 23:29:34">2024-07-12</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/12/ONNX%E5%92%8C%E6%A8%A1%E5%9E%8B%E8%BD%AC%E6%8D%A2/" title="ONNX和模型转换">ONNX和模型转换</a><time datetime="2024-07-12T15:28:43.000Z" title="发表于 2024-07-12 23:28:43">2024-07-12</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2024 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
