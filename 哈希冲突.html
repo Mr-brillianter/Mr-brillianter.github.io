@@ -1,0 +1,424 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Min的博客 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="哈希冲突（Hash Collision）是指不同的键（key）通过哈希函数计算后得到相同的哈希值（即相同的存储位置）。解决哈希冲突的方法主要有以下几种，每种方法各有优缺点，适用于不同场景：  1. 开放寻址法（Open Addressing）核心思想：如果目标位置已被占用，就按照某种规则（探测序列）寻找下一个空闲位置。常见探测方式：  线性探测（Linear Probing） 冲突时，顺序检查下一">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Min的博客">
+<meta property="og:url" content="https://xxminxx.love/%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="哈希冲突（Hash Collision）是指不同的键（key）通过哈希函数计算后得到相同的哈希值（即相同的存储位置）。解决哈希冲突的方法主要有以下几种，每种方法各有优缺点，适用于不同场景：  1. 开放寻址法（Open Addressing）核心思想：如果目标位置已被占用，就按照某种规则（探测序列）寻找下一个空闲位置。常见探测方式：  线性探测（Linear Probing） 冲突时，顺序检查下一">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2025-07-26T01:31:22.231Z">
+<meta property="article:modified_time" content="2025-07-26T01:31:22.231Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="Min&#39;s blog.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/%E5%93%88%E5%B8%8C%E5%86%B2%E7%AA%81.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Min的博客',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-07-26 09:31:22'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">Min的博客</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><p>哈希冲突（Hash Collision）是指不同的键（key）通过哈希函数计算后得到相同的哈希值（即相同的存储位置）。解决哈希冲突的方法主要有以下几种，每种方法各有优缺点，适用于不同场景：</p>
+<hr>
+<h3 id="1-开放寻址法（Open-Addressing）"><a href="#1-开放寻址法（Open-Addressing）" class="headerlink" title="1. 开放寻址法（Open Addressing）"></a><strong>1. 开放寻址法（Open Addressing）</strong></h3><p><strong>核心思想</strong>：如果目标位置已被占用，就按照某种规则（探测序列）寻找下一个空闲位置。<br><strong>常见探测方式</strong>：</p>
+<ul>
+<li><strong>线性探测（Linear Probing）</strong></li>
+<li>冲突时，顺序检查下一个位置（如 <code>h(key)+1, h(key)+2, ...</code>）。</li>
+<li><strong>缺点</strong>：容易导致“聚集”（Clustering），即连续占用位置，降低查找效率。</li>
+<li><strong>平方探测（Quadratic Probing）</strong></li>
+<li>冲突时，按平方步长探测（如 <code>h(key)+1², h(key)+2², ...</code>）。</li>
+<li>减少聚集问题，但可能无法遍历所有位置（需保证表大小为质数）。</li>
+<li><strong>双重哈希（Double Hashing）</strong></li>
+<li>使用第二个哈希函数计算步长（如 <code>h1(key) + i*h2(key)</code>）。</li>
+<li>探测序列更分散，冲突概率低，但计算成本略高。</li>
+</ul>
+<p><strong>优点</strong>：无需额外存储空间（如链表），适合数据量小、装载因子（load factor）低的场景。<br><strong>缺点</strong>：删除操作需特殊标记（如“墓碑”标记），否则会中断探测序列。</p>
+<hr>
+<h3 id="2-链地址法（Separate-Chaining）"><a href="#2-链地址法（Separate-Chaining）" class="headerlink" title="2. 链地址法（Separate Chaining）"></a><strong>2. 链地址法（Separate Chaining）</strong></h3><p><strong>核心思想</strong>：每个哈希桶（bucket）维护一个链表（或其他数据结构），所有冲突的键值对存储在同一个桶的链表中。<br><strong>优化变种</strong>：</p>
+<ul>
+<li><strong>链表 → 红黑树</strong>（如Java 8的<code>HashMap</code>）</li>
+<li>当链表长度超过阈值时，转为红黑树，将查找时间从O(n)降至O(log n)。</li>
+<li><strong>动态可扩展链表</strong>：根据负载情况调整链表结构。</li>
+</ul>
+<p><strong>优点</strong>：实现简单，删除操作方便，适合高冲突场景。<br><strong>缺点</strong>：需要额外指针空间，缓存不友好（链表节点非连续存储）。</p>
+<hr>
+<h1 id="其它概念"><a href="#其它概念" class="headerlink" title="其它概念"></a>其它概念</h1><h3 id="1-装载因子（Load-Factor）"><a href="#1-装载因子（Load-Factor）" class="headerlink" title="1. 装载因子（Load Factor）"></a><strong>1. 装载因子（Load Factor）</strong></h3><p><strong>定义</strong>：<br>装载因子是哈希表中已存储的<strong>键值对数量</strong>与<strong>哈希桶总数</strong>的比值，即：<br>$\text{Load Factor} &#x3D; \frac{\text{已存储的元素数量}}{\text{哈希桶的数量}}$</p>
+<p><strong>作用</strong>：</p>
+<ul>
+<li><strong>衡量哈希表的空间利用率</strong>：装载因子越高，哈希表越拥挤，冲突概率越大。</li>
+<li><strong>触发扩容的阈值</strong>：当装载因子超过预设值（如Java <code>HashMap</code>默认为0.75），哈希表会触发扩容（resize），以减少冲突。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul>
+<li>哈希表有10个桶（bucket），已存储7个元素，则装载因子为 ( \frac{7}{10} &#x3D; 0.7 )。</li>
+<li>若装载因子阈值设为0.75，插入第8个元素时会触发扩容（桶数量可能翻倍为20）。</li>
+</ul>
+<p><strong>影响</strong>：</p>
+<ul>
+<li><strong>高装载因子</strong>（接近1.0）：冲突频繁，查询&#x2F;插入效率下降（接近O(n)）。</li>
+<li><strong>低装载因子</strong>（接近0）：空间浪费，但冲突少（接近O(1)）。</li>
+</ul>
+<hr>
+<h3 id="2-哈希桶（Bucket）"><a href="#2-哈希桶（Bucket）" class="headerlink" title="2. 哈希桶（Bucket）"></a><strong>2. 哈希桶（Bucket）</strong></h3><p><strong>定义</strong>：<br>哈希桶是哈希表中存储元素的<strong>基本单元</strong>，每个桶对应一个哈希值（或哈希值的子集）。</p>
+<ul>
+<li>在<strong>开放寻址法</strong>中，每个桶直接存储一个键值对（或为空）。</li>
+<li>在<strong>链地址法</strong>中，每个桶是一个链表（或树结构），存储所有哈希到该位置的键值对。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul>
+<li>哈希函数 ( h(key) &#x3D; key % 10 ) 将键映射到10个桶（编号0~9）：</li>
+<li>键 <code>23</code> → 桶 <code>3</code>（因为 ( 23 % 10 &#x3D; 3 )）。</li>
+<li>键 <code>15</code> → 桶 <code>5</code>。</li>
+<li>若 <code>23</code> 和 <code>33</code> 都映射到桶 <code>3</code>，则发生冲突，需通过冲突解决方法处理。</li>
+</ul>
+<p><strong>哈希桶的实现方式</strong>：</p>
+<table>
+<thead>
+<tr>
+<th>冲突解决方法</th>
+<th>哈希桶的物理结构</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开放寻址法</td>
+<td>数组（每个位置是一个桶）</td>
+</tr>
+<tr>
+<td>链地址法</td>
+<td>数组 + 链表&#x2F;树（每个桶是链表头）</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="3-装载因子与哈希桶的关系"><a href="#3-装载因子与哈希桶的关系" class="headerlink" title="3. 装载因子与哈希桶的关系"></a><strong>3. 装载因子与哈希桶的关系</strong></h3><ol>
+<li><strong>扩容机制</strong>：</li>
+</ol>
+<ul>
+<li>当装载因子超过阈值，哈希表会<strong>增加桶的数量</strong>（如翻倍），并重新哈希所有元素到新桶中，以降低冲突概率。</li>
+<li>例如：Java <code>HashMap</code>默认扩容后桶数量变为原来的2倍。</li>
+</ul>
+<ol start="2">
+<li><strong>性能权衡</strong>：</li>
+</ol>
+<ul>
+<li><strong>桶数量多</strong>（装载因子低）：冲突少，但内存占用高。</li>
+<li><strong>桶数量少</strong>（装载因子高）：内存省，但冲突多。</li>
+</ul>
+<ol start="3">
+<li><strong>动态调整</strong>：</li>
+</ol>
+<ul>
+<li>现代哈希表（如Python <code>dict</code>、Java <code>HashMap</code>）会根据装载因子动态平衡时间与空间效率。</li>
+</ul>
+<hr>
+<h1 id="红黑树"><a href="#红黑树" class="headerlink" title="红黑树"></a>红黑树</h1><p>[[红黑树：自平衡的二叉搜索树]]</p>
+<h1 id="其它哈希冲突解决方法："><a href="#其它哈希冲突解决方法：" class="headerlink" title="其它哈希冲突解决方法："></a>其它哈希冲突解决方法：</h1><h3 id="3-再哈希（Rehashing）"><a href="#3-再哈希（Rehashing）" class="headerlink" title="3. 再哈希（Rehashing）"></a><strong>3. 再哈希（Rehashing）</strong></h3><p><strong>核心思想</strong>：当冲突发生时，使用另一个哈希函数重新计算位置（如 <code>h2(key)</code>）。</p>
+<ul>
+<li>通常需要设计一组哈希函数，避免二次冲突。</li>
+<li>适用于分布式哈希表等场景。</li>
+</ul>
+<p><strong>优点</strong>：减少聚集问题。<br><strong>缺点</strong>：计算成本高，需精心设计哈希函数组。</p>
+<hr>
+<h3 id="4-公共溢出区（Overflow-Area）"><a href="#4-公共溢出区（Overflow-Area）" class="headerlink" title="4. 公共溢出区（Overflow Area）"></a><strong>4. 公共溢出区（Overflow Area）</strong></h3><p><strong>核心思想</strong>：将冲突的键值对统一存放到一个独立的存储区域（溢出区）。</p>
+<ul>
+<li>主表通过指针指向溢出区。</li>
+<li>适用于静态哈希表或嵌入式系统。</li>
+</ul>
+<p><strong>优点</strong>：实现简单，主表结构紧凑。<br><strong>缺点</strong>：溢出区可能成为性能瓶颈。</p>
+<hr>
+<h3 id="5-动态扩容（Resizing）"><a href="#5-动态扩容（Resizing）" class="headerlink" title="5. 动态扩容（Resizing）"></a><strong>5. 动态扩容（Resizing）</strong></h3><p><strong>核心思想</strong>：当哈希表装载因子（元素数量&#x2F;桶数量）超过阈值时，扩容并重新哈希所有元素。</p>
+<ul>
+<li>例如，Java <code>HashMap</code>默认装载因子为0.75，超过时容量翻倍。</li>
+<li><strong>渐进式扩容</strong>：如Redis的渐进式rehash，避免一次性扩容导致的性能抖动。</li>
+</ul>
+<p><strong>优点</strong>：从根本上减少冲突概率。<br><strong>缺点</strong>：扩容时短暂性能下降。</p>
+<hr>
+<h3 id="方法对比"><a href="#方法对比" class="headerlink" title="方法对比"></a><strong>方法对比</strong></h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>时间复杂度（平均）</th>
+<th>空间开销</th>
+<th>适用场景</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开放寻址法</td>
+<td>O(1)</td>
+<td>低</td>
+<td>装载因子低、内存受限</td>
+</tr>
+<tr>
+<td>链地址法</td>
+<td>O(1)~O(n)</td>
+<td>中</td>
+<td>高冲突、频繁删除</td>
+</tr>
+<tr>
+<td>再哈希</td>
+<td>O(1)</td>
+<td>低</td>
+<td>需要避免聚集</td>
+</tr>
+<tr>
+<td>公共溢出区</td>
+<td>O(n)</td>
+<td>高</td>
+<td>静态数据或嵌入式系统</td>
+</tr>
+<tr>
+<td>动态扩容</td>
+<td>摊销O(1)</td>
+<td>高</td>
+<td>数据动态增长</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="实际应用示例"><a href="#实际应用示例" class="headerlink" title="实际应用示例"></a><strong>实际应用示例</strong></h3><ul>
+<li>**Java <code>HashMap</code>**：链地址法 + 红黑树优化 + 动态扩容。</li>
+<li>**Python <code>dict</code>**：开放寻址法（伪随机探测） + 动态扩容。</li>
+<li>**Redis <code>Hash</code>**：链地址法 + 渐进式rehash。</li>
+</ul>
+<p>[^1]: </p>
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/18/%E5%AD%A6%E6%9C%AF%E6%A3%80%E7%B4%A2/" title="学术检索完全指南：如何高效查找特定期刊/会议论文">学术检索完全指南：如何高效查找特定期刊/会议论文</a><time datetime="2025-05-18T04:14:50.000Z" title="发表于 2025-05-18 12:14:50">2025-05-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/02/UV/" title="无题">无题</a><time datetime="2025-05-02T07:03:36.328Z" title="发表于 2025-05-02 15:03:36">2025-05-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/01/Cloudinary/" title="Cloudinary">Cloudinary</a><time datetime="2025-05-01T11:53:10.000Z" title="发表于 2025-05-01 19:53:10">2025-05-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/22/Python%E4%B8%AD%E7%9A%84%E5%B9%B6%E8%A1%8C/" title="Python中的并行">Python中的并行</a><time datetime="2024-08-22T05:49:25.000Z" title="发表于 2024-08-22 13:49:25">2024-08-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/26/Python%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/" title="Python小知识点">Python小知识点</a><time datetime="2024-07-26T15:41:34.000Z" title="发表于 2024-07-26 23:41:34">2024-07-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MLops/"><span class="card-category-list-name">MLops</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/"><span class="card-category-list-name">Tools</span><span class="card-category-list-count">7</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">2</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%BA%BA%E5%B7%A5%E5%BC%B1%E6%99%BA/" style="font-size: 1.23em; color: #999ea6">人工弱智</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">深度学习</a> <a href="/tags/vim/" style="font-size: 1.1em; color: #999">vim</a> <a href="/tags/Python/" style="font-size: 1.5em; color: #99a9bf">Python</a> <a href="/tags/Clickhouse/" style="font-size: 1.1em; color: #999">Clickhouse</a> <a href="/tags/Playwright/" style="font-size: 1.1em; color: #999">Playwright</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/" style="font-size: 1.1em; color: #999">数据库使用</a> <a href="/tags/python%E8%AF%AD%E6%B3%95/" style="font-size: 1.1em; color: #999">python语法</a> <a href="/tags/pcap/" style="font-size: 1.37em; color: #99a4b2">pcap++</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">研究工具</a> <a href="/tags/react-ant%E7%BB%84%E4%BB%B6/" style="font-size: 1.1em; color: #999">react ant组件</a> <a href="/tags/Hexo/" style="font-size: 1.1em; color: #999">Hexo</a> <a href="/tags/linux/" style="font-size: 1.23em; color: #999ea6">linux</a> <a href="/tags/anti-bot-bypassing/" style="font-size: 1.1em; color: #999">anti-bot bypassing</a> <a href="/tags/git-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">git 工具</a> <a href="/tags/ffmpeg/" style="font-size: 1.1em; color: #999">ffmpeg</a> <a href="/tags/LLM/" style="font-size: 1.23em; color: #999ea6">LLM</a> <a href="/tags/geek/" style="font-size: 1.1em; color: #999">geek</a> <a href="/tags/windows-API/" style="font-size: 1.1em; color: #999">windows API</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%90%9C%E7%B4%A2/" style="font-size: 1.1em; color: #999">学术搜索</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.37em; color: #99a4b2">工具</a> <a href="/tags/Python%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">Python应用</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">神经网络</a> <a href="/tags/XPath/" style="font-size: 1.1em; color: #999">XPath</a> <a href="/tags/%E8%AE%BA%E6%96%87%E6%A3%80%E7%B4%A2/" style="font-size: 1.1em; color: #999">论文检索</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 1.1em; color: #999">函数式编程</a> <a href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">流量分析 工具</a> <a href="/tags/requests/" style="font-size: 1.1em; color: #999">requests</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.1em; color: #999">前端</a> <a href="/tags/pytest/" style="font-size: 1.1em; color: #999">pytest</a> <a href="/tags/Github-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">Github 工具</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">54</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-09-30T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">58.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-09-11T15:48:19.577Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

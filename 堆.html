@@ -1,0 +1,317 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>堆 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="推荐直接看网页和本页的heapq库：8.1   堆 - Hello 算法 基于堆更加高效地解决 Top-k 问题，流程 堆化（Heapify），即建堆操作：如何从一个无序数组或不符合堆性质的完全二叉树构建堆堆化的核心操作是 heapify_down（下沉） 或 heapify_up（上浮），这两个都是强调修复和单个元素，通过递归或迭代调整节点位置，最终使整个数据结构满足堆性质。  Top-k 问题">
+<meta property="og:type" content="website">
+<meta property="og:title" content="堆">
+<meta property="og:url" content="https://xxminxx.love/%E5%A0%86.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="推荐直接看网页和本页的heapq库：8.1   堆 - Hello 算法 基于堆更加高效地解决 Top-k 问题，流程 堆化（Heapify），即建堆操作：如何从一个无序数组或不符合堆性质的完全二叉树构建堆堆化的核心操作是 heapify_down（下沉） 或 heapify_up（上浮），这两个都是强调修复和单个元素，通过递归或迭代调整节点位置，最终使整个数据结构满足堆性质。  Top-k 问题">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2025-03-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-11T15:43:03.821Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="序">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/%E5%A0%86.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '堆',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-09-11 23:43:03'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">堆</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><p>推荐直接看网页和本页的heapq库：<br><a target="_blank" rel="noopener" href="https://www.hello-algo.com/chapter_heap/heap">8.1   堆 - Hello 算法</a></p>
+<p>基于堆更加高效地解决 Top-k 问题，流程</p>
+<h1 id="堆化（Heapify），即建堆操作：如何从一个无序数组或不符合堆性质的完全二叉树构建堆"><a href="#堆化（Heapify），即建堆操作：如何从一个无序数组或不符合堆性质的完全二叉树构建堆" class="headerlink" title="堆化（Heapify），即建堆操作：如何从一个无序数组或不符合堆性质的完全二叉树构建堆"></a>堆化（Heapify），即建堆操作：如何从一个无序数组或<strong>不符合堆性质</strong>的完全二叉树构建堆</h1><p>堆化的核心操作是 <strong><code>heapify_down</code>（下沉）</strong> 或 <strong><code>heapify_up</code>（上浮）</strong>，这两个都是强调修复和单个元素，通过递归或迭代调整节点位置，最终使整个数据结构满足堆性质。</p>
+<hr>
+<h1 id="Top-k-问题"><a href="#Top-k-问题" class="headerlink" title="Top-k 问题"></a>Top-k 问题</h1><p>问题：给定一个长度为n的无序数组 <code>nums</code> ，请返回数组中<strong>最大</strong>的k个元素。<br>步骤：</p>
+<ol>
+<li>初始化一个小顶堆，其堆顶元素最小。</li>
+<li>先将数组的前k个元素依次入堆。</li>
+<li>从第k个元素开始，若当前元素大于堆顶元素，则将堆顶元素出堆，并将当前元素入堆(<strong>最小元素出堆</strong>)。</li>
+<li>遍历完成后，堆中保存的就是最大的k个元素。<br>复杂度：<br>  <strong>n轮入堆和出堆，堆的最大长度为 k，因此时间复杂度为nlogk</strong></li>
+</ol>
+<hr>
+<h1 id="python的heapq（堆队列）库"><a href="#python的heapq（堆队列）库" class="headerlink" title="python的heapq（堆队列）库"></a>python的heapq（堆队列）库</h1><p>用法：注意，heapq借助原生的数组实现！！而不是heapq()！</p>
+<p>Python 的 <code>heapq</code> 模块提供了基于堆的优先队列实现，支持最小堆（Min Heap）操作。以下是 <code>heapq</code> 的<strong>核心用法</strong>及<strong>常见场景示例</strong>：</p>
+<hr>
+<h3 id="1-基本操作"><a href="#1-基本操作" class="headerlink" title="1. 基本操作"></a><strong>1. 基本操作</strong></h3><h4 id="1-1-将列表转换为堆（原地修改）"><a href="#1-1-将列表转换为堆（原地修改）" class="headerlink" title="1.1 将列表转换为堆（原地修改）"></a><strong>1.1 将列表转换为堆（原地修改）</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line">data = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>, <span class="number">1</span>, <span class="number">5</span>, <span class="number">9</span>, <span class="number">2</span>]</span><br><span class="line">heapq.heapify(data)<span class="comment"># 将列表转为最小堆，时间复杂度 O(n)</span></span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment"># 输出: [1, 1, 2, 3, 5, 9, 4]（堆结构，非完全排序）</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-2-插入元素（heappush）"><a href="#1-2-插入元素（heappush）" class="headerlink" title="1.2 插入元素（heappush）"></a><strong>1.2 插入元素（<code>heappush</code>）</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">heapq.heappush(data, <span class="number">0</span>)<span class="comment"># 插入元素并维护堆性质，O(log n)</span></span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment"># 输出: [0, 1, 1, 3, 5, 9, 4, 2]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="1-3-弹出最小元素（heappop）"><a href="#1-3-弹出最小元素（heappop）" class="headerlink" title="1.3 弹出最小元素（heappop）"></a><strong>1.3 弹出最小元素（<code>heappop</code>）</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">min_val = heapq.heappop(data)<span class="comment"># 弹出并返回最小值，O(log n)</span></span><br><span class="line"><span class="built_in">print</span>(min_val)<span class="comment"># 输出: 0</span></span><br><span class="line"><span class="built_in">print</span>(data)<span class="comment"># 输出: [1, 1, 2, 3, 5, 9, 4]</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="2-高级操作"><a href="#2-高级操作" class="headerlink" title="2. 高级操作"></a><strong>2. 高级操作</strong></h3><h4 id="2-1-获取前-N-个最小-最大元素"><a href="#2-1-获取前-N-个最小-最大元素" class="headerlink" title="2.1 获取前 N 个最小&#x2F;最大元素"></a><strong>2.1 获取前 N 个最小&#x2F;最大元素</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 获取前3个最小值（无需修改原列表）</span></span><br><span class="line">smallest = heapq.nsmallest(<span class="number">3</span>, data)</span><br><span class="line"><span class="built_in">print</span>(smallest)<span class="comment"># 输出: [1, 1, 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 获取前2个最大值</span></span><br><span class="line">largest = heapq.nlargest(<span class="number">2</span>, data)</span><br><span class="line"><span class="built_in">print</span>(largest)<span class="comment"># 输出: [9, 5]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-2-合并多个有序堆"><a href="#2-2-合并多个有序堆" class="headerlink" title="2.2 合并多个有序堆"></a><strong>2.2 合并多个有序堆</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">heap1 = [<span class="number">1</span>, <span class="number">3</span>, <span class="number">5</span>]</span><br><span class="line">heap2 = [<span class="number">2</span>, <span class="number">4</span>, <span class="number">6</span>]</span><br><span class="line">merged = <span class="built_in">list</span>(heapq.merge(heap1, heap2))<span class="comment"># 合并后仍有序</span></span><br><span class="line"><span class="built_in">print</span>(merged)<span class="comment"># 输出: [1, 2, 3, 4, 5, 6]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="2-3-自定义优先级（元组排序）"><a href="#2-3-自定义优先级（元组排序）" class="headerlink" title="2.3 自定义优先级（元组排序）"></a><strong>2.3 自定义优先级（元组排序）</strong></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">tasks = [(<span class="number">2</span>, <span class="string">&#x27;task1&#x27;</span>), (<span class="number">1</span>, <span class="string">&#x27;task2&#x27;</span>), (<span class="number">3</span>, <span class="string">&#x27;task3&#x27;</span>)]</span><br><span class="line">heapq.heapify(tasks)<span class="comment"># 按元组第一个元素（优先级）排序</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> tasks:</span><br><span class="line">	priority, task = heapq.heappop(tasks)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&quot;执行任务: <span class="subst">&#123;task&#125;</span> (优先级: <span class="subst">&#123;priority&#125;</span>)&quot;</span>)</span><br><span class="line"><span class="comment"># 输出:</span></span><br><span class="line"><span class="comment"># 执行任务: task2 (优先级: 1)</span></span><br><span class="line"><span class="comment"># 执行任务: task1 (优先级: 2)</span></span><br><span class="line"><span class="comment"># 执行任务: task3 (优先级: 3)</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="3-注意事项"><a href="#3-注意事项" class="headerlink" title="3. 注意事项"></a><strong>3. 注意事项</strong></h3><ol>
+<li><p><strong>最小堆特性</strong>：<br><code>heapq</code> <strong>仅实现最小堆，如需最大堆</strong>，可将数值取反存储（如 <code>push -x</code>，弹出时再取反）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">data = [<span class="number">3</span>, <span class="number">1</span>, <span class="number">4</span>]</span><br><span class="line">max_heap = [-x <span class="keyword">for</span> x <span class="keyword">in</span> data]</span><br><span class="line">heapq.heapify(max_heap)</span><br><span class="line">max_val = -heapq.heappop(max_heap)<span class="comment"># 弹出最大值 4</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p><strong>原地修改</strong>：<br><code>heapify</code>、<code>heappush</code>、<code>heappop</code> 直接修改原列表，<strong>不返回新列表</strong>。</p>
+</li>
+<li><p><strong>时间复杂度</strong>：</p>
+</li>
+</ol>
+<ul>
+<li><code>heapify</code>: O(n)</li>
+<li><code>heappush</code>&#x2F;<code>heappop</code>: O(log n)</li>
+<li><code>nsmallest</code>&#x2F;<code>nlargest</code>: O(n log k)（k 为前 N 个元素）</li>
+</ul>
+<hr>
+<h3 id="4-完整示例"><a href="#4-完整示例" class="headerlink" title="4. 完整示例"></a><strong>4. 完整示例</strong></h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> heapq</span><br><span class="line"></span><br><span class="line"><span class="comment"># 模拟任务调度</span></span><br><span class="line">tasks = []</span><br><span class="line">heapq.heappush(tasks, (<span class="number">3</span>, <span class="string">&quot;Low priority task&quot;</span>))</span><br><span class="line">heapq.heappush(tasks, (<span class="number">1</span>, <span class="string">&quot;Urgent task&quot;</span>))</span><br><span class="line">heapq.heappush(tasks, (<span class="number">2</span>, <span class="string">&quot;Normal task&quot;</span>))</span><br><span class="line"></span><br><span class="line"><span class="keyword">while</span> tasks:</span><br><span class="line">	priority, task = heapq.heappop(tasks)</span><br><span class="line">	<span class="built_in">print</span>(<span class="string">f&quot;[优先级 <span class="subst">&#123;priority&#125;</span>] <span class="subst">&#123;task&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># 输出:</span></span><br><span class="line"><span class="comment"># [优先级 1] Urgent task</span></span><br><span class="line"><span class="comment"># [优先级 2] Normal task</span></span><br><span class="line"><span class="comment"># [优先级 3] Low priority task</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a><strong>总结</strong></h3><p><code>heapq</code> 是 Python 中高效的堆实现，适用于：</p>
+<ul>
+<li><strong>优先队列</strong>（按优先级处理任务）</li>
+<li><strong>Top-K 问题</strong>（快速获取前 N 个极值）</li>
+<li><strong>合并有序序列</strong>（如多路归并）</li>
+</ul>
+<p>通过灵活使用元组和取反技巧，可以覆盖大多数场景需求。</p>
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/18/%E5%AD%A6%E6%9C%AF%E6%A3%80%E7%B4%A2/" title="学术检索完全指南：如何高效查找特定期刊/会议论文">学术检索完全指南：如何高效查找特定期刊/会议论文</a><time datetime="2025-05-18T04:14:50.000Z" title="发表于 2025-05-18 12:14:50">2025-05-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/02/UV/" title="无题">无题</a><time datetime="2025-05-02T07:03:36.328Z" title="发表于 2025-05-02 15:03:36">2025-05-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/01/Cloudinary/" title="Cloudinary">Cloudinary</a><time datetime="2025-05-01T11:53:10.000Z" title="发表于 2025-05-01 19:53:10">2025-05-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/22/Python%E4%B8%AD%E7%9A%84%E5%B9%B6%E8%A1%8C/" title="Python中的并行">Python中的并行</a><time datetime="2024-08-22T05:49:25.000Z" title="发表于 2024-08-22 13:49:25">2024-08-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/26/Python%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/" title="Python小知识点">Python小知识点</a><time datetime="2024-07-26T15:41:34.000Z" title="发表于 2024-07-26 23:41:34">2024-07-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MLops/"><span class="card-category-list-name">MLops</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/"><span class="card-category-list-name">Tools</span><span class="card-category-list-count">7</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">2</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%BA%BA%E5%B7%A5%E5%BC%B1%E6%99%BA/" style="font-size: 1.23em; color: #999ea6">人工弱智</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">深度学习</a> <a href="/tags/vim/" style="font-size: 1.1em; color: #999">vim</a> <a href="/tags/Python/" style="font-size: 1.5em; color: #99a9bf">Python</a> <a href="/tags/Clickhouse/" style="font-size: 1.1em; color: #999">Clickhouse</a> <a href="/tags/Playwright/" style="font-size: 1.1em; color: #999">Playwright</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/" style="font-size: 1.1em; color: #999">数据库使用</a> <a href="/tags/python%E8%AF%AD%E6%B3%95/" style="font-size: 1.1em; color: #999">python语法</a> <a href="/tags/pcap/" style="font-size: 1.37em; color: #99a4b2">pcap++</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">研究工具</a> <a href="/tags/react-ant%E7%BB%84%E4%BB%B6/" style="font-size: 1.1em; color: #999">react ant组件</a> <a href="/tags/Hexo/" style="font-size: 1.1em; color: #999">Hexo</a> <a href="/tags/linux/" style="font-size: 1.23em; color: #999ea6">linux</a> <a href="/tags/anti-bot-bypassing/" style="font-size: 1.1em; color: #999">anti-bot bypassing</a> <a href="/tags/git-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">git 工具</a> <a href="/tags/ffmpeg/" style="font-size: 1.1em; color: #999">ffmpeg</a> <a href="/tags/LLM/" style="font-size: 1.23em; color: #999ea6">LLM</a> <a href="/tags/geek/" style="font-size: 1.1em; color: #999">geek</a> <a href="/tags/windows-API/" style="font-size: 1.1em; color: #999">windows API</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%90%9C%E7%B4%A2/" style="font-size: 1.1em; color: #999">学术搜索</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.37em; color: #99a4b2">工具</a> <a href="/tags/Python%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">Python应用</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">神经网络</a> <a href="/tags/XPath/" style="font-size: 1.1em; color: #999">XPath</a> <a href="/tags/%E8%AE%BA%E6%96%87%E6%A3%80%E7%B4%A2/" style="font-size: 1.1em; color: #999">论文检索</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 1.1em; color: #999">函数式编程</a> <a href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">流量分析 工具</a> <a href="/tags/requests/" style="font-size: 1.1em; color: #999">requests</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.1em; color: #999">前端</a> <a href="/tags/pytest/" style="font-size: 1.1em; color: #999">pytest</a> <a href="/tags/Github-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">Github 工具</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">54</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-09-30T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">58.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-09-11T15:48:19.577Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

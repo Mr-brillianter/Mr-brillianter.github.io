@@ -1,0 +1,278 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Min的博客 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="在深度学习的CV（计算机视觉）和NLP（自然语言处理）任务中，理解张量形状在不同网络层中的变化至关重要。以下是常见网络层及其输入&#x2F;输出形状变化的细致总结（使用PyTorch&#x2F;Numpy的维度约定：(Batch Size, Channels&#x2F;Features&#x2F;Embedding Dim, Height, Width) 或 (Batch Size, Sequence Length,">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Min的博客">
+<meta property="og:url" content="https://xxminxx.love/CV%E5%92%8CNLP%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84shape%E5%9C%A8%E5%B8%B8%E8%A7%81%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B8%8B%E7%9A%84%E5%8F%98%E5%8C%96.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="在深度学习的CV（计算机视觉）和NLP（自然语言处理）任务中，理解张量形状在不同网络层中的变化至关重要。以下是常见网络层及其输入&#x2F;输出形状变化的细致总结（使用PyTorch&#x2F;Numpy的维度约定：(Batch Size, Channels&#x2F;Features&#x2F;Embedding Dim, Height, Width) 或 (Batch Size, Sequence Length,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2025-07-23T13:39:43.614Z">
+<meta property="article:modified_time" content="2025-07-23T13:39:00.085Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="Min&#39;s blog.">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/CV%E5%92%8CNLP%E4%B8%AD%E5%B8%B8%E8%A7%81%E7%9A%84shape%E5%9C%A8%E5%B8%B8%E8%A7%81%E7%BD%91%E7%BB%9C%E5%B1%82%E4%B8%8B%E7%9A%84%E5%8F%98%E5%8C%96.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Min的博客',
+  isPost: false,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: false,
+  postUpdate: '2025-07-23 21:39:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="page" id="body-wrap"><header class="not-home-page" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="page-site-info"><h1 id="site-title">Min的博客</h1></div></header><main class="layout" id="content-inner"><div id="page"><div id="article-container"><p>在深度学习的CV（计算机视觉）和NLP（自然语言处理）任务中，理解张量形状在不同网络层中的变化至关重要。以下是常见网络层及其输入&#x2F;输出形状变化的细致总结（使用PyTorch&#x2F;Numpy的维度约定：<code>(Batch Size, Channels/Features/Embedding Dim, Height, Width)</code> 或 <code>(Batch Size, Sequence Length, Hidden Size/Embedding Dim)</code>）：</p>
+<hr>
+<h3 id="核心维度概念"><a href="#核心维度概念" class="headerlink" title="核心维度概念"></a><strong>核心维度概念</strong></h3><p>1.<strong><code>N</code> &#x2F; <code>batch_size</code>:</strong> 批次大小（样本数）<br>2.<strong><code>C</code> &#x2F; <code>channels</code> &#x2F; <code>features</code> &#x2F; <code>embedding_dim</code> &#x2F; <code>d_model</code> &#x2F; <code>hidden_size</code></strong>: 特征维度（通道、词嵌入大小、隐藏层大小）<br>3.<strong><code>H</code></strong>: 特征图高度 (CV)<br>4.<strong><code>W</code></strong>: 特征图宽度 (CV)<br>5.<strong><code>L</code> &#x2F; <code>seq_len</code>:</strong> 序列长度 (NLP &#x2F; 1D CV)<br>6.<strong><code>K</code></strong>: 卷积核大小 (单个维度)<br>7.<strong><code>S</code> &#x2F; <code>stride</code></strong>: 步长<br>8.<strong><code>P</code> &#x2F; <code>padding</code></strong>: 填充 (通常指单边添加的数量)<br>9.<strong><code>D</code> &#x2F; <code>dilation</code></strong>: 膨胀率<br>10. <strong><code>O</code> &#x2F; <code>out_channels</code></strong>: 卷积输出通道数<br>11. <strong><code>G</code> &#x2F; <code>groups</code></strong>: 分组数 (分组卷积)<br>12. <strong><code>num_heads</code></strong>: Transformer中的注意力头数</p>
+<hr>
+<h3 id="常见层及其形状变化"><a href="#常见层及其形状变化" class="headerlink" title="常见层及其形状变化"></a><strong>常见层及其形状变化</strong></h3><h4 id="1-全连接层-Linear-Dense-Feed-Forward"><a href="#1-全连接层-Linear-Dense-Feed-Forward" class="headerlink" title="1. 全连接层 (Linear &#x2F; Dense &#x2F; Feed-Forward)"></a><strong>1. 全连接层 (Linear &#x2F; Dense &#x2F; Feed-Forward)</strong></h4><p>*<strong>输入形状:</strong> <code>(N, *, In_Features)</code><br>*<code>*</code> 表示任意数量的额外维度（会被展平）。<br>*<code>In_Features</code> 是输入特征维度。<br>*<strong>输出形状:</strong> <code>(N, *, Out_Features)</code><br>*<strong>变化说明:</strong><br>*无论输入有多少额外维度（如序列长度<code>L</code>、图像高度<code>H</code>、宽度<code>W</code>），该层将所有额外维度 <strong>展平</strong> (<code>view(N, -1)</code>)。<br>*执行 <code>Y = XW^T + b</code>，其中 <code>W</code> 的形状是 <code>(Out_Features, In_Features)</code>。</p>
+<h4 id="2-卷积层-Convolution"><a href="#2-卷积层-Convolution" class="headerlink" title="2. 卷积层 (Convolution)"></a><strong>2. 卷积层 (Convolution)</strong></h4><p>*<strong>输入形状 (CV - 2D):</strong> <code>(N, C_in, H_in, W_in)</code><br>*<strong>输出形状 (CV - 2D):</strong> <code>(N, C_out, H_out, W_out)</code><br>*<strong>计算单个维度输出长度公式:</strong><br><code>Output_Length = floor((Input_Length + 2 * Padding - Dilation * (Kernel_Size - 1) - 1) / Stride + 1)</code><br>*<strong>常见简化公式 (当 <code>dilation=1</code>):</strong><br><code>Output_Length = floor((Input_Length + 2 * Padding - Kernel_Size) / Stride) + 1</code><br>*<strong>变化说明:</strong><br>*通道数由 <code>C_in</code> 变为 <code>C_out</code>（由 <code>out_channels</code> 参数指定）。<br>*空间维度 <code>(H, W)</code> 根据上述公式收缩（通常）。<br>*<strong>分组卷积 (<code>groups&gt;1</code>):</strong> 要求 <code>C_in</code> 和 <code>C_out</code> 都能被 <code>groups</code> 整除。每个分组处理 <code>C_in/groups</code> 个输入通道，产生 <code>C_out/groups</code> 个输出通道，最后拼接。参数量显著减少。<br>*<strong>膨胀卷积 (<code>dilation&gt;1</code>):</strong> 通过跳过输入像素扩大感受野，不影响通道数，但影响空间尺寸计算。<br>*<strong>输入形状 (NLP&#x2F;1D - Conv1d):</strong> <code>(N, C_in, L_in)</code> (或有时定义为 <code>(N, L_in, C_in)</code>，需注意框架约定)<br>*<strong>输出形状 (NLP&#x2F;1D - Conv1d):</strong> <code>(N, C_out, L_out)</code></p>
+<h4 id="3-转置卷积层-Transposed-Convolution-Deconvolution-ConvTranspose"><a href="#3-转置卷积层-Transposed-Convolution-Deconvolution-ConvTranspose" class="headerlink" title="3. 转置卷积层 (Transposed Convolution &#x2F; Deconvolution &#x2F; ConvTranspose)"></a><strong>3. 转置卷积层 (Transposed Convolution &#x2F; Deconvolution &#x2F; ConvTranspose)</strong></h4><p>*<strong>目的:</strong> 常用于上采样（如分割、生成模型）。<br>*<strong>输入形状 (CV - 2D):</strong> <code>(N, C_in, H_in, W_in)</code><br>*<strong>输出形状 (CV - 2D):</strong> <code>(N, C_out, H_out, W_out)</code><br>*<strong>计算单个维度输出长度公式:</strong><br><code>Output_Length = (Input_Length - 1) * Stride - 2 * Padding + Dilation * (Kernel_Size - 1) + Output_Padding + 1</code><br>*<strong>简化公式 (常用参数 <code>dilation=1</code>, <code>output_padding=0</code>):</strong><br><code>Output_Length = (Input_Length - 1) * Stride - 2 * Padding + Kernel_Size</code><br>*<strong>变化说明:</strong><br>*通道数由 <code>C_in</code> 变为 <code>C_out</code>（由 <code>out_channels</code> 参数指定）。<br>*空间维度 <code>(H, W)</code> 根据上述公式 <strong>扩张</strong>（通常）。<code>output_padding</code> 用于解决因 <code>stride&gt;1</code> 导致的形状模糊问题。</p>
+<h4 id="4-池化层-Pooling-Max-Avg-Adaptive"><a href="#4-池化层-Pooling-Max-Avg-Adaptive" class="headerlink" title="4. 池化层 (Pooling - Max, Avg, Adaptive)"></a><strong>4. 池化层 (Pooling - Max, Avg, Adaptive)</strong></h4><p>*<strong>输入形状 (CV - 2D):</strong> <code>(N, C, H_in, W_in)</code><br>*<strong>输出形状 (CV - 2D):</strong> <code>(N, C, H_out, W_out)</code><br>*<strong>计算单个维度输出长度公式 (与卷积公式相同):</strong><br><code>Output_Length = floor((Input_Length + 2 * Padding - Dilation * (Kernel_Size - 1) - 1) / Stride + 1)</code><br><code>Output_Length = floor((Input_Length + 2 * Padding - Kernel_Size) / Stride) + 1</code> (当 <code>dilation=1</code>)<br>*<strong>变化说明:</strong><br>*<strong>通道数 <code>C</code> 保持不变</strong>（核心区别）。<br>*空间维度 <code>(H, W)</code> 根据上述公式收缩（通常）。<br>*<strong>自适应池化 (AdaptivePooling):</strong> 直接指定输出尺寸 <code>(H_out, W_out)</code>，忽略 <code>kernel_size</code>, <code>stride</code>, <code>padding</code>。内部自动计算所需参数以达到目标尺寸。</p>
+<h4 id="5-归一化层-Normalization"><a href="#5-归一化层-Normalization" class="headerlink" title="5. 归一化层 (Normalization)"></a><strong>5. 归一化层 (Normalization)</strong></h4><p>*<strong>批归一化 (BatchNorm - CV):</strong><br>*输入形状: <code>(N, C, H, W)</code><br>*输出形状: <strong><code>(N, C, H, W)</code> (完全相同)</strong><br>*变化说明: 沿 <code>N, H, W</code> 维度计算统计量 (均值、方差)，对每个通道 <code>C</code> 独立进行缩放和平移。<br>*<strong>层归一化 (LayerNorm - NLP&#x2F;CV):</strong><br>*输入形状: <code>(N, *, Normalized_Shape)</code> (PyTorch)。<code>Normalized_Shape</code> 是最后几个需要归一化的维度（如 <code>(L, C)</code> 或 <code>(C,)</code>）。<br>*输出形状: <strong><code>(N, *, Normalized_Shape)</code> (完全相同)</strong><br>*变化说明: 沿指定的 <code>Normalized_Shape</code> 维度计算统计量（独立于 <code>N</code> 和其他未指定维度）。NLP 中常用 <code>(..., L, C)</code> 的最后两个维度 <code>(L, C)</code> 进行归一化（对每个样本的每个时间步的特征独立归一化）。<br>*<strong>实例归一化 (InstanceNorm - CV Style Transfer):</strong><br>*输入形状: <code>(N, C, H, W)</code><br>*输出形状: <strong><code>(N, C, H, W)</code> (完全相同)</strong><br>*变化说明: 沿 <code>H, W</code> 维度计算统计量，对每个样本 <code>N</code> 的每个通道 <code>C</code> 独立进行缩放和平移。</p>
+<h4 id="6-循环神经网络层-RNN-LSTM-GRU"><a href="#6-循环神经网络层-RNN-LSTM-GRU" class="headerlink" title="6. 循环神经网络层 (RNN, LSTM, GRU)"></a><strong>6. 循环神经网络层 (RNN, LSTM, GRU)</strong></h4><p>*<strong>输入形状:</strong> <code>(N, L, H_in)</code> 或 <code>(L, N, H_in)</code> (PyTorch 通过 <code>batch_first=True</code> 控制，前者更常见)。<br>*<strong>输出形状:</strong><br>***<code>output</code>:** <code>(N, L, D * H_out)</code>。<br>*<code>H_out</code> 是隐藏层大小 (<code>hidden_size</code>)。<br>*<code>D = 2</code> 如果是双向RNN (<code>bidirectional=True</code>)，否则 <code>D = 1</code>。<br><strong><em><code>hidden</code> &#x2F; <code>(h_n, c_n)</code> (LSTM):</em>*<br>*<code>h_n</code>: <code>(D * num_layers, N, H_out)</code><br>*<code>c_n</code>: <code>(D * num_layers, N, H_out)</code> (仅LSTM)<br><strong><em>变化说明:</em>*<br>*<code>output</code> 包含</strong>所有时间步**的隐藏状态。<br>*<code>hidden</code> &#x2F; <code>(h_n, c_n)</code> 包含</strong>最后一个时间步**的隐藏状态（和细胞状态）。<br>*<code>num_layers</code> 决定了堆叠层数。<br>*输入维度 <code>H_in</code> 是输入特征大小，输出维度 <code>H_out</code> 是RNN单元定义的隐藏状态大小。</p>
+<h4 id="7-嵌入层-Embedding"><a href="#7-嵌入层-Embedding" class="headerlink" title="7. 嵌入层 (Embedding)"></a><strong>7. 嵌入层 (Embedding)</strong></h4><p>*<strong>输入形状:</strong> <code>(N, L)</code> 或 <code>(L, N)</code> (包含整数索引)。<br>*<strong>输出形状:</strong> <code>(N, L, E)</code> 或 <code>(L, N, E)</code>。<code>E</code> 是嵌入维度 (<code>embedding_dim</code>)。<br>*<strong>变化说明:</strong> 将每个整数索引映射到一个 <code>E</code> 维的稠密向量。增加了特征维 <code>E</code>。</p>
+<h4 id="8-Transformer-核心层"><a href="#8-Transformer-核心层" class="headerlink" title="8. Transformer 核心层"></a><strong>8. Transformer 核心层</strong></h4><p>*<strong>输入形状:</strong> <code>(N, L, d_model)</code> (词嵌入序列 + 位置编码)。<br>*<strong>多头自注意力 (Multi-Head Self-Attention):</strong><br>*<strong>输入:</strong> <code>Q, K, V</code>: 均为 <code>(N, L, d_model)</code><br>*<strong>线性投影 (Q&#x2F;K&#x2F;V):</strong> <code>(N, L, d_model) -&gt; (N, L, num_heads * d_k)</code> (通常 <code>d_k = d_v = d_model / num_heads</code>)<br>*<strong>Reshape:</strong> <code>(N, L, num_heads * d_k) -&gt; (N, L, num_heads, d_k) -&gt; (N, num_heads, L, d_k)</code> (转置以并行计算头)。<br>*<strong>计算注意力分数 &amp; 输出:</strong> <code>(N, num_heads, L, d_k) @ (N, num_heads, d_k, L) -&gt; (N, num_heads, L, L)</code> (分数)<br>*<strong>Softmax &amp; Weighted Sum:</strong> <code>(N, num_heads, L, L) @ (N, num_heads, L, d_v) -&gt; (N, num_heads, L, d_v)</code><br>*<strong>Reshape &amp; 拼接:</strong> <code>(N, num_heads, L, d_v) -&gt; (N, L, num_heads * d_v) = (N, L, d_model)</code> (因为 <code>d_v = d_model / num_heads</code>)。<br>*<strong>线性投影 (输出):</strong> <code>(N, L, d_model) -&gt; (N, L, d_model)</code> (可选，但标准Transformer有)。<br>*<strong>输出形状:</strong> <strong><code>(N, L, d_model)</code></strong> (与输入形状相同)。<br>*<strong>前馈网络 (Position-wise Feed-Forward Network - FFN):</strong><br>*<strong>输入:</strong> <code>(N, L, d_model)</code><br>*<strong>第一层:</strong> <code>(N, L, d_model) -&gt; (N, L, d_ff)</code> (扩张，<code>d_ff</code> 通常 <code>&gt; d_model</code>, 如 <code>4*d_model</code>)。<br>*<strong>激活函数 (如ReLU, GELU)。</strong><br>*<strong>第二层:</strong> <code>(N, L, d_ff) -&gt; (N, L, d_model)</code> (投影回 <code>d_model</code>)。<br>*<strong>输出形状:</strong> <strong><code>(N, L, d_model)</code></strong> (与输入形状相同)。<br>*<strong>层归一化 (LayerNorm) &amp; 残差连接 (Add):</strong> 不改变形状 (<code>(N, L, d_model)</code> -&gt; <code>(N, L, d_model)</code>)。</p>
+<hr>
+<h3 id="关键总结与提示"><a href="#关键总结与提示" class="headerlink" title="关键总结与提示"></a><strong>关键总结与提示</strong></h3><p>1.<strong><code>N</code> (Batch Size):</strong> 几乎总是贯穿所有层保持不变。<br>2.<strong>通道&#x2F;特征维度 (<code>C</code>, <code>H_in/H_out</code>, <code>embedding_dim</code>, <code>hidden_size</code>, <code>d_model</code>):</strong><br>*全连接层、卷积层 (<code>out_channels</code>)、嵌入层 (<code>embedding_dim</code>)、RNN (<code>hidden_size</code>)、Transformer (<code>d_model</code>) 显式改变此维度。<br>*池化层、归一化层（BatchNorm&#x2F;InstanceNorm&#x2F;LayerNorm）通常<strong>保持</strong>此维度不变（LayerNorm作用于指定的维度）。<br>3.<strong>空间&#x2F;序列维度 (<code>H</code>, <code>W</code>, <code>L</code>):</strong><br>*卷积层、池化层：根据公式<strong>改变</strong>尺寸（通常缩小）。<br>*转置卷积层：根据公式<strong>改变</strong>尺寸（通常扩大）。<br>*全连接层：<strong>展平</strong>（消失）。<br>*RNN、Transformer、嵌入层、归一化层 (LayerNorm作用于序列)：<strong>保持</strong>序列长度 <code>L</code> 不变。<br>4.<strong>RNN&#x2F;Transformer vs CNN:</strong><br>*RNN&#x2F;Transformer：核心处理维度是**序列长度 <code>L</code> + 特征维度 (<code>hidden_size</code>&#x2F;<code>d_model</code>)**。<br>*CNN (CV)：核心处理维度是**空间维度 <code>(H, W)</code> + 通道维度 <code>C</code>**。<br>5.<strong>框架约定:</strong> 特别注意维度顺序！PyTorch CV默认 <code>(N, C, H, W)</code>，NLP默认 <code>(L, N, *)</code> 但常设 <code>batch_first=True</code> 为 <code>(N, L, *)</code>。TensorFlow有时用 <code>(N, H, W, C)</code>。<br>6.<strong>形状推导工具:</strong> 善用 <code>model.summary()</code> (Keras&#x2F;TF), <code>print(model)</code> &#x2F; <code>torchinfo.summary()</code> (PyTorch) 或直接 <code>print(x.shape)</code> 在模型中调试。<br>7.<strong>维度匹配:</strong> 形状错误最常见的原因是层之间维度不匹配（尤其是卷积&#x2F;转置卷积输出尺寸计算错误，或全连接层输入未正确展平）。<br>8.<strong>自适应层:</strong> 当需要固定输出尺寸时（如分类头前），自适应池化 (<code>AdaptiveAvgPool2d(1)</code>) 非常有用，直接输出 <code>(N, C, 1, 1)</code> -&gt; 展平为 <code>(N, C)</code>。</p>
+<p>理解这些核心层的形状变换规律是设计和调试深度学习模型的基础。务必结合具体公式和实际调试进行验证。</p>
+</div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">54</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">32</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/18/%E5%AD%A6%E6%9C%AF%E6%A3%80%E7%B4%A2/" title="学术检索完全指南：如何高效查找特定期刊/会议论文">学术检索完全指南：如何高效查找特定期刊/会议论文</a><time datetime="2025-05-18T04:14:50.000Z" title="发表于 2025-05-18 12:14:50">2025-05-18</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/02/UV/" title="无题">无题</a><time datetime="2025-05-02T07:03:36.328Z" title="发表于 2025-05-02 15:03:36">2025-05-02</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/05/01/Cloudinary/" title="Cloudinary">Cloudinary</a><time datetime="2025-05-01T11:53:10.000Z" title="发表于 2025-05-01 19:53:10">2025-05-01</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/08/22/Python%E4%B8%AD%E7%9A%84%E5%B9%B6%E8%A1%8C/" title="Python中的并行">Python中的并行</a><time datetime="2024-08-22T05:49:25.000Z" title="发表于 2024-08-22 13:49:25">2024-08-22</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/26/Python%E5%B0%8F%E7%9F%A5%E8%AF%86%E7%82%B9/" title="Python小知识点">Python小知识点</a><time datetime="2024-07-26T15:41:34.000Z" title="发表于 2024-07-26 23:41:34">2024-07-26</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+            <i class="fas fa-folder-open"></i>
+            <span>分类</span>
+            <a class="card-more-btn" href="/categories/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a>
+            </div>
+            <ul class="card-category-list" id="aside-cat-list">
+            <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/LLM/"><span class="card-category-list-name">LLM</span><span class="card-category-list-count">2</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MLops/"><span class="card-category-list-name">MLops</span><span class="card-category-list-count">3</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">4</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/"><span class="card-category-list-name">Tools</span><span class="card-category-list-count">7</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/"><span class="card-category-list-name">Python</span><span class="card-category-list-count">1</span></a><ul class="card-category-list child"><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/Python/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Tools/%E7%88%AC%E8%99%AB/"><span class="card-category-list-name">爬虫</span><span class="card-category-list-count">1</span></a></li></ul></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/linux/"><span class="card-category-list-name">linux</span><span class="card-category-list-count">2</span></a></li>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/%E4%BA%BA%E5%B7%A5%E5%BC%B1%E6%99%BA/" style="font-size: 1.23em; color: #999ea6">人工弱智</a> <a href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">深度学习</a> <a href="/tags/vim/" style="font-size: 1.1em; color: #999">vim</a> <a href="/tags/Python/" style="font-size: 1.5em; color: #99a9bf">Python</a> <a href="/tags/Clickhouse/" style="font-size: 1.1em; color: #999">Clickhouse</a> <a href="/tags/Playwright/" style="font-size: 1.1em; color: #999">Playwright</a> <a href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93%E4%BD%BF%E7%94%A8/" style="font-size: 1.1em; color: #999">数据库使用</a> <a href="/tags/python%E8%AF%AD%E6%B3%95/" style="font-size: 1.1em; color: #999">python语法</a> <a href="/tags/pcap/" style="font-size: 1.37em; color: #99a4b2">pcap++</a> <a href="/tags/%E7%A0%94%E7%A9%B6%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">研究工具</a> <a href="/tags/react-ant%E7%BB%84%E4%BB%B6/" style="font-size: 1.1em; color: #999">react ant组件</a> <a href="/tags/Hexo/" style="font-size: 1.1em; color: #999">Hexo</a> <a href="/tags/linux/" style="font-size: 1.23em; color: #999ea6">linux</a> <a href="/tags/anti-bot-bypassing/" style="font-size: 1.1em; color: #999">anti-bot bypassing</a> <a href="/tags/git-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">git 工具</a> <a href="/tags/ffmpeg/" style="font-size: 1.1em; color: #999">ffmpeg</a> <a href="/tags/LLM/" style="font-size: 1.23em; color: #999ea6">LLM</a> <a href="/tags/geek/" style="font-size: 1.1em; color: #999">geek</a> <a href="/tags/windows-API/" style="font-size: 1.1em; color: #999">windows API</a> <a href="/tags/%E5%AD%A6%E6%9C%AF%E6%90%9C%E7%B4%A2/" style="font-size: 1.1em; color: #999">学术搜索</a> <a href="/tags/Vue/" style="font-size: 1.1em; color: #999">Vue</a> <a href="/tags/%E5%B7%A5%E5%85%B7/" style="font-size: 1.37em; color: #99a4b2">工具</a> <a href="/tags/Python%E5%BA%94%E7%94%A8/" style="font-size: 1.1em; color: #999">Python应用</a> <a href="/tags/%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/" style="font-size: 1.1em; color: #999">神经网络</a> <a href="/tags/XPath/" style="font-size: 1.1em; color: #999">XPath</a> <a href="/tags/%E8%AE%BA%E6%96%87%E6%A3%80%E7%B4%A2/" style="font-size: 1.1em; color: #999">论文检索</a> <a href="/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/" style="font-size: 1.1em; color: #999">函数式编程</a> <a href="/tags/%E6%B5%81%E9%87%8F%E5%88%86%E6%9E%90-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">流量分析 工具</a> <a href="/tags/requests/" style="font-size: 1.1em; color: #999">requests</a> <a href="/tags/%E5%89%8D%E7%AB%AF/" style="font-size: 1.1em; color: #999">前端</a> <a href="/tags/pytest/" style="font-size: 1.1em; color: #999">pytest</a> <a href="/tags/Github-%E5%B7%A5%E5%85%B7/" style="font-size: 1.1em; color: #999">Github 工具</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span><a class="card-more-btn" href="/archives/" title="查看更多">
+    <i class="fas fa-angle-right"></i></a></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2025/05/"><span class="card-archive-list-date">五月 2025</span><span class="card-archive-list-count">3</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/08/"><span class="card-archive-list-date">八月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/07/"><span class="card-archive-list-date">七月 2024</span><span class="card-archive-list-count">10</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/05/"><span class="card-archive-list-date">五月 2024</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/04/"><span class="card-archive-list-date">四月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/03/"><span class="card-archive-list-date">三月 2024</span><span class="card-archive-list-count">7</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2024/02/"><span class="card-archive-list-date">二月 2024</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2023/12/"><span class="card-archive-list-date">十二月 2023</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">54</div></div><div class="webinfo-item"><div class="item-name">已运行时间 :</div><div class="item-count" id="runtimeshow" data-publishDate="2023-09-30T16:00:00.000Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总字数 :</div><div class="item-count">58.1k</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2025-09-11T15:48:19.577Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
