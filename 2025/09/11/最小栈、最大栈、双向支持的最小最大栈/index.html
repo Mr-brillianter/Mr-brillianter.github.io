@@ -1,0 +1,519 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>最小栈、最大栈、双向支持的最小最大栈 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="✅ 什么是最小栈（Min Stack）？最小栈是一种支持常数时间内（O(1)) 获取栈中最小值的栈结构。  🔧 标准栈的限制通常，使用普通栈只能O(n) 时间遍历才能找出最小值： 12stack &#x3D; [3, 4, 2, 5]min_val &#x3D; min(stack)  # O(n)  但最小栈支持：  push(x)：压入元素 pop()：移出栈顶 top()：查看栈顶元素 getMin()：O(">
+<meta property="og:type" content="article">
+<meta property="og:title" content="最小栈、最大栈、双向支持的最小最大栈">
+<meta property="og:url" content="https://xxminxx.love/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="✅ 什么是最小栈（Min Stack）？最小栈是一种支持常数时间内（O(1)) 获取栈中最小值的栈结构。  🔧 标准栈的限制通常，使用普通栈只能O(n) 时间遍历才能找出最小值： 12stack &#x3D; [3, 4, 2, 5]min_val &#x3D; min(stack)  # O(n)  但最小栈支持：  push(x)：压入元素 pop()：移出栈顶 top()：查看栈顶元素 getMin()：O(">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2025-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-11T15:41:00.830Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '最小栈、最大栈、双向支持的最小最大栈',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-11 23:41:00'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">174</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">最小栈、最大栈、双向支持的最小最大栈</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-11T15:41:00.830Z" title="更新于 2025-09-11 23:41:00">2025-09-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.3k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>5分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="最小栈、最大栈、双向支持的最小最大栈"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h3 id="✅-什么是最小栈（Min-Stack）？"><a href="#✅-什么是最小栈（Min-Stack）？" class="headerlink" title="✅ 什么是最小栈（Min Stack）？"></a>✅ 什么是最小栈（Min Stack）？</h3><p><strong>最小栈</strong>是一种支持<strong>常数时间内（O(1)) 获取栈中最小值</strong>的栈结构。</p>
+<hr>
+<h3 id="🔧-标准栈的限制"><a href="#🔧-标准栈的限制" class="headerlink" title="🔧 标准栈的限制"></a>🔧 标准栈的限制</h3><p>通常，使用普通栈只能<strong>O(n)</strong> 时间遍历才能找出最小值：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">stack = [<span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">5</span>]</span><br><span class="line">min_val = <span class="built_in">min</span>(stack)  <span class="comment"># O(n)</span></span><br></pre></td></tr></table></figure>
+
+<p>但最小栈支持：</p>
+<ul>
+<li><code>push(x)</code>：压入元素</li>
+<li><code>pop()</code>：移出栈顶</li>
+<li><code>top()</code>：查看栈顶元素</li>
+<li><code>getMin()</code>：<strong>O(1)</strong> 获取栈中最小值</li>
+</ul>
+<hr>
+<h3 id="🧠-核心思想"><a href="#🧠-核心思想" class="headerlink" title="🧠 核心思想"></a>🧠 核心思想</h3><p>借助一个辅助栈来<strong>同步维护当前栈的最小值</strong>。例如：</p>
+<table>
+<thead>
+<tr>
+<th>操作</th>
+<th>原始栈(main_stack)</th>
+<th>最小栈(min_stack)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>push(5)</td>
+<td>5</td>
+<td>5</td>
+</tr>
+<tr>
+<td>push(3)</td>
+<td>5, 3</td>
+<td>5, 3</td>
+</tr>
+<tr>
+<td>push(4)</td>
+<td>5, 3, 4</td>
+<td>5, 3, 3</td>
+</tr>
+<tr>
+<td>pop()</td>
+<td>5, 3</td>
+<td>5, 3</td>
+</tr>
+<tr>
+<td>getMin()</td>
+<td>return <code>3</code></td>
+<td>top of min_stack</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="✅-Python-最小栈实现示例"><a href="#✅-Python-最小栈实现示例" class="headerlink" title="✅ Python 最小栈实现示例"></a>✅ Python 最小栈实现示例</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MinStack</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.stack = []       <span class="comment"># 原始栈</span></span><br><span class="line">        self.min_stack = []   <span class="comment"># 辅助栈：保存每一步的最小值</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, val: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.stack.append(val)</span><br><span class="line">        <span class="comment"># push 到 min_stack 中的元素始终是当前最小值</span></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.min_stack <span class="keyword">or</span> val &lt;= self.min_stack[-<span class="number">1</span>]:</span><br><span class="line">            self.min_stack.append(val)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.min_stack.append(self.min_stack[-<span class="number">1</span>])</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="keyword">if</span> self.stack:</span><br><span class="line">            self.stack.pop()</span><br><span class="line">            self.min_stack.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">top</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>] <span class="keyword">if</span> self.stack <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getMin</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">return</span> self.min_stack[-<span class="number">1</span>] <span class="keyword">if</span> self.min_stack <span class="keyword">else</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="🧰-操作说明"><a href="#🧰-操作说明" class="headerlink" title="🧰 操作说明"></a>🧰 操作说明</h3><ul>
+<li><code>push(val)</code>：将 <code>val</code> 压入主栈；同时，将新<strong>最小值</strong>压入 <code>min_stack</code></li>
+<li><code>pop()</code>：主栈和最小栈同时弹出</li>
+<li><code>getMin()</code>：直接返回 <code>min_stack</code> 栈顶</li>
+</ul>
+<hr>
+<h3 id="🧮-时间复杂度"><a href="#🧮-时间复杂度" class="headerlink" title="🧮 时间复杂度"></a>🧮 时间复杂度</h3><table>
+<thead>
+<tr>
+<th>操作</th>
+<th>时间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>push()</code></td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>pop()</code></td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>top()</code></td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td><code>getMin()</code></td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="🚀-更加节省空间的变体（不重复最小元素）"><a href="#🚀-更加节省空间的变体（不重复最小元素）" class="headerlink" title="🚀 更加节省空间的变体（不重复最小元素）"></a>🚀 更加节省空间的变体（不重复最小元素）</h3><p>上面的方法中 <code>min_stack</code> 与主栈等长，因为每次都同步 push，但你也可以只在 <code>min</code> 发生变化时记录保存：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MinStack</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.stack = []</span><br><span class="line">        self.min_stack = []  <span class="comment"># 只在更小值加入时才记录</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, val</span>):</span><br><span class="line">        self.stack.append(val)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.min_stack <span class="keyword">or</span> val &lt;= self.min_stack[-<span class="number">1</span>]:</span><br><span class="line">            self.min_stack.append(val)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>):</span><br><span class="line">        val = self.stack.pop()</span><br><span class="line">        <span class="keyword">if</span> val == self.min_stack[-<span class="number">1</span>]:</span><br><span class="line">            self.min_stack.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">top</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>]</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getMin</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.min_stack[-<span class="number">1</span>]</span><br></pre></td></tr></table></figure>
+
+<p>🔸这种写法更节省空间，适用于要求<strong>内存优势</strong>的场合。</p>
+<hr>
+<h3 id="📌-典型应用场景"><a href="#📌-典型应用场景" class="headerlink" title="📌 典型应用场景"></a>📌 典型应用场景</h3><ul>
+<li>实现含最小值查询功能的数据结构</li>
+<li>辅助解决滑动窗口、括号匹配、区间最小值等问题</li>
+<li>LeetCode 原题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/min-stack">155. 最小栈</a></li>
+</ul>
+<hr>
+<h3 id="✅-总结"><a href="#✅-总结" class="headerlink" title="✅ 总结"></a>✅ 总结</h3><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>支持操作</td>
+<td>push、pop、top、getMin</td>
+</tr>
+<tr>
+<td>时间复杂度</td>
+<td>所有操作均为 O(1)</td>
+</tr>
+<tr>
+<td>核心数据结构</td>
+<td>主栈 + 最小栈</td>
+</tr>
+<tr>
+<td>空间优化方法</td>
+<td>只在 <code>val &lt;= 当前最小</code> 时记录</td>
+</tr>
+<tr>
+<td>当然可以！下面我们讨论一种扩展数据结构：<strong>同时支持 O(1) 查询最小值和最大值的栈</strong>，即：</td>
+<td></td>
+</tr>
+</tbody></table>
+<hr>
+<h1 id="✅-双向支持的最小最大栈（MinMax-Stack）"><a href="#✅-双向支持的最小最大栈（MinMax-Stack）" class="headerlink" title="✅ 双向支持的最小最大栈（MinMax Stack）"></a>✅ 双向支持的最小最大栈（MinMax Stack）</h1><h3 id="💡-需求描述"><a href="#💡-需求描述" class="headerlink" title="💡 需求描述"></a>💡 需求描述</h3><p>构建一个<strong>MinMax 栈</strong>，支持以下操作，且所有操作都为 <strong>O(1)</strong> 时间复杂度：</p>
+<ul>
+<li><code>push(val)</code>：将元素压入栈</li>
+<li><code>pop()</code>：移除栈顶</li>
+<li><code>top()</code>：返回栈顶元素</li>
+<li><code>getMin()</code>：返回当前栈中最小值</li>
+<li><code>getMax()</code>：返回当前栈中最大值</li>
+</ul>
+<hr>
+<h3 id="✅-思路"><a href="#✅-思路" class="headerlink" title="✅ 思路"></a>✅ 思路</h3><p>除了维护主栈，我们再用两个辅助栈：</p>
+<ul>
+<li><code>min_stack</code>：记录每一状态下的<strong>最小值</strong></li>
+<li><code>max_stack</code>：记录每一状态下的<strong>最大值</strong></li>
+</ul>
+<p>每次压栈时，同步更新 <code>min_stack</code> 和 <code>max_stack</code>。</p>
+<hr>
+<h3 id="🧠-图解（push-操作）"><a href="#🧠-图解（push-操作）" class="headerlink" title="🧠 图解（push 操作）"></a>🧠 图解（push 操作）</h3><p>假设我们依次压入：<code>[3, 2, 5, 1]</code></p>
+<table>
+<thead>
+<tr>
+<th>Main Stack</th>
+<th>Min Stack</th>
+<th>Max Stack</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>3</td>
+<td>3</td>
+<td>3</td>
+</tr>
+<tr>
+<td>2</td>
+<td>2 ← min(2,3)</td>
+<td>3 ← max(2,3)</td>
+</tr>
+<tr>
+<td>5</td>
+<td>2</td>
+<td>5</td>
+</tr>
+<tr>
+<td>1</td>
+<td>1 ← min(1,2)</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="✅-Python-实现"><a href="#✅-Python-实现" class="headerlink" title="✅ Python 实现"></a>✅ Python 实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MinMaxStack</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.stack = []</span><br><span class="line">        self.min_stack = []</span><br><span class="line">        self.max_stack = []</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, val</span>):</span><br><span class="line">        self.stack.append(val)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> self.min_stack:</span><br><span class="line">            self.min_stack.append(val)</span><br><span class="line">            self.max_stack.append(val)</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            self.min_stack.append(<span class="built_in">min</span>(val, self.min_stack[-<span class="number">1</span>]))</span><br><span class="line">            self.max_stack.append(<span class="built_in">max</span>(val, self.max_stack[-<span class="number">1</span>]))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">if</span> self.stack:</span><br><span class="line">            self.stack.pop()</span><br><span class="line">            self.min_stack.pop()</span><br><span class="line">            self.max_stack.pop()</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">top</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.stack[-<span class="number">1</span>] <span class="keyword">if</span> self.stack <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getMin</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.min_stack[-<span class="number">1</span>] <span class="keyword">if</span> self.min_stack <span class="keyword">else</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">getMax</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="keyword">return</span> self.max_stack[-<span class="number">1</span>] <span class="keyword">if</span> self.max_stack <span class="keyword">else</span> <span class="literal">None</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="✅-示例用法"><a href="#✅-示例用法" class="headerlink" title="✅ 示例用法"></a>✅ 示例用法</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">s = MinMaxStack()</span><br><span class="line">s.push(<span class="number">4</span>)</span><br><span class="line">s.push(<span class="number">2</span>)</span><br><span class="line">s.push(<span class="number">7</span>)</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(s.getMin())  <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(s.getMax())  <span class="comment"># 7</span></span><br><span class="line"></span><br><span class="line">s.pop()</span><br><span class="line"><span class="built_in">print</span>(s.getMin())  <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(s.getMax())  <span class="comment"># 4</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="📊-时间-空间复杂度"><a href="#📊-时间-空间复杂度" class="headerlink" title="📊 时间 &amp; 空间复杂度"></a>📊 时间 &amp; 空间复杂度</h3><table>
+<thead>
+<tr>
+<th>方法</th>
+<th>时间复杂度</th>
+<th>空间复杂度（辅助栈）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>push</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>pop</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>top</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>getMin</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+<tr>
+<td>getMax</td>
+<td>O(1)</td>
+<td>O(1)</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="✅-空间优化（可选）"><a href="#✅-空间优化（可选）" class="headerlink" title="✅ 空间优化（可选）"></a>✅ 空间优化（可选）</h3><p>你可以进一步优化空间：<strong>只在新值小于等于当前 min &#x2F; max 时才入栈</strong><br>但这样做的话 <code>pop()</code> 时需要判断当前值是否是 <code>min / max</code>，略微增加复杂度。</p>
+<p>例如：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">not</span> min_stack <span class="keyword">or</span> val &lt;= min_stack[-<span class="number">1</span>]:</span><br><span class="line">    min_stack.append(val)</span><br><span class="line"><span class="comment"># 相应地，pop 时要做 if 判断</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h3 id="🔁-拓展"><a href="#🔁-拓展" class="headerlink" title="🔁 拓展"></a>🔁 拓展</h3><ul>
+<li>如果你还希望 <code>getMin</code> 和 <code>getMax</code> 支持在 <strong>队列中</strong> 实现（单调队列），则涉及：<ul>
+<li>单调栈 &#x2F; 单调队列</li>
+<li>滑动窗口（滑窗最大最小）</li>
+<li>可参考：LeetCode 239 滑动窗口最大值</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="✅-总结-1"><a href="#✅-总结-1" class="headerlink" title="✅ 总结"></a>✅ 总结</h3><table>
+<thead>
+<tr>
+<th>结构</th>
+<th>支持操作</th>
+<th>getMin &#x2F; getMax</th>
+<th>时间复杂度</th>
+<th>空间复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>正常栈</td>
+<td>push, pop, top</td>
+<td>✗</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>最小栈</td>
+<td>push, pop, top, getMin</td>
+<td>✓(min only)</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td>最大栈</td>
+<td>push, pop, top, getMax</td>
+<td>✓(max only)</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+<tr>
+<td><strong>MinMax栈</strong></td>
+<td>push, pop, top, getMin, getMax</td>
+<td>✓(both)</td>
+<td>O(1)</td>
+<td>O(n)</td>
+</tr>
+</tbody></table>
+<p>这种结构在许多算法面试中是高频考点。灵活掌握它将对你解决各类 “最值 + 动态结构” 类问题非常有帮助。需要我给出相关题目练习吗？</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/">https://xxminxx.love/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/09/11/ML%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" title="ML面试问题排查"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">ML面试问题排查</div></div></a></div><div class="next-post pull-right"><a href="/2025/09/11/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA/" title="条件随机场"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">条件随机场</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/05/%E9%AB%98%E5%9F%BA%E6%95%B0%E7%A6%BB%E6%95%A3%E7%89%B9%E5%BE%81%E5%AF%B9%E4%BA%8E%E6%A0%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BD%B1%E5%93%8D%E5%A4%A7%E5%B0%8F/" title="高基数离散特征对于树模型和神经网络模型的影响大小"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-05</div><div class="title">高基数离散特征对于树模型和神经网络模型的影响大小</div></div></a></div><div><a href="/2025/07/13/%E5%9F%BA%E7%9F%B3%E6%99%BA%E7%AE%97/" title="基石智算"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-13</div><div class="title">基石智算</div></div></a></div><div><a href="/2025/09/03/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/" title="交叉验证"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-03</div><div class="title">交叉验证</div></div></a></div><div><a href="/2025/09/11/%E7%BB%93%E6%9E%84%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96%20VS%20%E7%BB%8F%E9%AA%8C%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96/" title="结构风险最小化 VS 经验风险最小化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-11</div><div class="title">结构风险最小化 VS 经验风险最小化</div></div></a></div><div><a href="/2022/04/13/%E5%86%B3%E7%AD%96%E6%A0%91/" title="决策树"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-04-13</div><div class="title">决策树</div></div></a></div><div><a href="/2025/09/03/%E5%86%B3%E7%AD%96%E6%A0%91%E5%89%AA%E6%9E%9D/" title="悲观剪枝"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-03</div><div class="title">悲观剪枝</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">174</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E4%BB%80%E4%B9%88%E6%98%AF%E6%9C%80%E5%B0%8F%E6%A0%88%EF%BC%88Min-Stack%EF%BC%89%EF%BC%9F"><span class="toc-number">1.</span> <span class="toc-text">✅ 什么是最小栈（Min Stack）？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%A7-%E6%A0%87%E5%87%86%E6%A0%88%E7%9A%84%E9%99%90%E5%88%B6"><span class="toc-number">2.</span> <span class="toc-text">🔧 标准栈的限制</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E6%A0%B8%E5%BF%83%E6%80%9D%E6%83%B3"><span class="toc-number">3.</span> <span class="toc-text">🧠 核心思想</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Python-%E6%9C%80%E5%B0%8F%E6%A0%88%E5%AE%9E%E7%8E%B0%E7%A4%BA%E4%BE%8B"><span class="toc-number">4.</span> <span class="toc-text">✅ Python 最小栈实现示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%B0-%E6%93%8D%E4%BD%9C%E8%AF%B4%E6%98%8E"><span class="toc-number">5.</span> <span class="toc-text">🧰 操作说明</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%AE-%E6%97%B6%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">6.</span> <span class="toc-text">🧮 时间复杂度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%9A%80-%E6%9B%B4%E5%8A%A0%E8%8A%82%E7%9C%81%E7%A9%BA%E9%97%B4%E7%9A%84%E5%8F%98%E4%BD%93%EF%BC%88%E4%B8%8D%E9%87%8D%E5%A4%8D%E6%9C%80%E5%B0%8F%E5%85%83%E7%B4%A0%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">🚀 更加节省空间的变体（不重复最小元素）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8C-%E5%85%B8%E5%9E%8B%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF"><span class="toc-number">8.</span> <span class="toc-text">📌 典型应用场景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93"><span class="toc-number">9.</span> <span class="toc-text">✅ 总结</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E2%9C%85-%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88%EF%BC%88MinMax-Stack%EF%BC%89"><span class="toc-number"></span> <span class="toc-text">✅ 双向支持的最小最大栈（MinMax Stack）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%92%A1-%E9%9C%80%E6%B1%82%E6%8F%8F%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">💡 需求描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%80%9D%E8%B7%AF"><span class="toc-number">2.</span> <span class="toc-text">✅ 思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%A7%A0-%E5%9B%BE%E8%A7%A3%EF%BC%88push-%E6%93%8D%E4%BD%9C%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">🧠 图解（push 操作）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-Python-%E5%AE%9E%E7%8E%B0"><span class="toc-number">4.</span> <span class="toc-text">✅ Python 实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E7%A4%BA%E4%BE%8B%E7%94%A8%E6%B3%95"><span class="toc-number">5.</span> <span class="toc-text">✅ 示例用法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%93%8A-%E6%97%B6%E9%97%B4-%E7%A9%BA%E9%97%B4%E5%A4%8D%E6%9D%82%E5%BA%A6"><span class="toc-number">6.</span> <span class="toc-text">📊 时间 &amp; 空间复杂度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E7%A9%BA%E9%97%B4%E4%BC%98%E5%8C%96%EF%BC%88%E5%8F%AF%E9%80%89%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">✅ 空间优化（可选）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%F0%9F%94%81-%E6%8B%93%E5%B1%95"><span class="toc-number">8.</span> <span class="toc-text">🔁 拓展</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%9C%85-%E6%80%BB%E7%BB%93-1"><span class="toc-number">9.</span> <span class="toc-text">✅ 总结</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E7%BB%93%E6%9E%84%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96%20VS%20%E7%BB%8F%E9%AA%8C%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96/" title="结构风险最小化 VS 经验风险最小化">结构风险最小化 VS 经验风险最小化</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA/" title="条件随机场">条件随机场</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/" title="最小栈、最大栈、双向支持的最小最大栈">最小栈、最大栈、双向支持的最小最大栈</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/ML%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" title="ML面试问题排查">ML面试问题排查</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/ML%E7%AE%97%E6%B3%95%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="ML算法机器学习">ML算法机器学习</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

@@ -1,0 +1,528 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>决策树 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="CARTID3C4.5 对比三种算法以下是 C4.5、ID3 和 CART 对回归任务和连续值特征的支持对比：    特性 ID3 C4.5 CART    任务类型 仅分类 仅分类 分类 + 回归   连续特征支持 需手动分箱 自动二分 自动二分   分裂标准 信息增益 信息增益比 分类：基尼系数回归：MSE   缺失值处理 不支持 支持 支持   树结构 多叉树 多叉树 二叉树    如何选择">
+<meta property="og:type" content="article">
+<meta property="og:title" content="决策树">
+<meta property="og:url" content="https://xxminxx.love/2022/04/13/%E5%86%B3%E7%AD%96%E6%A0%91/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="CARTID3C4.5 对比三种算法以下是 C4.5、ID3 和 CART 对回归任务和连续值特征的支持对比：    特性 ID3 C4.5 CART    任务类型 仅分类 仅分类 分类 + 回归   连续特征支持 需手动分箱 自动二分 自动二分   分裂标准 信息增益 信息增益比 分类：基尼系数回归：MSE   缺失值处理 不支持 支持 支持   树结构 多叉树 多叉树 二叉树    如何选择">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2022-04-12T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-11T15:48:07.401Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="机器学习">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2022/04/13/%E5%86%B3%E7%AD%96%E6%A0%91/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '决策树',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-11 23:48:07'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">174</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">决策树</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-04-12T16:00:00.000Z" title="发表于 2022-04-13 00:00:00">2022-04-13</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-11T15:48:07.401Z" title="更新于 2025-09-11 23:48:07">2025-09-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">2.1k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>6分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="决策树"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>CART<br>ID3<br>C4.5</p>
+<h1 id="对比三种算法"><a href="#对比三种算法" class="headerlink" title="对比三种算法"></a>对比三种算法</h1><p>以下是 <strong>C4.5、ID3 和 CART</strong> 对<strong>回归任务</strong>和<strong>连续值特征</strong>的支持对比：</p>
+<table>
+<thead>
+<tr>
+<th><strong>特性</strong></th>
+<th><strong>ID3</strong></th>
+<th><strong>C4.5</strong></th>
+<th><strong>CART</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务类型</strong></td>
+<td>仅分类</td>
+<td>仅分类</td>
+<td>分类 + 回归</td>
+</tr>
+<tr>
+<td><strong>连续特征支持</strong></td>
+<td>需手动分箱</td>
+<td>自动二分</td>
+<td>自动二分</td>
+</tr>
+<tr>
+<td><strong>分裂标准</strong></td>
+<td>信息增益</td>
+<td>信息增益比</td>
+<td>分类：基尼系数<br>回归：MSE</td>
+</tr>
+<tr>
+<td><strong>缺失值处理</strong></td>
+<td>不支持</td>
+<td>支持</td>
+<td>支持</td>
+</tr>
+<tr>
+<td><strong>树结构</strong></td>
+<td>多叉树</td>
+<td>多叉树</td>
+<td>二叉树</td>
+</tr>
+</tbody></table>
+<hr>
+<h3 id="如何选择算法？"><a href="#如何选择算法？" class="headerlink" title="如何选择算法？"></a>如何选择算法？</h3><ul>
+<li><strong>分类任务</strong>：</li>
+<li>优先选 <strong>C4.5</strong>（支持连续值和缺失值，避免ID3的多值偏好问题）。</li>
+<li>若需二叉树或兼容回归，选 <strong>CART</strong>。</li>
+<li><strong>回归任务</strong>：只能选 <strong>CART</strong>。</li>
+<li><strong>简单需求</strong>：若数据全是离散值且无缺失值，可用 <strong>ID3</strong>（但实际很少单独使用）。</li>
+</ul>
+<h1 id="特征选择"><a href="#特征选择" class="headerlink" title="特征选择"></a>特征选择</h1><p><img src="https://res.cloudinary.com/dka40nkak/image/upload/v1753366528/qcvrd1r0bitxlwbnxozh.png"></p>
+<p><img src="https://res.cloudinary.com/dka40nkak/image/upload/v1753366585/n1w69eiu6gqjhkbskcva.png"></p>
+<p>计算信息增益&#x2F;比都可以进行特征筛选，后者更优</p>
+<p>特征增益没有绝对含义，通过相对熵来归一化尺度得到特征增益比（类多，相对熵大影响其绝对值的含义），实际上归一化系数常使用分裂信息计算，即某个属性Ag划分概率比例得到的熵</p>
+<h1 id="ID3步骤"><a href="#ID3步骤" class="headerlink" title="ID3步骤"></a>ID3步骤</h1><p><img src="https://res.cloudinary.com/dka40nkak/image/upload/v1753366795/xvrtdurdokz6me6n3nyq.png"><br><img src="https://res.cloudinary.com/dka40nkak/image/upload/v1753366802/rnzc892tyjt3jauo5xgw.png"></p>
+<p>步骤1，2分别处理标签全相同和没有数据集的情况，用于迭代终止</p>
+<p>需要选择一个阈值，找到最大信息增益的特征，最大信息增益小于阈值的设置为单结点树，使用最多类作为预测值，结束迭代；大于阈值的则继续迭代，对于每个特征的值都划分成子树，并将数据集y去除那个划分特征、X根据划分特征Ag取值划分为多份到不同子结点，重复训练。</p>
+<hr>
+<h1 id="C4-5"><a href="#C4-5" class="headerlink" title="C4.5"></a>C4.5</h1><p>根据《统计学习方法》， 只是将信息增益替换成信息增益比；但是有别的说法</p>
+<h1 id="C4-5-正规说法："><a href="#C4-5-正规说法：" class="headerlink" title="C4.5 正规说法："></a>C4.5 正规说法：</h1><h2 id="算法步骤"><a href="#算法步骤" class="headerlink" title="算法步骤"></a>算法步骤</h2><p>C4.5算法是ID3算法的改进版本，主要用于生成决策树，核心思想是通过信息增益比（Gain Ratio）选择最优划分属性。以下是C4.5算法的详细步骤：</p>
+<h3 id="1-数据准备"><a href="#1-数据准备" class="headerlink" title="1. 数据准备"></a><strong>1. 数据准备</strong></h3><ul>
+<li><strong>输入</strong>：训练数据集$D )，包含类别标签的样本。</li>
+<li><strong>属性集</strong>：所有候选属性$A &#x3D; {A_1, A_2, …, A_m} )（包括离散和连续属性）。</li>
+<li><strong>标签</strong>：类别集合$C &#x3D; {C_1, C_2, …, C_k} )。</li>
+</ul>
+<hr>
+<h3 id="2-递归构建决策树"><a href="#2-递归构建决策树" class="headerlink" title="2. 递归构建决策树"></a><strong>2. 递归构建决策树</strong></h3><h4 id="递归终止条件"><a href="#递归终止条件" class="headerlink" title="递归终止条件"></a><strong>递归终止条件</strong></h4><ol>
+<li>当前节点所有样本属于同一类别，标记为叶子节点并返回该类。</li>
+<li>属性集为空，或样本在所有属性上取值相同，标记为叶子节点并返回多数类。</li>
+<li>样本集为空（极少发生），返回父节点多数类。</li>
+</ol>
+<h4 id="未终止时步骤"><a href="#未终止时步骤" class="headerlink" title="未终止时步骤"></a><strong>未终止时步骤</strong></h4><ol>
+<li><strong>计算信息增益比</strong>：</li>
+</ol>
+<ul>
+<li><p><strong>信息熵（Entropy）</strong>：<br>$\text{Entropy}(D) &#x3D; -\sum_{i&#x3D;1}^{k} p_i \log_2(p_i)$<br>其中$p_i$是类别$C_i$在数据集$D$中的比例。</p>
+</li>
+<li><p><strong>信息增益（Gain）</strong>：<br>对属性$A_j$，按取值将$D$划分为子集${D_1, D_2, …, D_v} )，计算：<br>$\text{Gain}(D, A_j) &#x3D; \text{Entropy}(D) - \sum_{i&#x3D;1}^{v} \frac{|D_i|}{|D|} \text{Entropy}(D_i)$</p>
+</li>
+<li><p><strong>分裂信息（Split Information）</strong>：<br>$\text{SplitInfo}(D, A_j) &#x3D; -\sum_{i&#x3D;1}^{v} \frac{|D_i|}{|D|} \log_2 \left( \frac{|D_i|}{|D|} \right)$<br>衡量属性$A_j$的分支数量均匀性。</p>
+</li>
+<li><p><strong>信息增益比（Gain Ratio）</strong>：<br>$\text{GainRatio}(D, A_j) &#x3D; \frac{\text{Gain}(D, A_j)}{\text{SplitInfo}(D, A_j)}$<br>选择增益比最大的属性作为划分属性。</p>
+</li>
+</ul>
+<ol start="2">
+<li><strong>处理连续属性</strong>（C4.5新增）：</li>
+</ol>
+<ul>
+<li>对连续属性$A_j$，将样本按取值排序，计算相邻值中点作为候选划分点。</li>
+<li>选择使信息增益最大的划分点，将其转化为二元分裂（如“$A_j \leq a$”），计算信息增益比</li>
+</ul>
+<ol start="2">
+<li><strong>处理缺失值</strong>（C4.5改进）：</li>
+</ol>
+<ul>
+<li>按非缺失样本上该属性值的比例随机分配权重到子节点。</li>
+<li>计算信息增益时，忽略缺失该属性的样本。</li>
+<li>C4.5 在处理 <strong>连续属性（数值型特征）</strong> 时，默认会将其 <strong>二分（Binary Split）</strong>，生成 <strong>二叉树结构</strong>。</li>
+</ul>
+<ol start="4">
+<li><strong>生成子树</strong>：</li>
+</ol>
+<ul>
+<li>用选择的属性$A_j$划分数据集$D$为子集$D_1, D_2, …, D_v$。</li>
+<li>对每个非空子集递归调用C4.5算法生成子树。</li>
+</ul>
+<hr>
+<h3 id="3-决策树剪枝（后剪枝）"><a href="#3-决策树剪枝（后剪枝）" class="headerlink" title="3. 决策树剪枝（后剪枝）"></a><strong>3. 决策树剪枝（后剪枝）</strong></h3><ul>
+<li><strong>目的</strong>：避免过拟合，提升泛化能力。</li>
+<li><strong>方法</strong>：用验证集评估剪枝前后的性能，若剪枝后误差降低，则替换子树为叶子节点。</li>
+</ul>
+<hr>
+<h3 id="4-输出决策树"><a href="#4-输出决策树" class="headerlink" title="4. 输出决策树"></a><strong>4. 输出决策树</strong></h3><ul>
+<li>返回生成的决策树模型，可用于对新样本分类。</li>
+</ul>
+<hr>
+<h3 id="关键改进（对比ID3）"><a href="#关键改进（对比ID3）" class="headerlink" title="关键改进（对比ID3）"></a><strong>关键改进（对比ID3）</strong></h3><ol>
+<li><strong>信息增益比</strong>：解决ID3偏向多值属性的问题。</li>
+<li><strong>连续属性处理</strong>：支持数值型数据。</li>
+<li><strong>缺失值处理</strong>：通过权重分配提高鲁棒性。</li>
+<li><strong>剪枝机制</strong>：后剪枝优化树结构。</li>
+</ol>
+<hr>
+<h2 id="决策树剪枝"><a href="#决策树剪枝" class="headerlink" title="[[决策树剪枝]]"></a>[[决策树剪枝]]</h2><hr>
+<h3 id="C4-5-与-ID3-的区别对比"><a href="#C4-5-与-ID3-的区别对比" class="headerlink" title="C4.5 与 ID3 的区别对比"></a><strong>C4.5 与 ID3 的区别对比</strong></h3><p>C4.5 是 ID3 算法的改进版本，由 Ross Quinlan 提出，主要解决了 ID3 的几个关键缺陷。以下是两者的核心区别：</p>
+<hr>
+<h4 id="1-特征选择标准"><a href="#1-特征选择标准" class="headerlink" title="1. 特征选择标准"></a><strong>1. 特征选择标准</strong></h4><table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>标准</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ID3</strong></td>
+<td><strong>信息增益 (Information Gain)</strong></td>
+<td>选择信息增益最大的特征分裂节点，但对取值多的特征有偏好（容易过拟合）。</td>
+</tr>
+<tr>
+<td><strong>C4.5</strong></td>
+<td><strong>信息增益比 (Gain Ratio)</strong></td>
+<td>通过除以特征的固有信息（Split Information）来惩罚取值多的特征，更平衡分裂选择。</td>
+</tr>
+</tbody></table>
+<p><strong>公式对比</strong>：</p>
+<ul>
+<li><strong>信息增益</strong>：<br>$\text{Gain}(S, A) &#x3D; \text{Entropy}(S) - \sum_{v \in A} \frac{|S_v|}{|S|} \text{Entropy}(S_v) )</li>
+<li><strong>信息增益比</strong>：<br>$\text{GainRatio}(S, A) &#x3D; \frac{\text{Gain}(S, A)}{\text{SplitInformation}(S, A)} )<br>其中$\text{SplitInformation}(S, A) &#x3D; -\sum_{v \in A} \frac{|S_v|}{|S|} \log_2 \frac{|S_v|}{|S|} )。</li>
+</ul>
+<p><strong>示例</strong>：</p>
+<ul>
+<li>若某特征有唯一ID（每个样本值不同），ID3会优先选择它（信息增益最大），但C4.5会因Split Information过高而降低其增益比。</li>
+</ul>
+<hr>
+<h4 id="2-处理连续型特征"><a href="#2-处理连续型特征" class="headerlink" title="2. 处理连续型特征"></a><strong>2. 处理连续型特征</strong></h4><table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>支持连续特征？</strong></th>
+<th><strong>处理方法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ID3</strong></td>
+<td>❌ 不支持</td>
+<td>只能处理离散型特征，需手动分箱预处理。</td>
+</tr>
+<tr>
+<td><strong>C4.5</strong></td>
+<td>✅ 支持</td>
+<td>自动对连续特征排序并找到最佳分裂点（如“年龄&gt;30”），无需人工干预。</td>
+</tr>
+</tbody></table>
+<p><strong>实现方式</strong>：<br>C4.5 遍历连续特征的所有可能分割点，选择信息增益比最高的阈值。</p>
+<hr>
+<h4 id="3-缺失值处理"><a href="#3-缺失值处理" class="headerlink" title="3. 缺失值处理"></a><strong>3. 缺失值处理</strong></h4><table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>支持缺失值？</strong></th>
+<th><strong>处理方法</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ID3</strong></td>
+<td>❌ 不支持</td>
+<td>需提前填充或删除缺失值。</td>
+</tr>
+<tr>
+<td><strong>C4.5</strong></td>
+<td>✅ 支持</td>
+<td>1. 按已知值的比例分配样本到子节点；<br>2. 分裂时调整信息增益计算，忽略缺失样本。</td>
+</tr>
+</tbody></table>
+<hr>
+<h4 id="4-剪枝策略（防止过拟合）"><a href="#4-剪枝策略（防止过拟合）" class="headerlink" title="4. 剪枝策略（防止过拟合）"></a><strong>4. 剪枝策略（防止过拟合）</strong></h4><table>
+<thead>
+<tr>
+<th><strong>算法</strong></th>
+<th><strong>剪枝方法</strong></th>
+<th><strong>说明</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>ID3</strong></td>
+<td>❌ 无剪枝</td>
+<td>生成完全生长的树，容易过拟合。</td>
+</tr>
+<tr>
+<td><strong>C4.5</strong></td>
+<td>✅ 悲观剪枝（Pessimistic Pruning）</td>
+<td>通过统计显著性检验（如卡方检验）剪除对泛化性能无益的分支，提升模型简洁性。</td>
+</tr>
+</tbody></table>
+<p><strong>剪枝示例</strong>：<br>若某子树在训练集上准确率提升不显著（可能因噪声导致），C4.5会将其替换为叶子节点。</p>
+<hr>
+<h3 id="CART-VS-C4-5"><a href="#CART-VS-C4-5" class="headerlink" title="CART VS C4.5"></a>CART VS C4.5</h3><table>
+<thead>
+<tr>
+<th><strong>特征</strong></th>
+<th><strong>CART</strong></th>
+<th><strong>C4.5</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>任务类型</strong></td>
+<td>分类 + 回归</td>
+<td>仅分类（后续扩展支持回归）</td>
+</tr>
+<tr>
+<td><strong>分裂标准</strong></td>
+<td>基尼系数（Gini Index）或均方差（MSE）</td>
+<td>信息增益比（Gain Ratio）</td>
+</tr>
+<tr>
+<td><strong>树结构</strong></td>
+<td>二叉树（每个节点只有两个分支）</td>
+<td>多叉树（根据特征取值数量分支）</td>
+</tr>
+<tr>
+<td><strong>剪枝方法</strong></td>
+<td>代价复杂度剪枝（Cost-Complexity Pruning）</td>
+<td>悲观剪枝（Pessimistic Pruning）</td>
+</tr>
+<tr>
+<td><strong>缺失值处理</strong></td>
+<td>通过替代分裂（Surrogate Splits）</td>
+<td>直接处理缺失值（加权信息增益）</td>
+</tr>
+<tr>
+<td><strong>连续特征处理</strong></td>
+<td>自动二分（寻找最佳分割点）</td>
+<td>自动二分（类似CART）</td>
+</tr>
+<tr>
+<td><strong>适用场景</strong></td>
+<td>更通用（支持回归任务）</td>
+<td>主要用于分类</td>
+</tr>
+</tbody></table>
+<h3 id="2-详细对比"><a href="#2-详细对比" class="headerlink" title="2. 详细对比"></a><strong>2. 详细对比</strong></h3><hr>
+<h3 id="总结：C4-5-对-ID3-的改进"><a href="#总结：C4-5-对-ID3-的改进" class="headerlink" title="总结：C4.5 对 ID3 的改进"></a><strong>总结：C4.5 对 ID3 的改进</strong></h3><ol>
+<li><strong>更公平的特征选择</strong>：用信息增益比替代信息增益，减少对多值特征的偏好。</li>
+<li><strong>支持连续特征和缺失值</strong>：直接处理现实数据中的复杂情况。</li>
+<li><strong>引入剪枝</strong>：通过后剪枝降低过拟合风险。</li>
+<li><strong>工程友好性</strong>：无需手动分箱或处理缺失值，更适合实际应用。</li>
+</ol>
+<hr>
+<h3 id="附加对比：C4-5-与-CART"><a href="#附加对比：C4-5-与-CART" class="headerlink" title="附加对比：C4.5 与 CART"></a><strong>附加对比：C4.5 与 CART</strong></h3><p>虽然问题未提及，但常有人混淆C4.5与CART（Classification and Regression Trees）：</p>
+<ul>
+<li><strong>C4.5</strong>：生成多叉树，基于信息增益比，仅支持分类任务。</li>
+<li><strong>CART</strong>：生成二叉树，基于基尼系数，支持分类和回归。</li>
+</ul>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2022/04/13/%E5%86%B3%E7%AD%96%E6%A0%91/">https://xxminxx.love/2022/04/13/%E5%86%B3%E7%AD%96%E6%A0%91/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2021/10/19/Python-Vscode%E8%B0%83%E8%AF%95/" title="Python Vscode调试"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Python Vscode调试</div></div></a></div><div class="next-post pull-right"><a href="/2023/10/01/%E5%9F%BA%E4%BA%8EHexo%E6%A1%86%E6%9E%B6%E7%9A%84%E5%8D%9A%E5%AE%A2/" title="基于Hexo框架的博客"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">基于Hexo框架的博客</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/05/%E9%AB%98%E5%9F%BA%E6%95%B0%E7%A6%BB%E6%95%A3%E7%89%B9%E5%BE%81%E5%AF%B9%E4%BA%8E%E6%A0%91%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C%E6%A8%A1%E5%9E%8B%E7%9A%84%E5%BD%B1%E5%93%8D%E5%A4%A7%E5%B0%8F/" title="高基数离散特征对于树模型和神经网络模型的影响大小"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-05</div><div class="title">高基数离散特征对于树模型和神经网络模型的影响大小</div></div></a></div><div><a href="/2025/07/13/%E5%9F%BA%E7%9F%B3%E6%99%BA%E7%AE%97/" title="基石智算"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-07-13</div><div class="title">基石智算</div></div></a></div><div><a href="/2025/09/03/%E4%BA%A4%E5%8F%89%E9%AA%8C%E8%AF%81/" title="交叉验证"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-03</div><div class="title">交叉验证</div></div></a></div><div><a href="/2025/09/11/%E7%BB%93%E6%9E%84%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96%20VS%20%E7%BB%8F%E9%AA%8C%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96/" title="结构风险最小化 VS 经验风险最小化"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-11</div><div class="title">结构风险最小化 VS 经验风险最小化</div></div></a></div><div><a href="/2025/09/03/%E5%86%B3%E7%AD%96%E6%A0%91%E5%89%AA%E6%9E%9D/" title="悲观剪枝"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-03</div><div class="title">悲观剪枝</div></div></a></div><div><a href="/2025/09/05/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E6%9F%A5%E6%89%BE%E8%A1%A8/" title="条件概率查找表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-05</div><div class="title">条件概率查找表</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">174</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AF%B9%E6%AF%94%E4%B8%89%E7%A7%8D%E7%AE%97%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">对比三种算法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E7%AE%97%E6%B3%95%EF%BC%9F"><span class="toc-number">1.0.1.</span> <span class="toc-text">如何选择算法？</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9"><span class="toc-number">2.</span> <span class="toc-text">特征选择</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#ID3%E6%AD%A5%E9%AA%A4"><span class="toc-number">3.</span> <span class="toc-text">ID3步骤</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C4-5"><span class="toc-number">4.</span> <span class="toc-text">C4.5</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C4-5-%E6%AD%A3%E8%A7%84%E8%AF%B4%E6%B3%95%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">C4.5 正规说法：</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%AE%97%E6%B3%95%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.1.</span> <span class="toc-text">算法步骤</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E6%95%B0%E6%8D%AE%E5%87%86%E5%A4%87"><span class="toc-number">5.1.1.</span> <span class="toc-text">1. 数据准备</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E9%80%92%E5%BD%92%E6%9E%84%E5%BB%BA%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">5.1.2.</span> <span class="toc-text">2. 递归构建决策树</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E9%80%92%E5%BD%92%E7%BB%88%E6%AD%A2%E6%9D%A1%E4%BB%B6"><span class="toc-number">5.1.2.1.</span> <span class="toc-text">递归终止条件</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%9C%AA%E7%BB%88%E6%AD%A2%E6%97%B6%E6%AD%A5%E9%AA%A4"><span class="toc-number">5.1.2.2.</span> <span class="toc-text">未终止时步骤</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E5%86%B3%E7%AD%96%E6%A0%91%E5%89%AA%E6%9E%9D%EF%BC%88%E5%90%8E%E5%89%AA%E6%9E%9D%EF%BC%89"><span class="toc-number">5.1.3.</span> <span class="toc-text">3. 决策树剪枝（后剪枝）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%BE%93%E5%87%BA%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">5.1.4.</span> <span class="toc-text">4. 输出决策树</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%94%AE%E6%94%B9%E8%BF%9B%EF%BC%88%E5%AF%B9%E6%AF%94ID3%EF%BC%89"><span class="toc-number">5.1.5.</span> <span class="toc-text">关键改进（对比ID3）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%86%B3%E7%AD%96%E6%A0%91%E5%89%AA%E6%9E%9D"><span class="toc-number">5.2.</span> <span class="toc-text">[[决策树剪枝]]</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#C4-5-%E4%B8%8E-ID3-%E7%9A%84%E5%8C%BA%E5%88%AB%E5%AF%B9%E6%AF%94"><span class="toc-number">5.2.1.</span> <span class="toc-text">C4.5 与 ID3 的区别对比</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#1-%E7%89%B9%E5%BE%81%E9%80%89%E6%8B%A9%E6%A0%87%E5%87%86"><span class="toc-number">5.2.1.1.</span> <span class="toc-text">1. 特征选择标准</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#2-%E5%A4%84%E7%90%86%E8%BF%9E%E7%BB%AD%E5%9E%8B%E7%89%B9%E5%BE%81"><span class="toc-number">5.2.1.2.</span> <span class="toc-text">2. 处理连续型特征</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#3-%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86"><span class="toc-number">5.2.1.3.</span> <span class="toc-text">3. 缺失值处理</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#4-%E5%89%AA%E6%9E%9D%E7%AD%96%E7%95%A5%EF%BC%88%E9%98%B2%E6%AD%A2%E8%BF%87%E6%8B%9F%E5%90%88%EF%BC%89"><span class="toc-number">5.2.1.4.</span> <span class="toc-text">4. 剪枝策略（防止过拟合）</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CART-VS-C4-5"><span class="toc-number">5.2.2.</span> <span class="toc-text">CART VS C4.5</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E8%AF%A6%E7%BB%86%E5%AF%B9%E6%AF%94"><span class="toc-number">5.2.3.</span> <span class="toc-text">2. 详细对比</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%EF%BC%9AC4-5-%E5%AF%B9-ID3-%E7%9A%84%E6%94%B9%E8%BF%9B"><span class="toc-number">5.2.4.</span> <span class="toc-text">总结：C4.5 对 ID3 的改进</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%99%84%E5%8A%A0%E5%AF%B9%E6%AF%94%EF%BC%9AC4-5-%E4%B8%8E-CART"><span class="toc-number">5.2.5.</span> <span class="toc-text">附加对比：C4.5 与 CART</span></a></li></ol></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E7%BB%93%E6%9E%84%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96%20VS%20%E7%BB%8F%E9%AA%8C%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96/" title="结构风险最小化 VS 经验风险最小化">结构风险最小化 VS 经验风险最小化</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA/" title="条件随机场">条件随机场</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/" title="最小栈、最大栈、双向支持的最小最大栈">最小栈、最大栈、双向支持的最小最大栈</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/ML%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" title="ML面试问题排查">ML面试问题排查</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/ML%E7%AE%97%E6%B3%95%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="ML算法机器学习">ML算法机器学习</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

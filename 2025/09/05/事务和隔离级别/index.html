@@ -1,0 +1,393 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="dark"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>事务和隔离级别 | Min的博客</title><meta name="author" content="Min,357021376@qq.com"><meta name="copyright" content="Min"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#0d0d0d"><meta name="description" content="[[隔离级别、锁、脏读、不可重复读与幻读问题]] ACID Atomicity（原子性）：事务中的所有操作要么全部完成，要么全部不完成 Consistency（一致性）：事务将数据库从一个有效状态转移到另一个有效状态 Isolation（隔离性）：并发事务互不干扰 Durability（持久性）：一旦事务提交，结果永久保存  多条SQL语句需要显式使用事务控制语句(如BEGIN, COMMIT,">
+<meta property="og:type" content="article">
+<meta property="og:title" content="事务和隔离级别">
+<meta property="og:url" content="https://xxminxx.love/2025/09/05/%E4%BA%8B%E5%8A%A1%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/index.html">
+<meta property="og:site_name" content="Min的博客">
+<meta property="og:description" content="[[隔离级别、锁、脏读、不可重复读与幻读问题]] ACID Atomicity（原子性）：事务中的所有操作要么全部完成，要么全部不完成 Consistency（一致性）：事务将数据库从一个有效状态转移到另一个有效状态 Isolation（隔离性）：并发事务互不干扰 Durability（持久性）：一旦事务提交，结果永久保存  多条SQL语句需要显式使用事务控制语句(如BEGIN, COMMIT,">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg">
+<meta property="article:published_time" content="2025-09-04T16:00:00.000Z">
+<meta property="article:modified_time" content="2025-09-11T14:30:47.067Z">
+<meta property="article:author" content="Min">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="事务">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg"><link rel="shortcut icon" href="/img/favicon.png"><link rel="canonical" href="https://xxminxx.love/2025/09/05/%E4%BA%8B%E5%8A%A1%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlight.js","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":100,"languages":{"author":"作者: Min","link":"链接: ","source":"来源: Min的博客","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  infinitegrid: {
+    js: 'https://cdn.jsdelivr.net/npm/@egjs/infinitegrid/dist/infinitegrid.min.js',
+    buttonText: '加载更多'
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '事务和隔离级别',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-09-11 22:30:47'
+}</script><script>(win=>{
+      win.saveToLocal = {
+        set: (key, value, ttl) => {
+          if (ttl === 0) return
+          const now = Date.now()
+          const expiry = now + ttl * 86400000
+          const item = {
+            value,
+            expiry
+          }
+          localStorage.setItem(key, JSON.stringify(item))
+        },
+      
+        get: key => {
+          const itemStr = localStorage.getItem(key)
+      
+          if (!itemStr) {
+            return undefined
+          }
+          const item = JSON.parse(itemStr)
+          const now = Date.now()
+      
+          if (now > item.expiry) {
+            localStorage.removeItem(key)
+            return undefined
+          }
+          return item.value
+        }
+      }
+    
+      win.getScript = (url, attr = {}) => new Promise((resolve, reject) => {
+        const script = document.createElement('script')
+        script.src = url
+        script.async = true
+        script.onerror = reject
+        script.onload = script.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          script.onload = script.onreadystatechange = null
+          resolve()
+        }
+
+        Object.keys(attr).forEach(key => {
+          script.setAttribute(key, attr[key])
+        })
+
+        document.head.appendChild(script)
+      })
+    
+      win.getCSS = (url, id = false) => new Promise((resolve, reject) => {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.href = url
+        if (id) link.id = id
+        link.onerror = reject
+        link.onload = link.onreadystatechange = function() {
+          const loadState = this.readyState
+          if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+          link.onload = link.onreadystatechange = null
+          resolve()
+        }
+        document.head.appendChild(link)
+      })
+    
+      win.activateDarkMode = () => {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = () => {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+        if (t === 'dark') activateDarkMode()
+        else if (t === 'light') activateLightMode()
+      
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+      const detectApple = () => {
+        if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+          document.documentElement.classList.add('apple')
+        }
+      }
+      detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">174</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Min的博客"><span class="site-name">Min的博客</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时光轴</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 推荐</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/book/"><i class="fa-fw fas fa-book"></i><span> 书籍</span></a></li><li><a class="site-page child" href="/link/"><i class="fa-fw fas fa-link"></i><span> 链接</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">事务和隔离级别</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-09-04T16:00:00.000Z" title="发表于 2025-09-05 00:00:00">2025-09-05</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-09-11T14:30:47.067Z" title="更新于 2025-09-11 22:30:47">2025-09-11</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="事务和隔离级别"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p>[[隔离级别、锁、脏读、不可重复读与幻读问题]]</p>
+<h1 id="ACID"><a href="#ACID" class="headerlink" title="ACID"></a>ACID</h1><ul>
+<li><strong>A</strong>tomicity（原子性）：事务中的所有操作要么全部完成，要么全部不完成</li>
+<li><strong>C</strong>onsistency（一致性）：事务将数据库从一个有效状态转移到另一个有效状态</li>
+<li><strong>I</strong>solation（隔离性）：并发事务互不干扰</li>
+<li><strong>D</strong>urability（持久性）：一旦事务提交，结果永久保存</li>
+</ul>
+<p>多条SQL语句需要显式使用事务控制语句(如BEGIN, COMMIT, ROLLBACK)来保证ACID属性，单条SQL不一定能ACID<br>单条SQL：<br>原子性（Atomicity）</p>
+<ul>
+<li><strong>通常满足</strong>：单条SQL语句在大多数RDBMS中默认作为隐式事务执行</li>
+<li><strong>例外情况</strong>：<ul>
+<li>批量操作（如INSERT INTO … SELECT）可能部分成功</li>
+<li>某些数据库的特定语句（如MySQL的ALTER TABLE可能不支持原子DDL）<br>隔离性（Isolation）</li>
+</ul>
+</li>
+<li><strong>受隔离级别影响</strong><br>持久性（Durability）</li>
+<li><strong>可能不满足的情况</strong>：<ul>
+<li>使用内存表（如MySQL的MEMORY引擎）</li>
+</ul>
+</li>
+</ul>
+<h1 id="MySQL-事务详解"><a href="#MySQL-事务详解" class="headerlink" title="MySQL 事务详解"></a>MySQL 事务详解</h1><p>事务是数据库管理系统中的一个核心概念，它代表一组必须全部成功或全部失败的数据库操作。MySQL 中的事务主要用于保证数据库操作的完整性和一致性。</p>
+<h2 id="一、事务的基本概念"><a href="#一、事务的基本概念" class="headerlink" title="一、事务的基本概念"></a>一、事务的基本概念</h2><h3 id="1-什么是事务？"><a href="#1-什么是事务？" class="headerlink" title="1. 什么是事务？"></a>1. 什么是事务？</h3><p>事务(Transaction)是数据库操作的最小工作单元，是用户定义的一个操作序列，这些操作要么全部执行，要么全部不执行。</p>
+<h3 id="2-事务的典型特性-ACID-："><a href="#2-事务的典型特性-ACID-：" class="headerlink" title="2. 事务的典型特性(ACID)："></a>2. 事务的典型特性(ACID)：</h3><ul>
+<li>**原子性(Atomicity)**：事务是不可分割的工作单位，事务中的操作要么全部成功，要么全部失败回滚</li>
+<li>**一致性(Consistency)**：事务执行前后，数据库从一个一致状态变到另一个一致状态</li>
+<li>**隔离性(Isolation)**：多个事务并发执行时，一个事务的执行不应影响其他事务</li>
+<li>**持久性(Durability)**：一旦事务提交，其所做的修改会永久保存在数据库中</li>
+</ul>
+<h2 id="二、MySQL-中的事务操作"><a href="#二、MySQL-中的事务操作" class="headerlink" title="二、MySQL 中的事务操作"></a>二、MySQL 中的事务操作</h2><h3 id="1-基本语法"><a href="#1-基本语法" class="headerlink" title="1. 基本语法"></a>1. 基本语法</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION;<span class="comment">-- 或 BEGIN</span></span><br><span class="line"><span class="comment">-- 执行SQL语句</span></span><br><span class="line"><span class="keyword">COMMIT</span>;<span class="comment">-- 提交事务</span></span><br><span class="line"><span class="comment">-- 或</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;<span class="comment">-- 回滚事务</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="2-事务控制语句"><a href="#2-事务控制语句" class="headerlink" title="2. 事务控制语句"></a>2. 事务控制语句</h3><table>
+<thead>
+<tr>
+<th>语句</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>START TRANSACTION</code> 或 <code>BEGIN</code></td>
+<td>开始一个新事务</td>
+</tr>
+<tr>
+<td><code>COMMIT</code></td>
+<td>提交当前事务，使更改永久化</td>
+</tr>
+<tr>
+<td><code>ROLLBACK</code></td>
+<td>回滚当前事务，取消所有更改</td>
+</tr>
+<tr>
+<td><code>SAVEPOINT identifier</code></td>
+<td>在事务中创建保存点</td>
+</tr>
+<tr>
+<td><code>ROLLBACK TO [SAVEPOINT] identifier</code></td>
+<td>回滚到指定保存点</td>
+</tr>
+<tr>
+<td><code>RELEASE SAVEPOINT identifier</code></td>
+<td>删除保存点</td>
+</tr>
+<tr>
+<td><code>SET TRANSACTION</code></td>
+<td>设置事务的隔离级别</td>
+</tr>
+</tbody></table>
+<h2 id="三、事务的隔离级别"><a href="#三、事务的隔离级别" class="headerlink" title="三、事务的隔离级别"></a>三、事务的隔离级别</h2><p>MySQL 支持四种隔离级别：</p>
+<ol>
+<li><strong>READ UNCOMMITTED (读未提交)</strong></li>
+</ol>
+<ul>
+<li>可能读取到其他事务未提交的数据（脏读）</li>
+<li>性能最好，但一致性最差</li>
+</ul>
+<ol start="2">
+<li><strong>READ COMMITTED (读已提交)</strong></li>
+</ol>
+<ul>
+<li>只能读取已提交的数据</li>
+<li>解决脏读问题，但可能出现不可重复读</li>
+</ul>
+<ol start="3">
+<li><strong>REPEATABLE READ (可重复读) - MySQL默认</strong></li>
+</ol>
+<ul>
+<li>同一事务中多次读取同样数据结果一致</li>
+<li>解决不可重复读问题，但可能出现幻读</li>
+</ul>
+<ol start="4">
+<li><strong>SERIALIZABLE (串行化)</strong></li>
+</ol>
+<ul>
+<li>最高隔离级别，完全串行执行</li>
+<li>解决所有并发问题，但性能最差</li>
+</ul>
+<h3 id="设置隔离级别："><a href="#设置隔离级别：" class="headerlink" title="设置隔离级别："></a>设置隔离级别：</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SET</span> TRANSACTION ISOLATION LEVEL READ COMMITTED;</span><br><span class="line"><span class="comment">-- 或设置全局/会话级别</span></span><br><span class="line"><span class="keyword">SET</span> <span class="keyword">GLOBAL</span> TRANSACTION ISOLATION LEVEL REPEATABLE READ;</span><br><span class="line"><span class="keyword">SET</span> SESSION TRANSACTION ISOLATION LEVEL SERIALIZABLE;</span><br></pre></td></tr></table></figure>
+
+<h2 id="四、事务的实际应用示例"><a href="#四、事务的实际应用示例" class="headerlink" title="四、事务的实际应用示例"></a>四、事务的实际应用示例</h2><h3 id="1-银行转账示例"><a href="#1-银行转账示例" class="headerlink" title="1. 银行转账示例"></a>1. 银行转账示例</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 从A账户扣款</span></span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">-</span> <span class="number">100</span> <span class="keyword">WHERE</span> account_id <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 向B账户加款</span></span><br><span class="line"><span class="keyword">UPDATE</span> accounts <span class="keyword">SET</span> balance <span class="operator">=</span> balance <span class="operator">+</span> <span class="number">100</span> <span class="keyword">WHERE</span> account_id <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 检查是否有错误</span></span><br><span class="line">IF (没有错误) <span class="keyword">THEN</span></span><br><span class="line"><span class="keyword">COMMIT</span>;<span class="comment">-- 提交事务</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">&#x27;转账成功&#x27;</span>;</span><br><span class="line"><span class="keyword">ELSE</span></span><br><span class="line"><span class="keyword">ROLLBACK</span>;<span class="comment">-- 回滚事务</span></span><br><span class="line"><span class="keyword">SELECT</span> <span class="string">&#x27;转账失败&#x27;</span>;</span><br><span class="line"><span class="keyword">END</span> IF;</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-使用保存点-SAVEPOINT"><a href="#2-使用保存点-SAVEPOINT" class="headerlink" title="2. 使用保存点(SAVEPOINT)"></a>2. 使用保存点(SAVEPOINT)</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">START</span> TRANSACTION;</span><br><span class="line"></span><br><span class="line"><span class="keyword">INSERT</span> <span class="keyword">INTO</span> orders (order_id, customer_id) <span class="keyword">VALUES</span> (<span class="number">1</span>, <span class="number">101</span>);</span><br><span class="line"><span class="keyword">SAVEPOINT</span> order_created;</span><br><span class="line"></span><br><span class="line"><span class="keyword">UPDATE</span> inventory <span class="keyword">SET</span> stock <span class="operator">=</span> stock <span class="operator">-</span> <span class="number">1</span> <span class="keyword">WHERE</span> product_id <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line"><span class="comment">-- 如果库存更新失败</span></span><br><span class="line"><span class="keyword">ROLLBACK</span> <span class="keyword">TO</span> order_created;</span><br><span class="line"></span><br><span class="line"><span class="keyword">COMMIT</span>;</span><br></pre></td></tr></table></figure>
+
+<h2 id="五、事务的注意事项"><a href="#五、事务的注意事项" class="headerlink" title="五、事务的注意事项"></a>五、事务的注意事项</h2><ol>
+<li><strong>存储引擎支持</strong>：</li>
+</ol>
+<ul>
+<li>InnoDB 完全支持事务</li>
+<li>MyISAM 不支持事务</li>
+</ul>
+<ol start="2">
+<li><strong>自动提交模式</strong>：</li>
+</ol>
+<ul>
+<li>MySQL 默认是自动提交(autocommit&#x3D;1)</li>
+<li>可以关闭自动提交：<code>SET autocommit=0;</code></li>
+</ul>
+<ol start="3">
+<li><strong>长事务问题</strong>：</li>
+</ol>
+<ul>
+<li>避免长时间运行的事务，会锁定资源</li>
+<li>大事务可以拆分为小事务</li>
+</ul>
+<ol start="4">
+<li><strong>死锁处理</strong>：</li>
+</ol>
+<ul>
+<li>MySQL 能检测死锁并自动回滚其中一个事务</li>
+<li>应用层应实现重试机制</li>
+</ul>
+<h2 id="六、事务的最佳实践"><a href="#六、事务的最佳实践" class="headerlink" title="六、事务的最佳实践"></a>六、事务的最佳实践</h2><ol>
+<li>尽量使事务简短，减少锁定时间</li>
+<li>避免在事务中进行用户交互</li>
+<li>合理设置隔离级别，平衡一致性和性能</li>
+<li>处理事务失败情况，实现重试逻辑</li>
+<li>监控长事务和死锁情况</li>
+</ol>
+<p>通过正确使用事务，可以确保数据库操作的安全性和一致性，特别是在处理金融交易、订单处理等关键业务场景时尤为重要。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta"><i class="fas fa-circle-user fa-fw"></i>文章作者: </span><span class="post-copyright-info"><a href="https://xxminxx.love">Min</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta"><i class="fas fa-square-arrow-up-right fa-fw"></i>文章链接: </span><span class="post-copyright-info"><a href="https://xxminxx.love/2025/09/05/%E4%BA%8B%E5%8A%A1%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/">https://xxminxx.love/2025/09/05/%E4%BA%8B%E5%8A%A1%E5%92%8C%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta"><i class="fas fa-circle-exclamation fa-fw"></i>版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://xxminxx.love" target="_blank">Min的博客</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/">数据库</a><a class="post-meta__tags" href="/tags/%E4%BA%8B%E5%8A%A1/">事务</a></div><div class="post_share"><div class="social-share" data-image="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2025/09/05/%E6%9D%A1%E4%BB%B6%E6%A6%82%E7%8E%87%E6%9F%A5%E6%89%BE%E8%A1%A8/" title="条件概率查找表"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">条件概率查找表</div></div></a></div><div class="next-post pull-right"><a href="/2025/09/05/%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E3%80%81%E9%94%81%E3%80%81%E8%84%8F%E8%AF%BB%E3%80%81%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB%E4%B8%8E%E5%B9%BB%E8%AF%BB%E9%97%AE%E9%A2%98/" title="隔离级别、锁、脏读、不可重复读与幻读问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">隔离级别、锁、脏读、不可重复读与幻读问题</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2025/09/05/%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%E3%80%81%E9%94%81%E3%80%81%E8%84%8F%E8%AF%BB%E3%80%81%E4%B8%8D%E5%8F%AF%E9%87%8D%E5%A4%8D%E8%AF%BB%E4%B8%8E%E5%B9%BB%E8%AF%BB%E9%97%AE%E9%A2%98/" title="隔离级别、锁、脏读、不可重复读与幻读问题"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-09-05</div><div class="title">隔离级别、锁、脏读、不可重复读与幻读问题</div></div></a></div><div><a href="/2025/03/13/%E5%85%B3%E7%B3%BB%E6%95%B0%E6%8D%AE%E5%BA%93%E7%AE%A1%E7%90%86%E7%B3%BB%E7%BB%9F%EF%BC%88RDBMS%EF%BC%89%E4%B8%AD%E7%9A%84%E6%B8%B8%E6%A0%87%EF%BC%88Cursor%EF%BC%89/" title="关系数据库管理系统（RDBMS）中的游标（Cursor）"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-13</div><div class="title">关系数据库管理系统（RDBMS）中的游标（Cursor）</div></div></a></div><div><a href="/2025/03/13/sql%20having/" title="sql having"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2025-03-13</div><div class="title">sql having</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div class="vcomment" id="vcomment"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="https://s2.loli.net/2023/10/06/o6NdqIS2WFGpK7U.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Min</div><div class="author-info__description">GEEK对黑科技飢渴，NJUSTer,毕业于绵阳中学<br>Szechuanese在江苏<br>Python|C++|Vue<br>Field:ML|DL|3d-CV<br>Passion for Science,Engineering & Programming.</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">174</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">81</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">20</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Mr-brillianter"><i class="fab fa-github"></i><span>关注我</span></a></div><div class="card-widget card-announcement"><div class="item-headline"><i class="fas fa-bullhorn fa-shake"></i><span>公告</span></div><div class="announcement_content">这里是Min的博客，主要为了记录学习历程，分享给朋友们的踩过的坑，给中文互联网贡献更多优质干货。但是由于时间有限，可能只记录了产生坑的位置或者内容不够详细，希望多多海涵。</div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#ACID"><span class="toc-number">1.</span> <span class="toc-text">ACID</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MySQL-%E4%BA%8B%E5%8A%A1%E8%AF%A6%E8%A7%A3"><span class="toc-number">2.</span> <span class="toc-text">MySQL 事务详解</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5"><span class="toc-number">2.1.</span> <span class="toc-text">一、事务的基本概念</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%8B%E5%8A%A1%EF%BC%9F"><span class="toc-number">2.1.1.</span> <span class="toc-text">1. 什么是事务？</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%85%B8%E5%9E%8B%E7%89%B9%E6%80%A7-ACID-%EF%BC%9A"><span class="toc-number">2.1.2.</span> <span class="toc-text">2. 事务的典型特性(ACID)：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81MySQL-%E4%B8%AD%E7%9A%84%E4%BA%8B%E5%8A%A1%E6%93%8D%E4%BD%9C"><span class="toc-number">2.2.</span> <span class="toc-text">二、MySQL 中的事务操作</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%9F%BA%E6%9C%AC%E8%AF%AD%E6%B3%95"><span class="toc-number">2.2.1.</span> <span class="toc-text">1. 基本语法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BA%8B%E5%8A%A1%E6%8E%A7%E5%88%B6%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.2.2.</span> <span class="toc-text">2. 事务控制语句</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E4%BA%8B%E5%8A%A1%E7%9A%84%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB"><span class="toc-number">2.3.</span> <span class="toc-text">三、事务的隔离级别</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%BE%E7%BD%AE%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB%EF%BC%9A"><span class="toc-number">2.3.1.</span> <span class="toc-text">设置隔离级别：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%AE%9E%E9%99%85%E5%BA%94%E7%94%A8%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.4.</span> <span class="toc-text">四、事务的实际应用示例</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%93%B6%E8%A1%8C%E8%BD%AC%E8%B4%A6%E7%A4%BA%E4%BE%8B"><span class="toc-number">2.4.1.</span> <span class="toc-text">1. 银行转账示例</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E4%BD%BF%E7%94%A8%E4%BF%9D%E5%AD%98%E7%82%B9-SAVEPOINT"><span class="toc-number">2.4.2.</span> <span class="toc-text">2. 使用保存点(SAVEPOINT)</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-number">2.5.</span> <span class="toc-text">五、事务的注意事项</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%85%AD%E3%80%81%E4%BA%8B%E5%8A%A1%E7%9A%84%E6%9C%80%E4%BD%B3%E5%AE%9E%E8%B7%B5"><span class="toc-number">2.6.</span> <span class="toc-text">六、事务的最佳实践</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E7%BB%93%E6%9E%84%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96%20VS%20%E7%BB%8F%E9%AA%8C%E9%A3%8E%E9%99%A9%E6%9C%80%E5%B0%8F%E5%8C%96/" title="结构风险最小化 VS 经验风险最小化">结构风险最小化 VS 经验风险最小化</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E6%9D%A1%E4%BB%B6%E9%9A%8F%E6%9C%BA%E5%9C%BA/" title="条件随机场">条件随机场</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/%E6%9C%80%E5%B0%8F%E6%A0%88%E3%80%81%E6%9C%80%E5%A4%A7%E6%A0%88%E3%80%81%E5%8F%8C%E5%90%91%E6%94%AF%E6%8C%81%E7%9A%84%E6%9C%80%E5%B0%8F%E6%9C%80%E5%A4%A7%E6%A0%88/" title="最小栈、最大栈、双向支持的最小最大栈">最小栈、最大栈、双向支持的最小最大栈</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/ML%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98%E6%8E%92%E6%9F%A5/" title="ML面试问题排查">ML面试问题排查</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2025/09/11/ML%E7%AE%97%E6%B3%95%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" title="ML算法机器学习">ML算法机器学习</a><time datetime="2025-09-10T16:00:00.000Z" title="发表于 2025-09-11 00:00:00">2025-09-11</time></div></div></div></div></div></div></main><footer id="footer" style="background-image: url('https://s2.loli.net/2023/10/06/z9vMSwbJrFWUlCq.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2020 - 2025 By Min</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside-config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>(() => {
+  const initValine = () => {
+    const valine = new Valine(Object.assign({
+      el: '#vcomment',
+      appId: '',
+      appKey: '',
+      avatar: 'monsterid',
+      serverURLs: '',
+      emojiMaps: "",
+      path: window.location.pathname,
+      visitor: false
+    }, null))
+  }
+
+  const loadValine = async () => {
+    if (typeof Valine === 'function') initValine()
+    else {
+      await getScript('https://cdn.jsdelivr.net/npm/valine/dist/Valine.min.js')
+      initValine()
+    }
+  }
+
+  if ('Valine' === 'Valine' || !false) {
+    if (false) btf.loadComment(document.getElementById('vcomment'),loadValine)
+    else setTimeout(loadValine, 0)
+  } else {
+    window.loadOtherComment = loadValine
+  }
+})()</script></div><div class="aplayer no-destroy" data-id="8787507455" data-server="netease" data-type="playlist" data-fixed="true" data-autoplay="true"> </div><canvas class="fireworks" mobile="false"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="false" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/activate-power-mode.min.js"></script><script>POWERMODE.colorful = true;
+POWERMODE.shake = false;
+POWERMODE.mobile = false;
+document.body.addEventListener('input', POWERMODE);
+</script><script id="click-heart" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/click-heart.min.js" async="async" mobile="false"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/aplayer/dist/APlayer.min.js"></script><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/metingjs/dist/Meting.min.js"></script><script src="https://cdn.jsdelivr.net/npm/pjax/pjax.min.js"></script><script>let pjaxSelectors = ["head > title","#config-diff","#body-wrap","#rightside-config-hide","#rightside-config-show",".js-pjax"]
+
+var pjax = new Pjax({
+  elements: 'a:not([target="_blank"])',
+  selectors: pjaxSelectors,
+  cacheBust: false,
+  analytics: false,
+  scrollRestoration: false
+})
+
+document.addEventListener('pjax:send', function () {
+
+  // removeEventListener
+  btf.removeGlobalFnEvent('pjax')
+  btf.removeGlobalFnEvent('themeChange')
+
+  document.getElementById('rightside').classList.remove('rightside-show')
+  
+  if (window.aplayers) {
+    for (let i = 0; i < window.aplayers.length; i++) {
+      if (!window.aplayers[i].options.fixed) {
+        window.aplayers[i].destroy()
+      }
+    }
+  }
+
+  typeof typed === 'object' && typed.destroy()
+
+  //reset readmode
+  const $bodyClassList = document.body.classList
+  $bodyClassList.contains('read-mode') && $bodyClassList.remove('read-mode')
+
+  typeof disqusjs === 'object' && disqusjs.destroy()
+})
+
+document.addEventListener('pjax:complete', function () {
+  window.refreshFn()
+
+  document.querySelectorAll('script[data-pjax]').forEach(item => {
+    const newScript = document.createElement('script')
+    const content = item.text || item.textContent || item.innerHTML || ""
+    Array.from(item.attributes).forEach(attr => newScript.setAttribute(attr.name, attr.value))
+    newScript.appendChild(document.createTextNode(content))
+    item.parentNode.replaceChild(newScript, item)
+  })
+
+  GLOBAL_CONFIG.islazyload && window.lazyLoadInstance.update()
+
+  typeof panguInit === 'function' && panguInit()
+
+  // google analytics
+  typeof gtag === 'function' && gtag('config', '', {'page_path': window.location.pathname});
+
+  // baidu analytics
+  typeof _hmt === 'object' && _hmt.push(['_trackPageview',window.location.pathname]);
+
+  typeof loadMeting === 'function' && document.getElementsByClassName('aplayer').length && loadMeting()
+
+  // prismjs
+  typeof Prism === 'object' && Prism.highlightAll()
+})
+
+document.addEventListener('pjax:error', e => {
+  if (e.request.status === 404) {
+    pjax.loadUrl('/404.html')
+  }
+})</script><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
